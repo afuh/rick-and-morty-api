@@ -1,0 +1,9 @@
+.DS_Store
+deploy.js
+.cache/
+node_modules
+.env
+.env.*
+.eslintrc
+helpers
+public/

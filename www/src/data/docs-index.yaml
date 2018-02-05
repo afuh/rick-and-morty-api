@@ -1,0 +1,41 @@
+- title: Introduction
+  items:
+    - title: Rate Limit
+      link: '#rate-limit'
+    - title: Base URL
+      link: '#base-url'
+    - title: Info and pagination
+      link: '#info-and-pagination'
+- title: Character
+  link: '#character'
+  items:
+    - title: Character schema
+      link: '#character-schema'
+    - title: Get all characters
+      link: '#get-all-characters'
+    - title: Get a single character
+      link: '#get-a-single-character'
+    - title: Filter characters
+      link: '#filter-characters'
+- title: Location
+  link: '#location'
+  items:
+    - title: Location schema
+      link: '#location-schema'
+    - title: Get all locations
+      link: '#get-all-locations'
+    - title: Get a single location
+      link: '#get-a-single-location'
+    - title: Filter locations
+      link: '#filter-locations'
+- title: Episode
+  link: '#episode'
+  items:
+    - title: Episode schema
+      link: '#episode-schema'
+    - title: Get all episodes
+      link: '#get-all-episodes'
+    - title: Get a single episode
+      link: '#get-a-single-episode'
+    - title: Filter episodes
+      link: '#filter-episodes'

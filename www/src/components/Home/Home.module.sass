@@ -1,0 +1,78 @@
+@import ../../css/_variables
+
+.introWrapper
+  @extend .col, .centrate
+  height: 40vh
+  text-align: center
+
+.introWrapper
+  h1, h2
+    margin: 0
+    text-transform: uppercase
+    line-height: 0.75em
+    color: color(backblack)
+    border: none
+    +break(sm)
+      line-height: 1
+      padding: 0 12px
+
+  h1
+    font-size: 60px
+    +break(xs)
+      font-size: 50px
+  h2
+    font-size: 30px
+    color: color(orange)
+    transform: skew(2deg)
+    +break(xs)
+      font-size: 20px
+
+.subtitle
+  padding: 5px 4px 0
+  background: color(backblack)
+  transform: skew(-2deg) translateY(-6px)
+  h2:last-child
+    position: absolute
+    padding: 0 4px
+    width: 100%
+    top: 4px
+    left: 0
+    color: transparent
+    text-transform: uppercase
+    &::selection
+      background: color(orange)
+      color: color(backblack)
+  +break(sm)
+    background: color(white)
+
+.materialWrapper
+  @extend .row
+  justify-content: space-around
+  max-width: 1400px
+  min-height: 40vh
+
+.locationWrapper
+  @extend .row
+  +position(space-between, center)
+  flex-wrap: nowrap
+
+.apiSection
+  @extend .row
+  justify-content: center
+  padding: 30px
+  background: color(backblack)
+  min-height: calc(60vh - #{$header-height})
+
+.textWrapper
+  @extend .row
+  +position(space-between, center)
+  flex-wrap: nowrap
+  span
+    +font(0.7rem, 400)
+    color: color(gray)
+  p
+    +font(0.9rem, 200)
+    +size(100%, auto)
+    text-align: right
+    padding: 0
+    margin: 0

@@ -1,0 +1,17 @@
+@import ../../css/_variables
+
+.wrapper
+  @extend .col, .centrate
+  height: calc(100vh - #{$header-height*2})
+
+.imgWrapper
+  +size(300px, 300px)
+
+.img
+  +size(100%, auto)
+  border-radius: 50%
+
+.message
+  margin-bottom: 6px
+  +font(22px, 400)
+  text-align: center

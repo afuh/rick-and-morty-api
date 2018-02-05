@@ -1,0 +1,58 @@
+{
+  "name": "rick-morty-api-site",
+  "description": "Rick and Morty API site",
+  "version": "1.0.0",
+  "author": "Axel Fuhrmann",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "dotenv": "^4.0.0",
+    "gatsby": "^1.9.158",
+    "gatsby-link": "^1.6.34",
+    "gatsby-plugin-catch-links": "^1.0.15",
+    "gatsby-plugin-google-analytics": "^1.0.16",
+    "gatsby-plugin-nprogress": "^1.0.11",
+    "gatsby-plugin-postcss-sass": "^1.0.16",
+    "gatsby-plugin-react-helmet": "^2.0.3",
+    "gatsby-plugin-sitemap": "^1.2.11",
+    "gatsby-plugin-typography": "^1.7.12",
+    "gatsby-remark-autolink-headers": "^1.4.11",
+    "gatsby-remark-prismjs": "^1.2.12",
+    "gatsby-source-filesystem": "^1.5.15",
+    "gatsby-transformer-remark": "^1.7.29",
+    "gatsby-transformer-yaml": "^1.5.14",
+    "material-ui": "^0.20.0",
+    "moment": "^2.20.1",
+    "react-helmet": "^5.2.0",
+    "react-icons": "^2.2.7",
+    "react-spinkit": "^3.0.0",
+    "typography-theme-github": "^0.15.10"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.2.5",
+    "babel-eslint": "^8.2.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^4.16.0",
+    "eslint-plugin-react": "^7.5.1",
+    "prettier": "^1.10.2"
+  },
+  "keywords": [
+    "gatsby",
+    "api",
+    "rick and morty"
+  ],
+  "license": "BSD-3-Clause",
+  "scripts": {
+    "build": "gatsby build",
+    "dev": "gatsby develop",
+    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afuh/rick-and-morty-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/afuh/rick-and-morty-api/issues"
+  },
+  "homepage": "https://github.com/afuh/rick-and-morty-api#readme"
+}

@@ -1,0 +1,31 @@
+@import ../css/_variables
+
+.position
+  max-width: 1200px
+  margin: 0 auto
+  padding-left: 20px
+  +break(890px)
+    padding: 0
+
+.wrapper
+  @extend .row
+  flex-wrap: nowrap
+
+.wrapperDocs
+  +grid(5, 6)
+  +size(100%, auto)
+  z-index: 1
+  padding: 0 20px
+  +break(890px)
+    +grid(1, 1)
+
+.sidebar
+  +grid(1, 6)
+  min-width: 180px
+  +break(890px)
+    display: none
+
+.wrapperAbout
+  padding: 0
+  +break(890px)
+    padding: 0 20px

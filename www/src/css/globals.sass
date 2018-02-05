@@ -1,0 +1,17 @@
+@import /_variables
+
+p a,
+li a,
+  color: color(black)
+  border-bottom: 1px solid rgb(255, 152, 0)
+  transition: all .1s
+
+a
+  color: color(black)
+  +hover
+    text-decoration: none
+    color: color(orange)
+
+*::selection
+  color: color(orange)
+  background: color(backblack)

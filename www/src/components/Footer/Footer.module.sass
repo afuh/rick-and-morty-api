@@ -1,0 +1,29 @@
+@import ../../css/_variables
+
+.wrapper
+  @extend .col, .centrate
+  background: color(backblack)
+  color: color(gray)
+  padding: 10px 0
+  width: 100%
+  height: $header-height
+  span
+    +font(13px, 200)
+  a
+    font-weight: 400
+    transition: all .2s
+    color: color(whitesmoke)
+    border-bottom: 1px solid color(orange)
+    &:hover
+      color: color(orange)
+      border-bottom: none
+
+
+.statistics
+  @extend .row, .centrate
+  +size(100%, auto)
+
+.counts
+  font-size: 14px !important
+  font-weight: 300 !important
+  color: color(gray)

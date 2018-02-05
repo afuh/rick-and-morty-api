@@ -1,0 +1,21 @@
+@import ../../css/_variables
+
+.header
+  height: $header-height
+
+.wrapper
+  @extend .row
+  +position(space-between, center)
+  margin: 0 auto
+  max-width: 1200px
+  min-height: 80px
+  padding: 0 20px
+
+.menu
+  color: color(black)
+  transition: all .2s
+  border: none
+
+.menu
+  +hover
+    color: color(orange)
