@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - stable
+
+services:
+  - mongodb
+
+before_script:
+  - mongorestore --host=localhost:27017 --db=rickmorty-api --drop ./data
+
+script:
+  - npm test

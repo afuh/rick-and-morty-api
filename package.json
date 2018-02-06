@@ -10,7 +10,7 @@
     "start": "node ./server.js",
     "dev": "NODE_ENV=development nodemon ./server.js",
     "data": "mongorestore --host=localhost:27017 --db=rickmorty-api --drop ./data",
-    "test": "mocha --timeout 10000"
+    "test": "mocha --timeout 10000 --exit"
   },
   "author": "Axel Fuhrmann",
   "license": "BSD-3-Clause",
