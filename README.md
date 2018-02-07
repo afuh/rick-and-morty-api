@@ -10,7 +10,7 @@
 
 **To get started check the documentation on [rickandmortyapi.com](https://rickandmortyapi.com/documentation) or just keep reading ;)**
 
-You can check the code of the site [here](https://github.com/afuh/rick-and-morty-api/tree/master/www)
+You can check the code of the site [here](https://github.com/afuh/rick-and-morty-api-site)
 
 ### Contents
 
