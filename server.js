@@ -1,4 +1,4 @@
-require('dotenv').config({path: '.env'});
+require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -13,7 +13,7 @@ const errors = require('./handlers/errors')
 
 const db = process.env.NODE_ENV === "development" || "test" ? 'mongodb://localhost:27017/rickmorty-api' : process.env.DATABASE
 
-mongoose.connect(db, { useMongoClient: true})
+mongoose.connect(db)
 mongoose.Promise = global.Promise
 
 mongoose.connection.on('error', err => {
