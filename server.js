@@ -11,7 +11,7 @@ const app = express();
 const api = require('./routes/api')
 const errors = require('./handlers/errors')
 
-const db = process.env.NODE_ENV === "development" || "test" ? 'mongodb://localhost:27017/rickmorty-api' : process.env.DATABASE
+const db = process.env.NODE_ENV === "production" ? process.env.DATABASE : 'mongodb://localhost:27017/rickmorty-api'
 
 mongoose.connect(db)
 mongoose.Promise = global.Promise
