@@ -36,10 +36,10 @@ You can check the code of the site [here](https://github.com/afuh/rick-and-morty
 - [Run the API locally](#run-the-api-locally)
 
 ## Introduction
-This documentation will help you to know the resources of the API and how to make different queries to get the most out of it.
+This documentation will help you get familiar with the resources of the **Rick and Morty API** and show you how to make different queries, so that you can get the most out of it.
 
 ### Rate limit
-The **Rick and Morty API** is an open API, no authentication is required for use. Anyway, to prevent malicious usage of the API there is a limit on the number of requests a given IP address can make. This limit is 10000 requests per day. If you happen to hit the limit you'll receive a `429` status (Too Many Requests) on all your requests during a period of 12 hours.
+The **Rick and Morty API** is an open API, no authentication is required for use. Nonetheless, to prevent malicious usage of the API there is a limit on the number of requests a given IP address can make. This limit is 10000 requests per day. If you happen to hit the limit you'll receive a `429` status (Too Many Requests) on all your requests during a period of 12 hours.
 
 ### Base URL
 `https://rickandmortyapi.com/api`
@@ -62,7 +62,7 @@ https://rickandmortyapi.com/api
 There are currently three available resources:
 - [Character](#character): used to get all the characters.
 - [Location](#location): used to get all the locations.
-- [Episode](#episode): user to get all the episodes.
+- [Episode](#episode): used to get all the episodes.
 
 ### Info and Pagination
 The API will automatically paginate the responses. You will receive up to 20 documents per page.
@@ -73,8 +73,8 @@ Each resource contains an `info` object with information about the response.
 |---|---|---|
 |count|int|The length of the response
 |pages|int|The amount of pages
-|next|string (url)|Link to the next page (if exists)
-|prev|string (url)|Link to the previous page (if exists)
+|next|string (url)|Link to the next page (if it exists)
+|prev|string (url)|Link to the previous page (if it exists)
 
 
 *Sample request*
@@ -94,7 +94,7 @@ https://rickandmortyapi.com/api/character
   ]
 }
 ```
-You can access different pages with the `page` parameter. If you don't specify any page the first page is going to be shown. For example, if you want to get the page 2 you should add `?page=2` to the end of the URL.
+You can access different pages with the `page` parameter. If you don't specify any page, the first page will be shown. For example, in order to access page 2, add `?page=2` to the end of the URL.
 
 *Sample request*
 
@@ -150,12 +150,12 @@ There is a total of 394 characters sorted by id.
 |species|string|The species of the character.
 |type|string|The type or subspecies of the character.
 |gender|string|The gender of the character ('Female', 'Male', 'Genderless' or 'unknown').
-|origin|object| Name and link to the character's origin location.
+|origin|object|Name and link to the character's origin location.
 |location|object|Name and link to the character's last known location endpoint.
 |image|string (url)|Link to the character's image. All images are 300x300px and most are medium shots or portraits since they are intended to be used as avatars.
 |episode|array (urls)|List of episodes in which this character appeared.
-|url|string (url)|Link to the character's own endpoint.
-|created|string|Time in which the character was created in the database.
+|url|string (url)|Link to the character's own URL endpoint.
+|created|string|Time at which the character was created in the database.
 
 ### Get all characters
 You can access the list of characters by using the `/character` endpoint.
@@ -231,9 +231,9 @@ https://rickandmortyapi.com/api/character/2
 }
 ```
 ### Filter characters
-You can also include filters in the URL by including additional query parameters. To start filtering add a `?` followed by the query `<query>=<value>`. If you want to chain several queries in the same call use `&` followed by the query.
+You can also include filters in the URL by including additional query parameters. To start filtering add a `?` followed by the query `<query>=<value>`. If you want to chain several queries in the same call, use `&` followed by the query.
 
-For example, If you want to check how many alive Ricks are just add `?name=rick&status=alive` to the URL.
+For example, If you want to check how many alive Ricks exist, just add `?name=rick&status=alive` to the URL.
 
 Available parameters:
 - `name`: filter by the given name.
@@ -296,7 +296,7 @@ There is a total of 67 locations sorted by id.
 |dimension|string|The dimension in which the location is located.
 |residents|array (urls)|List of character who have been last seen in the location.
 |url|string (url)|Link to the location's own endpoint.
-|created|string|Time in which the location was created in the database.
+|created|string|Time at which the location was created in the database.
 
 ### Get all locations
 You can access the list of locations by using the `/location` endpoint.
@@ -401,7 +401,7 @@ There is a total of 31 episodes sorted by id (which is of course the order of th
 |episode|string|The code of the episode.
 |characters|array (urls)|List of characters who have been seen in the episode.
 |url|string (url)|Link to the episode's own endpoint.
-|created|string|Time in which the episode was created in the database.
+|created|string|Time at which the episode was created in the database.
 
 ### Get all episodes
 You can access the list of episodes by using the `/episode` endpoint.
