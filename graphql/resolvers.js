@@ -6,18 +6,18 @@ const ITEMS_PER_PAGE = 20;
 
 const getId = url => url.replace(/^\D+/g, '');
 const getSkip = page => page * ITEMS_PER_PAGE - ITEMS_PER_PAGE;
-const findAndCount = async (model, page) => {
+const findAndCount = async (model, { page = 1, ...args }) => {
   const skip = getSkip(page);
   const limit = ITEMS_PER_PAGE;
 
-  const { results, count } = await model.findAndCount({ skip, limit });
+  const { results, count } = await model.findAndCount({ skip, limit, ...args });
 
   const pages = Math.ceil(count / limit);
 
-  // if the user requests a page that doesn't exist,
-  // we return the last page
-  if (!results.length) {
-    return findAndCount(model, pages);
+  // if the user makes a request that has results,
+  // but the page asked doesn't exists, we return the last page
+  if (page > pages && count) {
+    return findAndCount(model, { page: pages, ...args });
   }
 
   return {
@@ -25,7 +25,7 @@ const findAndCount = async (model, page) => {
     pages,
     results,
     nextPage: page < pages ? page + 1 : null,
-    prevPage: page > 1 ? page - 1 : null,
+    prevPage: count && page > 1 ? page - 1 : null,
   };
 };
 
@@ -34,20 +34,20 @@ const resolvers = {
     character(_, { id }) {
       return Character.findOne({ id });
     },
-    characters(_, { page = 1 }) {
-      return findAndCount(Character, page);
+    characters(_, args) {
+      return findAndCount(Character, args);
     },
     episode(_, { id }) {
       return Episode.findOne({ id });
     },
-    episodes(_, { page = 1 }) {
-      return findAndCount(Episode, page);
+    episodes(_, args) {
+      return findAndCount(Episode, args);
     },
     location(_, { id }) {
       return Location.findOne({ id });
     },
-    locations(_, { page = 1 }) {
-      return findAndCount(Location, page);
+    locations(_, args) {
+      return findAndCount(Location, args);
     },
   },
   Character: {

@@ -4,11 +4,27 @@ const resolvers = require('./resolvers');
 const typeDefs = `
   type Query {
     character(id: Int!): Character
-    characters(page: Int): Characters
+    characters(
+      page: Int,
+      name: String,
+      status: String,
+      species: String,
+      type: String,
+      gender: String
+    ): Characters
     episode(id: Int!): Episode
-    episodes(page: Int): Episodes
+    episodes(
+      page: Int,
+      name: String,
+      episode: String
+    ): Episodes
     location(id: Int!): Location
-    locations(page: Int): Locations
+    locations(
+      page: Int,
+      name: String,
+      type: String
+      dimension: String
+    ): Locations
   }
 
   type Character {
