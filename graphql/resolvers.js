@@ -6,6 +6,28 @@ const ITEMS_PER_PAGE = 20;
 
 const getId = url => url.replace(/^\D+/g, '');
 const getSkip = page => page * ITEMS_PER_PAGE - ITEMS_PER_PAGE;
+const findAndCount = async (model, page) => {
+  const skip = getSkip(page);
+  const limit = ITEMS_PER_PAGE;
+
+  const { results, count } = await model.findAndCount({ skip, limit });
+
+  const pages = Math.ceil(count / limit);
+
+  // if the user requests a page that doesn't exist,
+  // we return the last page
+  if (!results.length) {
+    return findAndCount(model, pages);
+  }
+
+  return {
+    count,
+    pages,
+    results,
+    nextPage: page < pages ? page + 1 : null,
+    prevPage: page > 1 ? page - 1 : null,
+  };
+};
 
 const resolvers = {
   Query: {
@@ -13,31 +35,19 @@ const resolvers = {
       return Character.findOne({ id });
     },
     characters(_, { page = 1 }) {
-      // TODO: add page information?
-      return Character.find()
-        .skip(getSkip(page))
-        .limit(ITEMS_PER_PAGE)
-        .sort('id');
+      return findAndCount(Character, page);
     },
     episode(_, { id }) {
       return Episode.findOne({ id });
     },
     episodes(_, { page = 1 }) {
-      // TODO: add page information?
-      return Episode.find()
-        .skip(getSkip(page))
-        .limit(ITEMS_PER_PAGE)
-        .sort('id');
+      return findAndCount(Episode, page);
     },
     location(_, { id }) {
       return Location.findOne({ id });
     },
     locations(_, { page = 1 }) {
-      // TODO: add page information?
-      return Location.find()
-        .skip(getSkip(page))
-        .limit(ITEMS_PER_PAGE)
-        .sort('id');
+      return findAndCount(Location, page);
     },
   },
   Character: {
@@ -47,17 +57,9 @@ const resolvers = {
       return Episode.find({ id: { $in: ids } });
     },
     location({ location }) {
-      if (!location.url) {
-        return location;
-      }
-
       return Location.findOne({ name: location.name });
     },
     origin({ origin }) {
-      if (!origin.url) {
-        return origin;
-      }
-
       return Location.findOne({ name: origin.name });
     },
   },
