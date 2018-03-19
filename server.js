@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const morgan = require('morgan')
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+const depthLimit = require('graphql-depth-limit');
 const schema = require('./graphql/schema');
 
 const app = express();
@@ -38,7 +39,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => res.redirect('/api'))
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
+app.use('/graphql', bodyParser.json(), graphqlExpress({
+  schema,
+  validationRules: [depthLimit(4)],
+}));
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 app.use('/api', api)
 
