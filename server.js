@@ -6,6 +6,9 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const morgan = require('morgan')
 
+const apicache = require('apicache')
+const { middleware: cache } = apicache
+
 const app = express();
 
 const api = require('./routes/api')
@@ -36,7 +39,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => res.redirect('/api'))
-app.use('/api', api)
+app.use('/api', cache('5 minutes'), api)
 
 app.use(errors.notFound);
 app.use(errors.productionErrors);
