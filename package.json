@@ -8,13 +8,14 @@
   },
   "scripts": {
     "start": "node ./server.js",
-    "dev": "NODE_ENV=development nodemon ./server.js",
+    "dev": "nodemon ./server.js",
     "data": "mongorestore --host=localhost:27017 --db=rickmorty-api --drop ./data",
     "test": "mocha --timeout 10000 --exit"
   },
   "author": "Axel Fuhrmann",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "apicache": "^1.2.1",
     "dotenv": "^5.0.0",
     "express": "^4.16.2",
     "express-brute": "^1.0.1",
