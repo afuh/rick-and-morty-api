@@ -45,14 +45,14 @@ This documentation will help you get familiar with the resources of the **Rick a
 The **Rick and Morty API** is an open API, no authentication is required for use. Nonetheless, to prevent malicious usage of the API there is a limit on the number of requests a given IP address can make. This limit is 10000 requests per day. If you happen to hit the limit you'll receive a `429` status (Too Many Requests) on all your requests during a period of 12 hours.
 
 ### Base URL
-`https://rickandmortyapi.com/api`
+`https://rickandmortyapi.com/api/`
 
 The base url contains information about all available API's resources.
 All requests are `GET` requests and go over `https`. All responses will return data in `json`.
 
 *Sample request*
 ```
-https://rickandmortyapi.com/api
+https://rickandmortyapi.com/api/
 ```
 ```js
 {
@@ -82,7 +82,7 @@ Each resource contains an `info` object with information about the response.
 
 *Sample request*
 ```
-https://rickandmortyapi.com/api/character
+https://rickandmortyapi.com/api/character/
 ```
 ```js
 {
@@ -102,7 +102,7 @@ You can access different pages with the `page` parameter. If you don't specify a
 *Sample request*
 
 ```
-https://rickandmortyapi.com/api/character?page=19
+https://rickandmortyapi.com/api/character/?page=19
 ```
 
 ```js
@@ -163,7 +163,7 @@ There is a total of 394 characters sorted by id.
 ### Get all characters
 You can access the list of characters by using the `/character` endpoint.
 ```
-https://rickandmortyapi.com/api/character
+https://rickandmortyapi.com/api/character/
 ```
 ```js
 {
@@ -304,7 +304,7 @@ There is a total of 67 locations sorted by id.
 ### Get all locations
 You can access the list of locations by using the `/location` endpoint.
 ```
-https://rickandmortyapi.com/api/location
+https://rickandmortyapi.com/api/location/
 ```
 ```js
 
@@ -363,7 +363,7 @@ If you want to know how to use queries, check [here](#filter-characters)
 
 *Sample request*
 ```
-https://rickandmortyapi.com/api/location?name=earth
+https://rickandmortyapi.com/api/location/?name=earth
 ```
 ```js
 
@@ -410,7 +410,7 @@ There is a total of 31 episodes sorted by id (which is of course the order of th
 You can access the list of episodes by using the `/episode` endpoint.
 
 ```
-https://rickandmortyapi.com/api/episode
+https://rickandmortyapi.com/api/episode/
 ```
 ```js
 {
