@@ -470,6 +470,9 @@ If you want to know how to use queries, check [here](#filter-characters)
 ## Libraries
 Here you will find a list of helper libraries to use the Rick and Morty API with your preferred language.   
 
+#### Elixir
+- [ExShla - The Rick and Morty API Wrapper](https://github.com/l1h3r/ex_shla) by [l1h3r](https://github.com/l1h3r)
+
 #### GraphQL
 - [The Rick and Morty GraphQL API](https://github.com/arthurdenner/rick-and-morty-graphql-api) by [Arthur Denner](https://github.com/arthurdenner)
 
