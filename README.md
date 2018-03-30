@@ -34,6 +34,7 @@ You can check the code of the site [here](https://github.com/afuh/rick-and-morty
   - [Get a single episode](#get-a-single-episode)
   - [Filter episodes](#filter-episodes)
 - [Libraries](#libraries)
+  - [Elixir](#elixir)
   - [GraphQL](#graphql)
   - [Ruby](#ruby)
 - [Run the API locally](#run-the-api-locally)
