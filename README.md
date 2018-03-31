@@ -477,6 +477,9 @@ Here you will find a list of helper libraries to use the Rick and Morty API with
 #### GraphQL
 - [The Rick and Morty GraphQL API](https://github.com/arthurdenner/rick-and-morty-graphql-api) by [Arthur Denner](https://github.com/arthurdenner)
 
+#### JavaScript
+- [The Rick and Morty API Node client](https://github.com/afuh/rick-and-morty-api-node) by [Simple Rick](https://github.com/afuh)
+
 #### Ruby
 - [The Rick and Morty API Gem](https://github.com/spielhoelle/rick-and-morty-gem) by [Tommy Spielhoelle](https://github.com/spielhoelle)
 
