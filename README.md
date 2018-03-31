@@ -36,6 +36,7 @@ You can check the code of the site [here](https://github.com/afuh/rick-and-morty
 - [Libraries](#libraries)
   - [Elixir](#elixir)
   - [GraphQL](#graphql)
+  - [JavaScript](#javascript)
   - [Ruby](#ruby)
 - [Run the API locally](#run-the-api-locally)
 
