@@ -7,3 +7,6 @@ node_modules
 .eslintrc
 helpers
 public/
+.coveralls.yml
+.nyc_output
+coverage

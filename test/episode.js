@@ -13,7 +13,7 @@ const { message } = require('../helpers')
 describe('Episode Endpoints', () => {
 
   describe('/GET All episodes', () => {
-    it('it should get all episodes', done => {
+    it('should get all episodes', done => {
       chai.request(server)
         .get('/api/episode')
         .end((err, res) => {
@@ -28,7 +28,7 @@ describe('Episode Endpoints', () => {
   })
 
   describe('/GET Single episode with id: 1', () => {
-    it('it should get one episode with id: 1', done => {
+    it('should get one episode with id: 1', done => {
       chai.request(server)
         .get('/api/episode/1')
         .end((err, res) => {
@@ -38,10 +38,29 @@ describe('Episode Endpoints', () => {
           done()
         })
     })
+
+    it('should have a keys', done => {
+      chai.request(server)
+        .get('/api/episode/1')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          Object.keys(res.body).should.be.eql([
+            'id',
+            'name',
+            'air_date',
+            'episode',
+            'characters',
+            'url',
+            'created'
+          ])
+          done()
+        })
+    })
   })
 
   describe('/GET Single episode with id: 12345', () => {
-    it('it should get an error message', done => {
+    it('should get an error message', done => {
       chai.request(server)
         .get('/api/episode/12345')
         .end((err, res) => {
@@ -54,7 +73,7 @@ describe('Episode Endpoints', () => {
   })
 
   describe('/GET Single episode with id: asdasd', () => {
-    it('it should get an error message', done => {
+    it('should get an error message', done => {
       chai.request(server)
         .get('/api/episode/asdasd')
         .end((err, res) => {
@@ -67,7 +86,7 @@ describe('Episode Endpoints', () => {
   })
 
   describe('/GET ?name', () => {
-    it('it should get episodes with name: Pilot', done => {
+    it('should get episodes with name: Pilot', done => {
       chai.request(server)
         .get('/api/episode?name=Pilot')
         .end((err, res) => {
@@ -75,20 +94,23 @@ describe('Episode Endpoints', () => {
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
-          res.body.results[0].should.have.property('name').include('Pilot')
+          res.body.results.forEach(char => {
+            char.should.have.property('name').include('Pilot')
+          })
           done()
         })
     })
   })
 
   describe('/GET ?episode', () => {
-    it('it should get episodes with episode: S01E01', done => {
+    it('should get episodes with episode: S01E01', done => {
       chai.request(server)
         .get('/api/episode?episode=S01E01')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
+          res.body.info.count.should.be.eql(1)
           res.body.results.should.be.a('array')
           res.body.results[0].should.have.property('episode').include('S01E01')
           done()
@@ -97,7 +119,7 @@ describe('Episode Endpoints', () => {
   })
 
   describe('/GET ?page=1', () => {
-    it('it should get page: 1', done => {
+    it('should get page: 1', done => {
       chai.request(server)
         .get('/api/episode?page=1')
         .end((err, res) => {
@@ -105,6 +127,7 @@ describe('Episode Endpoints', () => {
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.info.prev.length.should.be.eql(0)
+          res.body.info.next.slice(-1).should.be.eql('2')
           res.body.results.should.be.a('array')
           res.body.results.length.should.be.eql(20)
           res.body.results[0].id.should.be.eql(1);
@@ -115,13 +138,15 @@ describe('Episode Endpoints', () => {
   })
 
   describe('/GET ?page=2', () => {
-    it('it should get page: 2', done => {
+    it('should get page: 2', done => {
       chai.request(server)
         .get('/api/episode?page=2')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
+          res.body.info.prev.slice(-1).should.be.eql('1')
+          res.body.info.next.length.should.be.eql(0)
           res.body.results.should.be.a('array')
           res.body.results[0].id.should.be.eql(21);
           done()
@@ -130,7 +155,7 @@ describe('Episode Endpoints', () => {
   })
 
   describe('/GET ?page=12345 ', () => {
-    it('it should get an error message', done => {
+    it('should get an error message', done => {
       chai.request(server)
         .get('/api/episode?page=12345')
         .end((err, res) => {
