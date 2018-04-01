@@ -10,7 +10,13 @@
     "start": "node ./server.js",
     "dev": "nodemon ./server.js",
     "data": "mongorestore --host=localhost:27017 --db=rickmorty-api --drop ./data",
-    "test": "mocha --timeout 10000 --exit"
+    "test": "nyc --check-coverage --lines 95 mocha --timeout 10000 --exit && nyc report --reporter=text-lcov | coveralls",
+    "test:watch": "mocha --watch"
+  },
+  "nyc": {
+    "exclude": [
+      "./helpers/*"
+    ]
   },
   "author": "Axel Fuhrmann",
   "license": "BSD-3-Clause",
@@ -29,9 +35,11 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
+    "coveralls": "^3.0.0",
     "eslint": "^4.17.0",
     "mocha": "^5.0.0",
-    "nodemon": "^1.14.12"
+    "nodemon": "^1.14.12",
+    "nyc": "^11.6.0"
   },
   "directories": {
     "doc": "docs",

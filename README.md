@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/afuh/rick-and-morty-api.svg?branch=master)](https://travis-ci.org/afuh/rick-and-morty-api)
+[![Coverage Status](https://coveralls.io/repos/github/afuh/rick-and-morty-api/badge.svg?branch=feature%2Fcover)](https://coveralls.io/github/afuh/rick-and-morty-api?branch=feature%2Fcover)
 
 # The Rick and Morty API
 
