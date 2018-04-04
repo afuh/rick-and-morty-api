@@ -156,6 +156,38 @@ describe('Location Endpoints', () => {
     })
   })
 
+  describe('/GET special characters', () => {
+    it('should get location with name: (', done => {
+      chai.request(server)
+        .get('/api/character?name=(')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object')
+          res.body.info.should.be.a('object')
+          res.body.results.should.be.a('array')
+          res.body.results.forEach(char => {
+            char.should.have.property('name').include('(')
+          })
+          done()
+        })
+    })
+
+    it('should get characters with name: -', done => {
+      chai.request(server)
+        .get('/api/location?name=-')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object')
+          res.body.info.should.be.a('object')
+          res.body.results.should.be.a('array')
+          res.body.results.forEach(char => {
+            char.should.have.property('name').include('-')
+          })
+          done()
+        })
+    })
+  })
+
   describe('/GET ?page=1', () => {
     it('should get page: 1', done => {
       chai.request(server)
