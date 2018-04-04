@@ -40,7 +40,7 @@ episodeSchema.statics.structure = ch => {
 }
 
 episodeSchema.statics.findAndCount = async function({ name, episode, skip, limit }) {
-  const q = key => new RegExp(key && key, "i")
+  const q = key => new RegExp(key && key.replace(/[^\w\s]/g, "\\$&"), "i")
 
   const [ loc, count ] = await Promise.all([
     this.find({
