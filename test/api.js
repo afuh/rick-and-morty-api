@@ -13,7 +13,6 @@ chai.use(chaiHttp);
 const { site, message } = require('../helpers')
 
 describe('Generic API', () => {
-
   describe('Endpoints list', () => {
     it('should GET a list of endpoints', done => {
       chai.request(server)
@@ -54,7 +53,7 @@ describe('Generic API', () => {
   describe('API 404', () => {
     it('should get an error message', done => {
       chai.request(server)
-        .get('/wubbalubbadubdub')
+        .get('/api/wubbalubbadubdub')
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.be.a('object');
@@ -69,6 +68,7 @@ describe('Generic API', () => {
       chai.request(server)
         .get('/api/character/avatar')
         .end((err, res) => {
+          res.should.redirect
           res.should.have.status(200);
           res.req.path.should.be.eql('/api/character/')
           done()
