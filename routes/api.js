@@ -1,13 +1,13 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-const char = require('../controllers/character');
-const loc = require('../controllers/location');
-const epi = require('../controllers/episode');
+const char = require('../controllers/character')
+const loc = require('../controllers/location')
+const epi = require('../controllers/episode')
 
-const { catchErrors } = require('../handlers/errors');
+const { catchErrors } = require('../handlers/errors')
 const { site } = require('../helpers')
-const rateLimit = require('../handlers/rate');
+const rateLimit = require('../handlers/rate')
 
 const { pagination, checkArray, showData } = require('./middlewares')
 
@@ -32,4 +32,4 @@ router.get('/location/:id', checkArray, catchErrors(loc.getById))
 router.get('/episode', epi.sanitize, pagination, catchErrors(epi.getAll), showData)
 router.get('/episode/:id', checkArray, catchErrors(epi.getById))
 
-module.exports = router;
+module.exports = router

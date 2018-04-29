@@ -1,5 +1,5 @@
 const Char = require('../models/Character')
-const { sanitizeQuery } = require('express-validator/filter');
+const { sanitizeQuery } = require('express-validator/filter')
 
 const { message, exclude } = require('../helpers')
 
@@ -14,7 +14,7 @@ exports.getAll = async (req, res, next) => {
     name, type, status, species, gender, skip, limit
   })
 
-  const pages = Math.ceil(count / limit);
+  const pages = Math.ceil(count / limit)
 
   if (page > pages) {
     res.status(404).json({ error: message.noPage })

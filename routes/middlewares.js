@@ -4,7 +4,7 @@ const pagination = (req, res, next) => {
   req.body.limit = 20
   req.body.page = req.query.page > 0 && req.query.page || 1
   req.body.skip = (req.body.page * req.body.limit) - req.body.limit
-  next();
+  next()
 }
 
 const showData = (req, res) => {

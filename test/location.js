@@ -1,12 +1,12 @@
 /* eslint no-unused-vars: [error, { "varsIgnorePattern": "should" }] */
 /* global it, describe */
 
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+const chai = require('chai')
+const chaiHttp = require('chai-http')
 const server = require('../server')
-const should = chai.should();
+const should = chai.should()
 
-chai.use(chaiHttp);
+chai.use(chaiHttp)
 
 const { message } = require('../helpers')
 
@@ -17,8 +17,8 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location')
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
+          res.should.have.status(200)
+          res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
           res.body.results.length.should.be.eql(20)
@@ -32,9 +32,9 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location/1')
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.id.should.be.eql(1);
+          res.should.have.status(200)
+          res.body.should.be.a('object')
+          res.body.id.should.be.eql(1)
           done()
         })
     })
@@ -43,8 +43,8 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location/1')
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
+          res.should.have.status(200)
+          res.body.should.be.a('object')
           Object.keys(res.body).should.be.eql([
             'id',
             'name',
@@ -66,7 +66,7 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get(`/api/location/${locs}`)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('array')
           res.body.length.should.be.eql(locs.length)
           res.body.forEach(loc => {
@@ -81,7 +81,7 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get(`/api/location/${locs}`)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('array')
           res.body.length.should.be.eql(locs.replace(/,/g, '').length)
           res.body.forEach(loc => {
@@ -97,8 +97,8 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location/12345')
         .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.be.a('object');
+          res.should.have.status(404)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.noLocation)
           done()
         })
@@ -108,8 +108,8 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location/asdasd')
         .end((err, res) => {
-          res.should.have.status(500);
-          res.body.should.be.a('object');
+          res.should.have.status(500)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.badParam)
           done()
         })
@@ -119,8 +119,8 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location/1,2]')
         .end((err, res) => {
-          res.should.have.status(500);
-          res.body.should.be.a('object');
+          res.should.have.status(500)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.badArray)
           done()
         })
@@ -130,8 +130,8 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location/[1,2')
         .end((err, res) => {
-          res.should.have.status(500);
-          res.body.should.be.a('object');
+          res.should.have.status(500)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.badArray)
           done()
         })
@@ -141,8 +141,8 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location/[1,asdasd]')
         .end((err, res) => {
-          res.should.have.status(500);
-          res.body.should.be.a('object');
+          res.should.have.status(500)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.badArray)
           done()
         })
@@ -154,7 +154,7 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location?name=Earth')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -169,7 +169,7 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location?type=planet')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -184,7 +184,7 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location?dimension=C-137')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -201,7 +201,7 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location?name=earth&type=planet&dimension=c-137')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -220,7 +220,7 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/character?name=(')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -235,7 +235,7 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location?name=-')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -252,15 +252,15 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location?page=1')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.info.prev.length.should.be.eql(0)
           res.body.info.next.slice(-1).should.be.eql('2')
           res.body.results.should.be.a('array')
           res.body.results.length.should.be.eql(20)
-          res.body.results[0].id.should.be.eql(1);
-          res.body.results[19].id.should.be.eql(20);
+          res.body.results[0].id.should.be.eql(1)
+          res.body.results[19].id.should.be.eql(20)
           done()
         })
     })
@@ -269,15 +269,15 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location?page=2')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.info.prev.slice(-1).should.be.eql('1')
           res.body.info.next.slice(-1).should.be.eql('3')
           res.body.results.should.be.a('array')
           res.body.results.length.should.be.eql(20)
-          res.body.results[0].id.should.be.eql(21);
-          res.body.results[19].id.should.be.eql(40);
+          res.body.results[0].id.should.be.eql(21)
+          res.body.results[19].id.should.be.eql(40)
           done()
         })
     })
@@ -288,8 +288,8 @@ describe('Location Endpoints', () => {
       chai.request(server)
         .get('/api/location?page=12345')
         .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.be.a('object');
+          res.should.have.status(404)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.noPage)
           done()
         })
