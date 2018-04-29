@@ -65,8 +65,40 @@ describe('Character Endpoints', () => {
 
   })
 
-  describe('/GET Single character with id: 12345', () => {
-    it('should get an error message', done => {
+  describe('/GET five characters', () => {
+    it('should get five characters with an array', done => {
+      const chars = [1,2,3,4,5]
+      chai.request(server)
+        .get(`/api/character/${chars}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('array')
+          res.body.length.should.be.eql(chars.length)
+          res.body.forEach(char => {
+            chars.includes(char.id)
+          })
+          done()
+        })
+    })
+
+    it('should get five characters with a string', done => {
+      const chars = '1,2,3,4,5'
+      chai.request(server)
+        .get(`/api/character/${chars}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('array')
+          res.body.length.should.be.eql(chars.replace(/,/g, '').length)
+          res.body.forEach(char => {
+            chars.includes(char.id)
+          })
+          done()
+        })
+    })
+  })
+
+  describe('/GET Error messages', () => {
+    it('should get an error message with id:12345', done => {
       chai.request(server)
         .get('/api/character/12345')
         .end((err, res) => {
@@ -76,10 +108,8 @@ describe('Character Endpoints', () => {
           done()
         })
     })
-  })
 
-  describe('/GET Single character with id: asdasd', () => {
-    it('should get an error message', done => {
+    it('should get an error message with id:asdads', done => {
       chai.request(server)
         .get('/api/character/asdasd')
         .end((err, res) => {
@@ -89,9 +119,42 @@ describe('Character Endpoints', () => {
           done()
         })
     })
+
+    it('should get an error message with id:1,2]', done => {
+      chai.request(server)
+        .get('/api/character/1,2]')
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error').include(message.badArray)
+          done()
+        })
+    })
+
+    it('should get an error message with id:[1,2', done => {
+      chai.request(server)
+        .get('/api/character/[1,2')
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error').include(message.badArray)
+          done()
+        })
+    })
+
+    it('should get an error message with id:[1,asdasd]', done => {
+      chai.request(server)
+        .get('/api/character/[1,asdasd]')
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error').include(message.badArray)
+          done()
+        })
+    })
   })
 
-  describe('/GET ?name', () => {
+  describe('/GET characters with single query', () => {
     it('should get characters with name: Rick', done => {
       chai.request(server)
         .get('/api/character?name=Rick')
@@ -106,9 +169,7 @@ describe('Character Endpoints', () => {
           done()
         })
     })
-  })
 
-  describe('/GET ?status', () => {
     it('should get characters with status: Alive', done => {
       chai.request(server)
         .get('/api/character?status=alive')
@@ -123,9 +184,7 @@ describe('Character Endpoints', () => {
           done()
         })
     })
-  })
 
-  describe('/GET ?species', () => {
     it('should get characters with status: Alien', done => {
       chai.request(server)
         .get('/api/character?species=alien')
@@ -140,9 +199,7 @@ describe('Character Endpoints', () => {
           done()
         })
     })
-  })
 
-  describe('/GET ?type', () => {
     it('should get characters with type: Parasite', done => {
       chai.request(server)
         .get('/api/character?type=parasite')
@@ -157,9 +214,7 @@ describe('Character Endpoints', () => {
           done()
         })
     })
-  })
 
-  describe('/GET ?gender', () => {
     it('should get characters with gender: Female', done => {
       chai.request(server)
         .get('/api/character?gender=female')
@@ -176,7 +231,7 @@ describe('Character Endpoints', () => {
     })
   })
 
-  describe('/GET ?name, ?status, ?gender, ?species', () => {
+  describe('/GET characters with multiple queries', () => {
     it('should get characters with name: Rick, stauts: Alive, gender: Male and species: Human', done => {
       chai.request(server)
         .get('/api/character?name=Rick&status=alive&gender=Male&species=Human')
@@ -229,7 +284,7 @@ describe('Character Endpoints', () => {
     })
   })
 
-  describe('/GET ?page=1', () => {
+  describe('/GET pages', () => {
     it('should get page: 1', done => {
       chai.request(server)
         .get('/api/character?page=1')
@@ -246,9 +301,7 @@ describe('Character Endpoints', () => {
           done()
         })
     })
-  })
 
-  describe('/GET ?page=2', () => {
     it('should get page: 2', done => {
       chai.request(server)
         .get('/api/character?page=2')

@@ -28,13 +28,23 @@ exports.getAll = async (req, res, next) => {
 }
 
 // ================ GET SINGLE ================ //
-exports.getSingle = async (req, res) => {
-  // Check if the param is a number
-  if (Number.isNaN(parseInt(req.params.id))) {
-    return res.status(500).json({error: message.badParam})
+exports.getById = async ({ params: { id } }, res) => {
+
+  // Check if the param is an array
+  if (Array.isArray(id)) {
+    const chars = await Char.find({
+      id: { $in: id }
+    }).select(exclude)
+
+    return res.json(Char.structure(chars))
   }
 
-  const char = await Char.findOne({id: req.params.id}).select(exclude);
+  // Check if the param is a number
+  if (Number.isNaN(parseInt(id))) {
+    return res.status(500).json({ error: message.badParam })
+  }
+
+  const char = await Char.findOne({ id }).select(exclude)
   if (!char) return res.status(404).json({ error: message.noCharacter })
 
   res.json(Char.structure(char))
