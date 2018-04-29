@@ -1,14 +1,14 @@
 /* eslint no-unused-vars: [error, { "varsIgnorePattern": "should" }] */
 /* global it, describe */
 
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = 'test'
 
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+const chai = require('chai')
+const chaiHttp = require('chai-http')
 const server = require('../server')
-const should = chai.should();
+const should = chai.should()
 
-chai.use(chaiHttp);
+chai.use(chaiHttp)
 
 const { site, message } = require('../helpers')
 
@@ -18,8 +18,8 @@ describe('Generic API', () => {
       chai.request(server)
         .get('/api')
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
+          res.should.have.status(200)
+          res.body.should.be.a('object')
           res.body.should.have.property('characters').include(`${site}/character`)
           res.body.should.have.property('locations').include(`${site}/location`)
           res.body.should.have.property('episodes').include(`${site}/episode`)
@@ -33,7 +33,7 @@ describe('Generic API', () => {
       chai.request(server)
         .get('/api/character')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.info.should.be.a('object')
           Object.keys(res.body.info).should.be.eql([
             'count',
@@ -55,8 +55,8 @@ describe('Generic API', () => {
       chai.request(server)
         .get('/api/wubbalubbadubdub')
         .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.be.a('object');
+          res.should.have.status(404)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.noPage)
           done()
         })
@@ -69,7 +69,7 @@ describe('Generic API', () => {
         .get('/api/character/avatar')
         .end((err, res) => {
           res.should.redirect
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.req.path.should.be.eql('/api/character/')
           done()
         })

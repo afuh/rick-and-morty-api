@@ -4,7 +4,7 @@ const pagination = (req, res, next) => {
   req.body.limit = 20
   req.body.page = req.query.page > 0 && req.query.page || 1
   req.body.skip = (req.body.page * req.body.limit) - req.body.limit
-  next();
+  next()
 }
 
 const showData = (req, res) => {
@@ -18,14 +18,14 @@ const showData = (req, res) => {
     location: ['name', 'dimension', 'type']
   }
 
-  let qr = ''
-  for (const key in req.query) {
+  const qr = Object.keys(req.query).reduce((acc, key) => {
     // if the query isn't undefined and it's an allowed query for the path
     if (req.query[key] && pass[path].includes(key)) {
       // add it to the url
-      qr+= `&${key}=${req.query[key]}`
+      acc+= `&${key}=${req.query[key]}`
     }
-  }
+    return acc
+  }, '')
 
   // Show data
   res.json({

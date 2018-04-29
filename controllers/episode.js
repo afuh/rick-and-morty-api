@@ -1,5 +1,5 @@
 const Episode = require('../models/Episode')
-const { sanitizeQuery } = require('express-validator/filter');
+const { sanitizeQuery } = require('express-validator/filter')
 
 const { message, exclude } = require('../helpers')
 
@@ -14,7 +14,7 @@ exports.getAll = async (req, res, next) => {
     name, episode, skip, limit
   })
 
-  const pages = Math.ceil(count / limit);
+  const pages = Math.ceil(count / limit)
 
   if (page > pages) {
     res.status(404).json({ error: message.noPage })
@@ -28,7 +28,7 @@ exports.getAll = async (req, res, next) => {
   next()
 }
 
-// ================ GET SINGLE ================ //
+// ================ GET BY ID ================ //
 exports.getById = async ({ params: { id } }, res) => {
 
   // Check if the param is an array
@@ -45,7 +45,7 @@ exports.getById = async ({ params: { id } }, res) => {
     return res.status(500).json({ error: message.badParam })
   }
 
-  const epi = await Episode.findOne({ id }).select(exclude);
+  const epi = await Episode.findOne({ id }).select(exclude)
   if (!epi) return res.status(404).json({ error: message.noEpisode })
 
   res.json(Episode.structure(epi))

@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const mongodbErrorHandler = require('mongoose-mongodb-errors');
+const mongoose = require('mongoose')
+const mongodbErrorHandler = require('mongoose-mongodb-errors')
 
 const { exclude } = require('../helpers')
 
@@ -28,7 +28,7 @@ const locationSchema = new mongoose.Schema({
 })
 
 locationSchema.statics.structure = ch => {
-  const m = ({id, name, type, dimension, residents,  url, created}) => ({
+  const m = ({ id, name, type, dimension, residents,  url, created }) => ({
     id,
     name,
     type,
@@ -43,12 +43,12 @@ locationSchema.statics.structure = ch => {
 locationSchema.statics.findAndCount = async function({ name, type, dimension, skip, limit }) {
   const q = key => new RegExp(key && key.replace(/[^\w\s]/g, "\\$&"), "i")
 
-  const [ loc, count ] = await Promise.all([
+  const [loc, count] = await Promise.all([
     this.find({
       name: q(name),
       type: q(type),
       dimension: q(dimension)
-    }).sort({id: 1}).select(exclude).skip(skip).limit(limit),
+    }).sort({ id: 1 }).select(exclude).skip(skip).limit(limit),
 
     this.find({
       name: q(name),
@@ -62,6 +62,6 @@ locationSchema.statics.findAndCount = async function({ name, type, dimension, sk
   return { results, count }
 }
 
-locationSchema.plugin(mongodbErrorHandler);
+locationSchema.plugin(mongodbErrorHandler)
 
-module.exports = mongoose.model('Location', locationSchema);
+module.exports = mongoose.model('Location', locationSchema)

@@ -1,12 +1,12 @@
 /* eslint no-unused-vars: [error, { "varsIgnorePattern": "should" }] */
 /* global it, describe */
 
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+const chai = require('chai')
+const chaiHttp = require('chai-http')
 const server = require('../server')
-const should = chai.should();
+const should = chai.should()
 
-chai.use(chaiHttp);
+chai.use(chaiHttp)
 
 const { message } = require('../helpers')
 
@@ -17,8 +17,8 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode')
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
+          res.should.have.status(200)
+          res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
           res.body.results.length.should.be.eql(20)
@@ -32,9 +32,9 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode/1')
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.id.should.be.eql(1);
+          res.should.have.status(200)
+          res.body.should.be.a('object')
+          res.body.id.should.be.eql(1)
           done()
         })
     })
@@ -43,8 +43,8 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode/1')
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
+          res.should.have.status(200)
+          res.body.should.be.a('object')
           Object.keys(res.body).should.be.eql([
             'id',
             'name',
@@ -65,7 +65,7 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get(`/api/episode/${epis}`)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('array')
           res.body.length.should.be.eql(epis.length)
           res.body.forEach(epi => {
@@ -80,7 +80,7 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get(`/api/episode/${epis}`)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('array')
           res.body.length.should.be.eql(epis.replace(/,/g, '').length)
           res.body.forEach(char => {
@@ -96,8 +96,8 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode/12345')
         .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.be.a('object');
+          res.should.have.status(404)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.noEpisode)
           done()
         })
@@ -107,8 +107,8 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode/asdasd')
         .end((err, res) => {
-          res.should.have.status(500);
-          res.body.should.be.a('object');
+          res.should.have.status(500)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.badParam)
           done()
         })
@@ -118,8 +118,8 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode/1,2]')
         .end((err, res) => {
-          res.should.have.status(500);
-          res.body.should.be.a('object');
+          res.should.have.status(500)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.badArray)
           done()
         })
@@ -129,8 +129,8 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode/[1,2')
         .end((err, res) => {
-          res.should.have.status(500);
-          res.body.should.be.a('object');
+          res.should.have.status(500)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.badArray)
           done()
         })
@@ -140,8 +140,8 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode/[1,asdasd]')
         .end((err, res) => {
-          res.should.have.status(500);
-          res.body.should.be.a('object');
+          res.should.have.status(500)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.badArray)
           done()
         })
@@ -153,7 +153,7 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode?name=Pilot')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -168,7 +168,7 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode?episode=S01E01')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.info.count.should.be.eql(1)
@@ -184,7 +184,7 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode?name=-')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -201,15 +201,15 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode?page=1')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.info.prev.length.should.be.eql(0)
           res.body.info.next.slice(-1).should.be.eql('2')
           res.body.results.should.be.a('array')
           res.body.results.length.should.be.eql(20)
-          res.body.results[0].id.should.be.eql(1);
-          res.body.results[19].id.should.be.eql(20);
+          res.body.results[0].id.should.be.eql(1)
+          res.body.results[19].id.should.be.eql(20)
           done()
         })
     })
@@ -218,13 +218,13 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode?page=2')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.info.prev.slice(-1).should.be.eql('1')
           res.body.info.next.length.should.be.eql(0)
           res.body.results.should.be.a('array')
-          res.body.results[0].id.should.be.eql(21);
+          res.body.results[0].id.should.be.eql(21)
           done()
         })
     })
@@ -235,8 +235,8 @@ describe('Episode Endpoints', () => {
       chai.request(server)
         .get('/api/episode?page=12345')
         .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.be.a('object');
+          res.should.have.status(404)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.noPage)
           done()
         })

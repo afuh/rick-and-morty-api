@@ -1,12 +1,12 @@
 /* eslint no-unused-vars: [error, { "varsIgnorePattern": "should" }] */
 /* global it, describe */
 
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+const chai = require('chai')
+const chaiHttp = require('chai-http')
 const server = require('../server')
-const should = chai.should();
+const should = chai.should()
 
-chai.use(chaiHttp);
+chai.use(chaiHttp)
 
 const { message } = require('../helpers')
 
@@ -17,8 +17,8 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character')
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
+          res.should.have.status(200)
+          res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
           res.body.results.length.should.be.eql(20)
@@ -32,9 +32,9 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character/1')
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.id.should.be.eql(1);
+          res.should.have.status(200)
+          res.body.should.be.a('object')
+          res.body.id.should.be.eql(1)
           done()
         })
     })
@@ -43,8 +43,8 @@ describe('Character Endpoints', () => {
       chai.request(server)
       .get('/api/character/1')
       .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('object');
+        res.should.have.status(200)
+        res.body.should.be.a('object')
         Object.keys(res.body).should.be.eql([
           'id',
           'name',
@@ -71,7 +71,7 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get(`/api/character/${chars}`)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('array')
           res.body.length.should.be.eql(chars.length)
           res.body.forEach(char => {
@@ -86,7 +86,7 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get(`/api/character/${chars}`)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('array')
           res.body.length.should.be.eql(chars.replace(/,/g, '').length)
           res.body.forEach(char => {
@@ -102,8 +102,8 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character/12345')
         .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.be.a('object');
+          res.should.have.status(404)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.noCharacter)
           done()
         })
@@ -113,8 +113,8 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character/asdasd')
         .end((err, res) => {
-          res.should.have.status(500);
-          res.body.should.be.a('object');
+          res.should.have.status(500)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.badParam)
           done()
         })
@@ -124,8 +124,8 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character/1,2]')
         .end((err, res) => {
-          res.should.have.status(500);
-          res.body.should.be.a('object');
+          res.should.have.status(500)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.badArray)
           done()
         })
@@ -135,8 +135,8 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character/[1,2')
         .end((err, res) => {
-          res.should.have.status(500);
-          res.body.should.be.a('object');
+          res.should.have.status(500)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.badArray)
           done()
         })
@@ -146,8 +146,8 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character/[1,asdasd]')
         .end((err, res) => {
-          res.should.have.status(500);
-          res.body.should.be.a('object');
+          res.should.have.status(500)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.badArray)
           done()
         })
@@ -159,7 +159,7 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character?name=Rick')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -174,7 +174,7 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character?status=alive')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -189,7 +189,7 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character?species=alien')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -204,7 +204,7 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character?type=parasite')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -219,7 +219,7 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character?gender=female')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -236,7 +236,7 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character?name=Rick&status=alive&gender=Male&species=Human')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -257,7 +257,7 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character?name=(')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -272,7 +272,7 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character?name=-')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.results.should.be.a('array')
@@ -289,15 +289,15 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character?page=1')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.info.prev.length.should.be.eql(0)
           res.body.info.next.slice(-1).should.be.eql("2")
           res.body.results.should.be.a('array')
           res.body.results.length.should.be.eql(20)
-          res.body.results[0].id.should.be.eql(1);
-          res.body.results[19].id.should.be.eql(20);
+          res.body.results[0].id.should.be.eql(1)
+          res.body.results[19].id.should.be.eql(20)
           done()
         })
     })
@@ -306,15 +306,15 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character?page=2')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(200)
           res.body.should.be.a('object')
           res.body.info.should.be.a('object')
           res.body.info.prev.slice(-1).should.be.eql('1')
           res.body.info.next.slice(-1).should.be.eql('3')
           res.body.results.should.be.a('array')
           res.body.results.length.should.be.eql(20)
-          res.body.results[0].id.should.be.eql(21);
-          res.body.results[19].id.should.be.eql(40);
+          res.body.results[0].id.should.be.eql(21)
+          res.body.results[19].id.should.be.eql(40)
           done()
         })
     })
@@ -325,8 +325,8 @@ describe('Character Endpoints', () => {
       chai.request(server)
         .get('/api/character?page=12345')
         .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.be.a('object');
+          res.should.have.status(404)
+          res.body.should.be.a('object')
           res.body.should.have.property('error').include(message.noPage)
           done()
         })
