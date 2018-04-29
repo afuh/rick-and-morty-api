@@ -60,8 +60,40 @@ describe('Location Endpoints', () => {
     })
   })
 
-  describe('/GET Single location with id: 12345', () => {
-    it('should get an error message', done => {
+  describe('/GET five locations', () => {
+    it('should get five locations with an array', done => {
+      const locs = [1,2,3,4,5]
+      chai.request(server)
+        .get(`/api/location/${locs}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('array')
+          res.body.length.should.be.eql(locs.length)
+          res.body.forEach(loc => {
+            locs.includes(loc.id)
+          })
+          done()
+        })
+    })
+
+    it('should get five locations with a string', done => {
+      const locs = '1,2,3,4,5'
+      chai.request(server)
+        .get(`/api/location/${locs}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('array')
+          res.body.length.should.be.eql(locs.replace(/,/g, '').length)
+          res.body.forEach(loc => {
+            locs.includes(loc.id)
+          })
+          done()
+        })
+    })
+  })
+
+  describe('/GET Error messages', () => {
+    it('should get an error message with id:12345', done => {
       chai.request(server)
         .get('/api/location/12345')
         .end((err, res) => {
@@ -71,10 +103,8 @@ describe('Location Endpoints', () => {
           done()
         })
     })
-  })
 
-  describe('/GET Single location with id: asdasd', () => {
-    it('should get an error message', done => {
+    it('should get an error message with id:asdasd', done => {
       chai.request(server)
         .get('/api/location/asdasd')
         .end((err, res) => {
@@ -84,9 +114,42 @@ describe('Location Endpoints', () => {
           done()
         })
     })
+
+    it('should get an error message with id:1,2]', done => {
+      chai.request(server)
+        .get('/api/location/1,2]')
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error').include(message.badArray)
+          done()
+        })
+    })
+
+    it('should get an error message with id:[1,2', done => {
+      chai.request(server)
+        .get('/api/location/[1,2')
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error').include(message.badArray)
+          done()
+        })
+    })
+
+    it('should get an error message with id:[1,asdasd]', done => {
+      chai.request(server)
+        .get('/api/location/[1,asdasd]')
+        .end((err, res) => {
+          res.should.have.status(500);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error').include(message.badArray)
+          done()
+        })
+    })
   })
 
-  describe('/GET ?name', () => {
+  describe('/GET locations with single query', () => {
     it('should get locations with name: Earth', done => {
       chai.request(server)
         .get('/api/location?name=Earth')
@@ -101,9 +164,7 @@ describe('Location Endpoints', () => {
           done()
         })
     })
-  })
 
-  describe('/GET ?type', () => {
     it('should get locations with type: Planet', done => {
       chai.request(server)
         .get('/api/location?type=planet')
@@ -118,9 +179,7 @@ describe('Location Endpoints', () => {
           done()
         })
     })
-  })
 
-  describe('/GET ?dimension', () => {
     it('should get locations with dimension: C-137', done => {
       chai.request(server)
         .get('/api/location?dimension=C-137')
@@ -137,7 +196,7 @@ describe('Location Endpoints', () => {
     })
   })
 
-  describe('/GET ?name, ?type, ?dimension', () => {
+  describe('/GET locations with multiple queries', () => {
     it('should get locations with name: Earth, type: Planet, dimension: C-137', done => {
       chai.request(server)
         .get('/api/location?name=earth&type=planet&dimension=c-137')
@@ -188,7 +247,7 @@ describe('Location Endpoints', () => {
     })
   })
 
-  describe('/GET ?page=1', () => {
+  describe('/GET pages', () => {
     it('should get page: 1', done => {
       chai.request(server)
         .get('/api/location?page=1')
@@ -205,9 +264,7 @@ describe('Location Endpoints', () => {
           done()
         })
     })
-  })
 
-  describe('/GET ?page=2', () => {
     it('should get page: 2', done => {
       chai.request(server)
         .get('/api/location?page=2')
