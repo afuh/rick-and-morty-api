@@ -9,7 +9,7 @@ const { catchErrors } = require('../handlers/errors');
 const { site } = require('../helpers')
 const rateLimit = require('../handlers/rate');
 
-const { pagination, showData } = require('./middlewares')
+const { pagination, checkArray, showData } = require('./middlewares')
 
 router.all('/*', rateLimit)
 
@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
 router.get('/character/avatar', (req, res) => res.redirect('/api/character'))
 
 router.get('/character', char.sanitize, pagination, catchErrors(char.getAll), showData)
-router.get('/character/:id', catchErrors(char.getById))
+router.get('/character/:id', checkArray, catchErrors(char.getById))
 
 router.get('/location', loc.sanitize, pagination, catchErrors(loc.getAll), showData)
 router.get('/location/:id', catchErrors(loc.getSingle))

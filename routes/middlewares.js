@@ -39,7 +39,33 @@ const showData = (req, res) => {
   })
 }
 
+const checkArray = (req, res, next) => {
+  const { id } = req.params
+
+  if (/\[.+\]$/.test(id)) {
+    try {
+      req.params.id = JSON.parse(id)
+      return next()
+    }
+    catch (e) {
+      return res.status(500).json({ error: message.badArray })
+    }
+  }
+
+  if ( id.includes(',') && !/\[|\]/.test(id) && id.length > 1 ) {
+    req.params.id = id.split(",").map(Number)
+    return next()
+  }
+
+  if (/\[|\]/.test(id)) {
+    return res.status(500).json({ error: message.badArray })
+  }
+
+  next()
+}
+
 module.exports = {
   pagination,
   showData,
+  checkArray
 }
