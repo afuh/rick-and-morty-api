@@ -631,3 +631,7 @@ npm run data
 npm run dev
 ```
 Use to http://localhost:8080/api to access the API.
+
+---
+
+[go to top](https://github.com/afuh/rick-and-morty-api/tree/develop#the-rick-and-morty-api)
