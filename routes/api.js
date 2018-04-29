@@ -27,7 +27,7 @@ router.get('/character', char.sanitize, pagination, catchErrors(char.getAll), sh
 router.get('/character/:id', checkArray, catchErrors(char.getById))
 
 router.get('/location', loc.sanitize, pagination, catchErrors(loc.getAll), showData)
-router.get('/location/:id', catchErrors(loc.getSingle))
+router.get('/location/:id', checkArray, catchErrors(loc.getById))
 
 router.get('/episode', epi.sanitize, pagination, catchErrors(epi.getAll), showData)
 router.get('/episode/:id', catchErrors(epi.getSingle))
