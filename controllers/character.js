@@ -27,7 +27,7 @@ exports.getAll = async (req, res, next) => {
   next()
 }
 
-// ================ GET SINGLE ================ //
+// ================ GET BY ID ================ //
 exports.getById = async ({ params: { id } }, res) => {
 
   // Check if the param is an array
