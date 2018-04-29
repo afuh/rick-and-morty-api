@@ -1,5 +1,4 @@
-const site = 'https://rickandmortyapi.com/api'
-exports.site = site
+exports.site = 'https://rickandmortyapi.com/api'
 
 exports.message = {
   noPage: 'There is nothing here',

@@ -18,14 +18,14 @@ const showData = (req, res) => {
     location: ['name', 'dimension', 'type']
   }
 
-  let qr = ''
-  for (const key in req.query) {
+  const qr = Object.keys(req.query).reduce((acc, key) => {
     // if the query isn't undefined and it's an allowed query for the path
     if (req.query[key] && pass[path].includes(key)) {
       // add it to the url
-      qr+= `&${key}=${req.query[key]}`
+      acc+= `&${key}=${req.query[key]}`
     }
-  }
+    return acc
+  }, '')
 
   // Show data
   res.json({
