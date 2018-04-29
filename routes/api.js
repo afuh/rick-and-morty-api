@@ -30,6 +30,6 @@ router.get('/location', loc.sanitize, pagination, catchErrors(loc.getAll), showD
 router.get('/location/:id', checkArray, catchErrors(loc.getById))
 
 router.get('/episode', epi.sanitize, pagination, catchErrors(epi.getAll), showData)
-router.get('/episode/:id', catchErrors(epi.getSingle))
+router.get('/episode/:id', checkArray, catchErrors(epi.getById))
 
 module.exports = router;
