@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const mongodbErrorHandler = require('mongoose-mongodb-errors');
+const mongoose = require('mongoose')
+const mongodbErrorHandler = require('mongoose-mongodb-errors')
 
 const { exclude } = require('../helpers')
 
@@ -20,10 +20,10 @@ const characterSchema = new mongoose.Schema({
     type: String, trim: true, default: 'unknown'
   },
   location: {
-    type: mongoose.Schema.ObjectId, ref: 'Location',
+    type: mongoose.Schema.ObjectId, ref: 'Location'
   },
   origin: {
-    type: mongoose.Schema.ObjectId, ref: 'Location',
+    type: mongoose.Schema.ObjectId, ref: 'Location'
   },
   gender: {
     type: String, trim: true, default: 'unknown'
@@ -41,16 +41,16 @@ const characterSchema = new mongoose.Schema({
 })
 
 function autopopulate(next) {
-  this.populate({path: 'location', select: 'name url -_id'});
-  this.populate({path: 'origin', select: 'name url -_id'});
-  next();
+  this.populate({ path: 'location', select: 'name url -_id' })
+  this.populate({ path: 'origin', select: 'name url -_id' })
+  next()
 }
 
-characterSchema.pre('find', autopopulate);
-characterSchema.pre('findOne', autopopulate);
+characterSchema.pre('find', autopopulate)
+characterSchema.pre('findOne', autopopulate)
 
 characterSchema.statics.structure = ch => {
-  const m = ({id, name, status, species, type, gender, origin, location, image, episode, url, created}) => ({
+  const m = ({ id, name, status, species, type, gender, origin, location, image, episode, url, created }) => ({
     id,
     name,
     status,
@@ -71,14 +71,14 @@ characterSchema.statics.structure = ch => {
 characterSchema.statics.findAndCount = async function({ name, type, status, species, gender, skip, limit }) {
   const q = key => new RegExp(key && ( /^male/i.test(key) ? `^${key}` : key.replace(/[^\w\s]/g, "\\$&") ), "i")
 
-  const [ loc, count ] = await Promise.all([
+  const [loc, count] = await Promise.all([
     this.find({
       name: q(name),
       status: q(status),
       species: q(species),
       type: q(type),
       gender: q(gender)
-    }).sort({id: 1}).select(exclude).skip(skip).limit(limit),
+    }).sort({ id: 1 }).select(exclude).skip(skip).limit(limit),
 
     this.find({
       name: q(name),
@@ -94,8 +94,6 @@ characterSchema.statics.findAndCount = async function({ name, type, status, spec
   return { results, count }
 }
 
+characterSchema.plugin(mongodbErrorHandler)
 
-
-characterSchema.plugin(mongodbErrorHandler);
-
-module.exports = mongoose.model('Char', characterSchema);
+module.exports = mongoose.model('Char', characterSchema)

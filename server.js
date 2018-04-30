@@ -1,15 +1,15 @@
-require('dotenv').config();
+require('dotenv').config()
 
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const path = require('path');
+const express = require('express')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+const path = require('path')
 const morgan = require('morgan')
 
 const apicache = require('apicache')
 const { middleware: cache } = apicache
 
-const app = express();
+const app = express()
 
 const api = require('./routes/api')
 const errors = require('./handlers/errors')
@@ -20,8 +20,8 @@ mongoose.connect(db)
 mongoose.Promise = global.Promise
 
 mongoose.connection.on('error', err => {
-  console.error(`→ ${err.message}`);
-});
+  console.error(`→ ${err.message}`)
+})
 
 if (app.get('env') !== 'test') {
   app.use(morgan('dev', {
@@ -31,18 +31,18 @@ if (app.get('env') !== 'test') {
   }))
 }
 
-app.set('trust proxy', 1);
+app.set('trust proxy', 1)
 
-app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(path.join(__dirname, 'static')))
 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => res.redirect('/api'))
 app.use('/api', cache('5 minutes'), api)
 
-app.use(errors.notFound);
-app.use(errors.productionErrors);
+app.use(errors.notFound)
+app.use(errors.productionErrors)
 
 const PORT = process.env.PORT || 8080
 app.listen(PORT, () => console.log('\x1b[34m%s\x1b[0m', `
