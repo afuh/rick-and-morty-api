@@ -25,6 +25,24 @@ describe('Location Endpoints', () => {
           done()
         })
     })
+
+    it('should be the same length as the info count', done => {
+      chai.request(server)
+        .get('/api/location')
+        .end((err, res) => {
+          res.should.have.status(200)
+          const count = res.body.info.count
+          const locs = Array.from({ length: count }, (v, i) => i + 1)
+
+          chai.request(server)
+            .get(`/api/location/${locs}`)
+            .end(err, res => {
+              res.body.results.should.be.a('array')
+              res.body.results.length.should.be.eql(count)
+            })
+          done()
+        })
+    })
   })
 
   describe('/GET Single location with id: 1', () => {

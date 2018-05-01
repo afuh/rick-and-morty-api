@@ -25,6 +25,24 @@ describe('Character Endpoints', () => {
           done()
         })
     })
+
+    it('should be the same length as the info count', done => {
+      chai.request(server)
+        .get('/api/character')
+        .end((err, res) => {
+          res.should.have.status(200)
+          const count = res.body.info.count
+          const chars = Array.from({ length: count }, (v, i) => i + 1)
+
+          chai.request(server)
+            .get(`/api/character/${chars}`)
+            .end(err, res => {
+              res.body.results.should.be.a('array')
+              res.body.results.length.should.be.eql(count)
+            })
+          done()
+        })
+    })
   })
 
   describe('/GET Single character with id: 1', () => {
