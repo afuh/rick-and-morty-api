@@ -1,5 +1,7 @@
-[![Build Status](https://travis-ci.org/afuh/rick-and-morty-api.svg?branch=master)](https://travis-ci.org/afuh/rick-and-morty-api)
-[![Coverage Status](https://coveralls.io/repos/github/afuh/rick-and-morty-api/badge.svg?branch=feature%2Fcover)](https://coveralls.io/github/afuh/rick-and-morty-api?branch=feature%2Fcover)
+[![Travis](https://img.shields.io/travis/afuh/rick-and-morty-api.svg?style=flat-square)](https://travis-ci.org/afuh/rick-and-morty-api)
+[![Coveralls github branch](https://img.shields.io/coveralls/github/afuh/rick-and-morty-api/master.svg?style=flat-square)](https://coveralls.io/github/afuh/rick-and-morty-api?branch=feature%2Fcover)
+[![Twitter Follow](https://img.shields.io/twitter/follow/rickandmortyapi.svg?style=flat-square&label=Follow)](https://twitter.com/rickandmortyapi)
+
 
 # The Rick and Morty API
 
@@ -148,7 +150,7 @@ https://rickandmortyapi.com/api/character/?page=19
 ```
 
 ## Character
-There is a total of 460 characters sorted by id.
+There is a total of 493 characters sorted by id.
 
 ### Character schema
 |Key|Type|Description|
@@ -351,7 +353,7 @@ https://rickandmortyapi.com/api/character/?name=rick&status=alive
 ```
 
 ## Location
-There is a total of 75 locations sorted by id.
+There is a total of 76 locations sorted by id.
 
 ### Location schema
 |Key|Type|Description|

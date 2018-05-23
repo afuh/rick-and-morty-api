@@ -36,9 +36,9 @@ describe('Episode Endpoints', () => {
 
           chai.request(server)
             .get(`/api/episode/${epis}`)
-            .end(err, res => {
-              res.body.results.should.be.a('array')
-              res.body.results.length.should.be.eql(count)
+            .end((err, res) => {
+              res.body.should.be.a('array')
+              res.body.length.should.be.eql(count)
             })
           done()
         })
