@@ -36,10 +36,29 @@ describe('Character Endpoints', () => {
 
           chai.request(server)
             .get(`/api/character/${chars}`)
-            .end(err, res => {
-              res.body.results.should.be.a('array')
-              res.body.results.length.should.be.eql(count)
+            .end((err, res) => {
+              res.body.should.be.a('array')
+              res.body.length.should.be.eql(count)
             })
+          done()
+        })
+    })
+
+    it('should have an image/jpeg that matches the char. ID', done => {
+      chai.request(server)
+        .get('/api/character')
+        .end((err, res) => {
+          res.should.have.status(200)
+          const count = res.body.info.count
+          const chars = Array.from({ length: count }, (v, i) => i + 1)
+
+          chars.forEach(id => {
+            chai.request(server)
+            .get(`/api/character/avatar/${id}.jpeg`)
+            .end((err, res) => {
+              res.type.should.be.eql('image/jpeg')
+            })
+          })
           done()
         })
     })
