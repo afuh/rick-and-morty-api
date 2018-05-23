@@ -36,9 +36,9 @@ describe('Character Endpoints', () => {
 
           chai.request(server)
             .get(`/api/character/${chars}`)
-            .end(err, res => {
-              res.body.results.should.be.a('array')
-              res.body.results.length.should.be.eql(count)
+            .end((err, res) => {
+              res.body.should.be.a('array')
+              res.body.length.should.be.eql(count)
             })
           done()
         })
