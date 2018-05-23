@@ -150,7 +150,7 @@ https://rickandmortyapi.com/api/character/?page=19
 ```
 
 ## Character
-There is a total of 485 characters sorted by id.
+There is a total of 493 characters sorted by id.
 
 ### Character schema
 |Key|Type|Description|
