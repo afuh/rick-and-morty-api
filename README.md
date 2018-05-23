@@ -148,7 +148,7 @@ https://rickandmortyapi.com/api/character/?page=19
 ```
 
 ## Character
-There is a total of 460 characters sorted by id.
+There is a total of 485 characters sorted by id.
 
 ### Character schema
 |Key|Type|Description|
@@ -351,7 +351,7 @@ https://rickandmortyapi.com/api/character/?name=rick&status=alive
 ```
 
 ## Location
-There is a total of 75 locations sorted by id.
+There is a total of 76 locations sorted by id.
 
 ### Location schema
 |Key|Type|Description|
