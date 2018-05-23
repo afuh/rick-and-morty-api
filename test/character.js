@@ -43,6 +43,25 @@ describe('Character Endpoints', () => {
           done()
         })
     })
+
+    it('should have an image/jpeg that matches the char. ID', done => {
+      chai.request(server)
+        .get('/api/character')
+        .end((err, res) => {
+          res.should.have.status(200)
+          const count = res.body.info.count
+          const chars = Array.from({ length: count }, (v, i) => i + 1)
+
+          chars.forEach(id => {
+            chai.request(server)
+            .get(`/api/character/avatar/${id}.jpeg`)
+            .end((err, res) => {
+              res.type.should.be.eql('image/jpeg')
+            })
+          })
+          done()
+        })
+    })
   })
 
   describe('/GET Single character with id: 1', () => {
