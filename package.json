@@ -21,7 +21,6 @@
   "author": "Axel Fuhrmann",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "apicache": "^1.2.1",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-brute": "^1.0.1",
