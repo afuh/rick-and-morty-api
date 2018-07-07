@@ -13,7 +13,7 @@ const errors = require('./handlers/errors')
 
 const db = process.env.NODE_ENV === "production" ? process.env.DATABASE : 'mongodb://localhost:27017/rickmorty-api'
 
-mongoose.connect(db)
+mongoose.connect(db, { useNewUrlParser: true })
 mongoose.Promise = global.Promise
 
 mongoose.connection.on('error', err => {
