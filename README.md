@@ -43,6 +43,7 @@ You can check the code of the site [here](https://github.com/afuh/rick-and-morty
   - [Elixir](#elixir)
   - [GraphQL](#graphql)
   - [JavaScript](#javascript)
+  - [Python](#python)
   - [Ruby](#ruby)
 - [Run the API locally](#run-the-api-locally)
 
@@ -615,6 +616,9 @@ Here you will find a list of helper libraries to use the Rick and Morty API with
 
 #### JavaScript
 - [The Rick and Morty API Node client](https://github.com/afuh/rick-and-morty-api-node) by [Simple Rick](https://github.com/afuh)
+
+#### Python
+- [Python implementation for the Rick and Morty API](https://github.com/curiousrohan/ramapi) by [Rohan Hazra](https://github.com/curiousrohan)
 
 #### Ruby
 - [The Rick and Morty API Gem](https://github.com/spielhoelle/rick-and-morty-gem) by [Tommy Spielhoelle](https://github.com/spielhoelle)
