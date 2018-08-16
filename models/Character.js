@@ -86,7 +86,7 @@ characterSchema.statics.findAndCount = async function({ name, type, status, spec
       species: q(species),
       type: q(type),
       gender: q(gender)
-    }).count()
+    }).countDocuments()
   ])
 
   const results = this.structure(loc)
