@@ -51,7 +51,7 @@ episodeSchema.statics.findAndCount = async function({ name, episode, skip, limit
     this.find({
       name: q(name),
       episode: q(episode)
-    }).count()
+    }).countDocuments()
   ])
 
   const results = this.structure(loc)

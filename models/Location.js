@@ -54,7 +54,7 @@ locationSchema.statics.findAndCount = async function({ name, type, dimension, sk
       name: q(name),
       type: q(type),
       dimension: q(dimension)
-    }).count()
+    }).countDocuments()
   ])
 
   const results = this.structure(loc)
