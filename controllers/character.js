@@ -1,4 +1,4 @@
-const Char = require('../models/Character')
+const Character = require('../models/Character')
 const { sanitizeQuery } = require('express-validator/filter')
 
 const { message, exclude } = require('../helpers')
@@ -10,7 +10,7 @@ exports.getAll = async (req, res, next) => {
   const { name, status, species, gender, type } = req.query
   const { skip, limit, page } = req.body
 
-  const { results, count } = await Char.findAndCount({
+  const { results, count } = await Character.findAndCount({
     name, type, status, species, gender, skip, limit
   })
 

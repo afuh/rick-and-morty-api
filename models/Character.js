@@ -96,4 +96,4 @@ characterSchema.statics.findAndCount = async function({ name, type, status, spec
 
 characterSchema.plugin(mongodbErrorHandler)
 
-module.exports = mongoose.model('Char', characterSchema)
+module.exports = mongoose.model('Character', characterSchema)
