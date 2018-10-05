@@ -28,7 +28,7 @@ const locationSchema = new mongoose.Schema({
 })
 
 locationSchema.statics.structure = ch => {
-  const m = ({ id, name, type, dimension, residents,  url, created }) => ({
+  const m = ({ id, name, type, dimension, residents, url, created }) => ({
     id,
     name,
     type,

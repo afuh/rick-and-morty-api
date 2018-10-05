@@ -31,7 +31,7 @@ describe('Episode Endpoints', () => {
         .get('/api/episode')
         .end((err, res) => {
           res.should.have.status(200)
-          const count = res.body.info.count
+          const { count } = res.body.info
           const epis = Array.from({ length: count }, (v, i) => i + 1)
 
           chai.request(server)
@@ -79,7 +79,7 @@ describe('Episode Endpoints', () => {
 
   describe('/GET five episodes', () => {
     it('should get five episodes with an array', done => {
-      const epis = [1,2,3,4,5]
+      const epis = [1, 2, 3, 4, 5]
       chai.request(server)
         .get(`/api/episode/${epis}`)
         .end((err, res) => {

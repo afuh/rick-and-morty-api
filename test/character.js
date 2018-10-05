@@ -31,7 +31,7 @@ describe('Character Endpoints', () => {
         .get('/api/character')
         .end((err, res) => {
           res.should.have.status(200)
-          const count = res.body.info.count
+          const { count } = res.body.info
           const chars = Array.from({ length: count }, (v, i) => i + 1)
 
           chai.request(server)
@@ -49,15 +49,15 @@ describe('Character Endpoints', () => {
         .get('/api/character')
         .end((err, res) => {
           res.should.have.status(200)
-          const count = res.body.info.count
+          const { count } = res.body.info
           const chars = Array.from({ length: count }, (v, i) => i + 1)
 
           chars.forEach(id => {
             chai.request(server)
-            .get(`/api/character/avatar/${id}.jpeg`)
-            .end((err, res) => {
-              res.type.should.be.eql('image/jpeg')
-            })
+              .get(`/api/character/avatar/${id}.jpeg`)
+              .end((err, res) => {
+                res.type.should.be.eql('image/jpeg')
+              })
           })
           done()
         })
@@ -78,33 +78,33 @@ describe('Character Endpoints', () => {
 
     it('should have a keys', done => {
       chai.request(server)
-      .get('/api/character/1')
-      .end((err, res) => {
-        res.should.have.status(200)
-        res.body.should.be.a('object')
-        Object.keys(res.body).should.be.eql([
-          'id',
-          'name',
-          'status',
-          'species',
-          'type',
-          'gender',
-          'origin',
-          'location',
-          'image',
-          'episode',
-          'url',
-          'created'
-        ])
-        done()
-      })
+        .get('/api/character/1')
+        .end((err, res) => {
+          res.should.have.status(200)
+          res.body.should.be.a('object')
+          Object.keys(res.body).should.be.eql([
+            'id',
+            'name',
+            'status',
+            'species',
+            'type',
+            'gender',
+            'origin',
+            'location',
+            'image',
+            'episode',
+            'url',
+            'created'
+          ])
+          done()
+        })
     })
 
   })
 
   describe('/GET five characters', () => {
     it('should get five characters with an array', done => {
-      const chars = [1,2,3,4,5]
+      const chars = [1, 2, 3, 4, 5]
       chai.request(server)
         .get(`/api/character/${chars}`)
         .end((err, res) => {

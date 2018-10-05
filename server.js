@@ -21,11 +21,7 @@ mongoose.connection.on('error', err => {
 })
 
 if (app.get('env') !== 'test') {
-  app.use(morgan('dev', {
-    skip(req) {
-      return req.path.match(/(ico|png|svg|jpeg|woff2|css|js|txt|)$/ig)[0] ? true : false
-    }
-  }))
+  app.use(morgan('dev'))
 }
 
 app.set('trust proxy', 1)

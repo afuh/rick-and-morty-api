@@ -1,8 +1,4 @@
-exports.catchErrors = fn => {
-  return (req, res, next) => {
-    return fn(req, res, next).catch(next)
-  }
-}
+exports.catchErrors = fn => (req, res, next) => fn(req, res, next).catch(next)
 
 exports.notFound = (req, res, next) => {
   const err = new Error('There is nothing here.')
