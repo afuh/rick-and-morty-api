@@ -14,15 +14,9 @@ exports.getAll = async (req, res, next) => {
     name, type, status, species, gender, skip, limit
   })
 
-  const pages = Math.ceil(count / limit)
-
-  if (page > pages) {
-    res.status(404).json({ error: message.noPage })
-    return
+  req.payload = {
+    count, limit, page, results
   }
-  req.body.results = results
-  req.body.count = count
-  req.body.pages = pages
 
   next()
 }

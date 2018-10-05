@@ -7,6 +7,21 @@ const pagination = (req, res, next) => {
   next()
 }
 
+const checkData = (req, res, next) => {
+  const { count, limit, page, results } = req.payload
+  const pages = Math.ceil(count / limit)
+
+  if (page > pages) {
+    res.status(404).json({ error: message.noPage })
+    return
+  }
+  req.body.results = results
+  req.body.count = count
+  req.body.pages = pages
+
+  next()
+}
+
 const showData = (req, res) => {
   const { results, count, page, pages } = req.body
   const path = req.path.replace(/\//g, '')
@@ -67,5 +82,6 @@ const checkArray = (req, res, next) => {
 module.exports = {
   pagination,
   showData,
+  checkData,
   checkArray
 }
