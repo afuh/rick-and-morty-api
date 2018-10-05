@@ -10,7 +10,7 @@ const should = chai.should()
 
 chai.use(chaiHttp)
 
-const { site, message } = require('../helpers')
+const { site, message } = require('../utils/helpers')
 
 describe('Generic API', () => {
   describe('Endpoints list', () => {

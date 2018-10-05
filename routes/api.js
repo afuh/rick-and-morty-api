@@ -6,10 +6,10 @@ const loc = require('../controllers/location')
 const epi = require('../controllers/episode')
 
 const { catchErrors } = require('../handlers/errors')
-const { site } = require('../helpers')
+const { site } = require('../utils/helpers')
 const rateLimit = require('../handlers/rate')
 
-const { pagination, checkArray, showData } = require('./middlewares')
+const { pagination, checkArray, showData, checkData } = require('./middlewares')
 
 router.all('/*', rateLimit)
 
@@ -23,13 +23,13 @@ router.get('/', (req, res) => {
 
 router.get('/character/avatar', (req, res) => res.redirect('/api/character'))
 
-router.get('/character', char.sanitize, pagination, catchErrors(char.getAll), showData)
+router.get('/character', char.sanitize, pagination, catchErrors(char.getAll), checkData, showData)
 router.get('/character/:id', checkArray, catchErrors(char.getById))
 
-router.get('/location', loc.sanitize, pagination, catchErrors(loc.getAll), showData)
+router.get('/location', loc.sanitize, pagination, catchErrors(loc.getAll), checkData, showData)
 router.get('/location/:id', checkArray, catchErrors(loc.getById))
 
-router.get('/episode', epi.sanitize, pagination, catchErrors(epi.getAll), showData)
+router.get('/episode', epi.sanitize, pagination, catchErrors(epi.getAll), checkData, showData)
 router.get('/episode/:id', checkArray, catchErrors(epi.getById))
 
 module.exports = router

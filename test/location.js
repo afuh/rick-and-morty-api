@@ -8,7 +8,7 @@ const should = chai.should()
 
 chai.use(chaiHttp)
 
-const { message } = require('../helpers')
+const { message } = require('../utils/helpers')
 
 describe('Location Endpoints', () => {
 
@@ -31,7 +31,7 @@ describe('Location Endpoints', () => {
         .get('/api/location')
         .end((err, res) => {
           res.should.have.status(200)
-          const count = res.body.info.count
+          const { count } = res.body.info
           const locs = Array.from({ length: count }, (v, i) => i + 1)
 
           chai.request(server)
@@ -80,7 +80,7 @@ describe('Location Endpoints', () => {
 
   describe('/GET five locations', () => {
     it('should get five locations with an array', done => {
-      const locs = [1,2,3,4,5]
+      const locs = [1, 2, 3, 4, 5]
       chai.request(server)
         .get(`/api/location/${locs}`)
         .end((err, res) => {
