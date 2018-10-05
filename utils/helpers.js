@@ -1,4 +1,4 @@
-exports.site = process.env.NODE_ENV === "production" ? 'https://rickandmortyapi.com/api' : `http://localhost:${process.env.PORT}/api`
+exports.site = 'https://rickandmortyapi.com/api'
 
 exports.message = {
   noPage: 'There is nothing here',

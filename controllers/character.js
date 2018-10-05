@@ -22,4 +22,4 @@ exports.getAll = async (req, res, next) => {
 }
 
 // ================ GET BY ID ================ //
-exports.getById = async ({ params: { id } }, res) => handleSingle(Character, id, res)
+exports.getById = async ({ params: { id } }, res) => await handleSingle(Character, id, res)
