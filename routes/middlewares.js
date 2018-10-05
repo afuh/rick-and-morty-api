@@ -1,4 +1,4 @@
-const { site, message } = require('../helpers')
+const { site, message } = require('../utils/helpers')
 
 const pagination = (req, res, next) => {
   req.body.limit = 20

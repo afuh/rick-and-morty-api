@@ -1,7 +1,7 @@
 const Character = require('../models/Character')
 const { sanitizeQuery } = require('express-validator/filter')
 
-const { message, exclude } = require('../helpers')
+const Character = require('../models/Character')
 
 exports.sanitize = sanitizeQuery(['name', 'status', 'species', 'gender', 'type']).trim()
 

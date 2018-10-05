@@ -1,7 +1,7 @@
 const Episode = require('../models/Episode')
 const { sanitizeQuery } = require('express-validator/filter')
 
-const { message, exclude } = require('../helpers')
+const Episode = require('../models/Episode')
 
 exports.sanitize = sanitizeQuery(['name', 'episode']).trim()
 

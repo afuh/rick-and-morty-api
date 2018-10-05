@@ -1,7 +1,7 @@
 const Location = require('../models/Location')
 const { sanitizeQuery } = require('express-validator/filter')
 
-const { message, exclude } = require('../helpers')
+const Location = require('../models/Location')
 
 exports.sanitize = sanitizeQuery(['name', 'dimension', 'type']).trim()
 

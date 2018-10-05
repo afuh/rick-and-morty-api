@@ -8,7 +8,7 @@ const should = chai.should()
 
 chai.use(chaiHttp)
 
-const { message } = require('../helpers')
+const { message } = require('../utils/helpers')
 
 describe('Location Endpoints', () => {
 
