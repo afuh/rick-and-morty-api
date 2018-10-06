@@ -25,20 +25,20 @@
     "express": "^4.16.3",
     "express-brute": "^1.0.1",
     "express-brute-mongoose": "^1.0.2",
-    "express-validator": "^5.2.0",
+    "express-validator": "^5.3.0",
     "moment": "^2.22.2",
-    "mongoose": "^5.2.1",
+    "mongoose": "^5.3.1",
     "mongoose-mongodb-errors": "0.0.2",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.1"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "chai-http": "^4.0.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
     "coveralls": "^3.0.2",
-    "eslint": "^5.0.1",
+    "eslint": "^5.6.1",
     "mocha": "^5.2.0",
-    "nodemon": "^1.17.5",
-    "nyc": "^12.0.2"
+    "nodemon": "^1.18.4",
+    "nyc": "^13.0.1"
   },
   "directories": {
     "doc": "docs",
