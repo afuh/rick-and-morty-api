@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const mongodbErrorHandler = require('mongoose-mongodb-errors')
 
-const { exclude } = require('../helpers')
+const { exclude } = require('../utils/helpers')
 
 const characterSchema = new mongoose.Schema({
   id: {
@@ -96,4 +96,4 @@ characterSchema.statics.findAndCount = async function({ name, type, status, spec
 
 characterSchema.plugin(mongodbErrorHandler)
 
-module.exports = mongoose.model('Char', characterSchema)
+module.exports = mongoose.model('Character', characterSchema)

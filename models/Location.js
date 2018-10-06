@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const mongodbErrorHandler = require('mongoose-mongodb-errors')
 
-const { exclude } = require('../helpers')
+const { exclude } = require('../utils/helpers')
 
 const locationSchema = new mongoose.Schema({
   id: {
@@ -28,7 +28,7 @@ const locationSchema = new mongoose.Schema({
 })
 
 locationSchema.statics.structure = ch => {
-  const m = ({ id, name, type, dimension, residents,  url, created }) => ({
+  const m = ({ id, name, type, dimension, residents, url, created }) => ({
     id,
     name,
     type,

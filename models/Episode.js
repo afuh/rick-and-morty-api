@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const mongodbErrorHandler = require('mongoose-mongodb-errors')
 
-const { exclude } = require('../helpers')
+const { exclude } = require('../utils/helpers')
 
 const episodeSchema = new mongoose.Schema({
   id: {
