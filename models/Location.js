@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const mongodbErrorHandler = require('mongoose-mongodb-errors')
 
-const { exclude } = require('../utils/helpers')
+const { collection } = require('../utils/helpers')
 
 const locationSchema = new mongoose.Schema({
   id: {
@@ -40,24 +40,21 @@ locationSchema.statics.structure = ch => {
   return Array.isArray(ch) ? ch.map(ch => m(ch)) : m(ch)
 }
 
-locationSchema.statics.findAndCount = async function({ name, type, dimension, skip, limit }) {
+locationSchema.statics.findAndCount = async function({ name, type, dimension, skip }) {
   const q = key => new RegExp(key && key.replace(/[^\w\s]/g, "\\$&"), "i")
 
-  const [loc, count] = await Promise.all([
-    this.find({
-      name: q(name),
-      type: q(type),
-      dimension: q(dimension)
-    }).sort({ id: 1 }).select(exclude).skip(skip).limit(limit),
+  const query = {
+    name: q(name),
+    type: q(type),
+    dimension: q(dimension)
+  }
 
-    this.find({
-      name: q(name),
-      type: q(type),
-      dimension: q(dimension)
-    }).countDocuments()
+  const [data, count] = await Promise.all([
+    this.find(query).sort({ id: 1 }).select(collection.exclude).limit(collection.limit).skip(skip),
+    this.find(query).countDocuments()
   ])
 
-  const results = this.structure(loc)
+  const results = this.structure(data)
 
   return { results, count }
 }

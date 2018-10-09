@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const mongodbErrorHandler = require('mongoose-mongodb-errors')
 
-const { exclude } = require('../utils/helpers')
+const { collection } = require('../utils/helpers')
 
 const episodeSchema = new mongoose.Schema({
   id: {
@@ -39,22 +39,20 @@ episodeSchema.statics.structure = ch => {
   return Array.isArray(ch) ? ch.map(ch => m(ch)) : m(ch)
 }
 
-episodeSchema.statics.findAndCount = async function({ name, episode, skip, limit }) {
+episodeSchema.statics.findAndCount = async function({ name, episode, skip }) {
   const q = key => new RegExp(key && key.replace(/[^\w\s]/g, "\\$&"), "i")
 
-  const [loc, count] = await Promise.all([
-    this.find({
-      name: q(name),
-      episode: q(episode)
-    }).sort({ id: 1 }).select(exclude).skip(skip).limit(limit),
+  const query = {
+    name: q(name),
+    episode: q(episode)
+  }
 
-    this.find({
-      name: q(name),
-      episode: q(episode)
-    }).countDocuments()
+  const [data, count] = await Promise.all([
+    this.find(query).sort({ id: 1 }).select(collection.exclude).limit(collection.limit).skip(skip),
+    this.find(query).countDocuments()
   ])
 
-  const results = this.structure(loc)
+  const results = this.structure(data)
 
   return { results, count }
 }
