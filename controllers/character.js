@@ -10,14 +10,16 @@ exports.sanitize = sanitizeQuery(collection.queries.character).trim()
 // ================ GET ALL ================ //
 exports.getAll = async (req, res, next) => {
   const { name, status, species, gender, type } = req.query
-  const { skip, limit, page } = req.body
+  const { skip } = req.payload
 
   const { results, count } = await Character.findAndCount({
-    name, type, status, species, gender, skip, limit
+    name, type, status, species, gender, skip
   })
 
   req.payload = {
-    count, limit, page, results
+    ...req.payload,
+    count,
+    results
   }
 
   next()
