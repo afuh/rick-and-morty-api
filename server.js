@@ -15,6 +15,7 @@ const db = process.env.NODE_ENV === "production" ? process.env.DATABASE : 'mongo
 
 mongoose.connect(db, { useNewUrlParser: true })
 mongoose.Promise = global.Promise
+mongoose.set('useCreateIndex', true)
 
 mongoose.connection.on('error', err => {
   console.error(`→ ${err.message}`)
