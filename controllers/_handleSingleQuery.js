@@ -1,4 +1,4 @@
-const { message, exclude } = require('../utils/helpers')
+const { message, collection } = require('../utils/helpers')
 
 module.exports = async (Col, id, res) => {
 
@@ -6,7 +6,7 @@ module.exports = async (Col, id, res) => {
   if (Array.isArray(id)) {
     const data = await Col.find({
       id: { $in: id }
-    }).select(exclude)
+    }).select(collection.exclude)
 
     return res.json(Col.structure(data))
   }
@@ -16,7 +16,7 @@ module.exports = async (Col, id, res) => {
     return res.status(500).json({ error: message.badParam })
   }
 
-  const data = await Col.findOne({ id }).select(exclude)
+  const data = await Col.findOne({ id }).select(collection.exclude)
 
   if (!data) {
     return res.status(404).json({ error: message[`no${Col.modelName}`] })

@@ -9,7 +9,6 @@ exports.message = {
   badArray: 'Bad... bad array :/'
 }
 
-exports.exclude = '-_id -author -__v -edited'
 exports.collection = {
   exclude: '-_id -author -__v -edited',
   limit: 20,
