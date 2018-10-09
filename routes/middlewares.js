@@ -1,4 +1,4 @@
-const { site, message } = require('../utils/helpers')
+const { site, message, collection } = require('../utils/helpers')
 
 const pagination = (req, res, next) => {
   req.body.limit = 20
@@ -26,16 +26,9 @@ const showData = (req, res) => {
   const { results, count, page, pages } = req.body
   const path = req.path.replace(/\//g, '')
 
-  // Allowed queries for each path
-  const pass = {
-    character: ['name', 'status', 'species', 'type', 'gender'],
-    episode: ['name', 'episode'],
-    location: ['name', 'dimension', 'type']
-  }
-
   const qr = Object.keys(req.query).reduce((acc, key) => {
     // if the query isn't undefined and it's an allowed query for the path
-    if (req.query[key] && pass[path].includes(key)) {
+    if (req.query[key] && collection.queries[path].includes(key)) {
       // add it to the url
       acc+= `&${key}=${req.query[key]}`
     }

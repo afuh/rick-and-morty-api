@@ -1,9 +1,11 @@
 const { sanitizeQuery } = require('express-validator/filter')
 
+const { collection } = require('../utils/helpers')
+
 const Location = require('../models/Location')
 const handleSingle = require('./_handleSingleQuery')
 
-exports.sanitize = sanitizeQuery(['name', 'dimension', 'type']).trim()
+exports.sanitize = sanitizeQuery(collection.queries.episode).trim()
 
 // ================ GET ALL ================ //
 exports.getAll = async (req, res, next) => {

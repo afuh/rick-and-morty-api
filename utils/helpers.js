@@ -10,3 +10,12 @@ exports.message = {
 }
 
 exports.exclude = '-_id -author -__v -edited'
+exports.collection = {
+  exclude: '-_id -author -__v -edited',
+  limit: 20,
+  queries: {
+    character: ['name', 'status', 'species', 'type', 'gender'],
+    episode: ['name', 'episode'],
+    location: ['name', 'dimension', 'type']
+  }
+}
