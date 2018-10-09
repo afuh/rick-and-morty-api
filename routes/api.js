@@ -1,15 +1,21 @@
 const express = require('express')
 const router = express.Router()
 
-const char = require('../controllers/character')
-const loc = require('../controllers/location')
-const epi = require('../controllers/episode')
+const { sanitizeQuery } = require('express-validator/filter')
 
 const { catchErrors } = require('../handlers/errors')
-const { site } = require('../utils/helpers')
+const { site, collection } = require('../utils/helpers')
 const rateLimit = require('../handlers/rate')
 
+const operations = require('../controllers/handleOperations')
 const { pagination, checkArray, showData, checkData } = require('./middlewares')
+
+const sanitize = model => sanitizeQuery(collection.queries[model]).trim()
+
+const hooks = {
+  find: [pagination, catchErrors(operations.getAll), checkData, showData],
+  findById: [checkArray, catchErrors(operations.getById)]
+}
 
 router.all('/*', rateLimit)
 
@@ -23,13 +29,13 @@ router.get('/', (req, res) => {
 
 router.get('/character/avatar', (req, res) => res.redirect('/api/character'))
 
-router.get('/character', char.sanitize, pagination, catchErrors(char.getAll), checkData, showData)
-router.get('/character/:id', checkArray, catchErrors(char.getById))
+router.get('/character', sanitize("character"), hooks.find)
+router.get('/character/:id', hooks.findById)
 
-router.get('/location', loc.sanitize, pagination, catchErrors(loc.getAll), checkData, showData)
-router.get('/location/:id', checkArray, catchErrors(loc.getById))
+router.get('/location', sanitize("location"), hooks.find)
+router.get('/location/:id', hooks.findById)
 
-router.get('/episode', epi.sanitize, pagination, catchErrors(epi.getAll), checkData, showData)
-router.get('/episode/:id', checkArray, catchErrors(epi.getById))
+router.get('/episode', sanitize("episode"), hooks.find)
+router.get('/episode/:id', hooks.findById)
 
 module.exports = router
