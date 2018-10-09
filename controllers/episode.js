@@ -3,18 +3,13 @@ const { sanitizeQuery } = require('express-validator/filter')
 const { collection } = require('../utils/helpers')
 
 const Episode = require('../models/Episode')
-const handleSingle = require('./_handleSingleQuery')
+const { handleSingle, handleMultiple } = require('./_handleQuery')
 
 exports.sanitize = sanitizeQuery(collection.queries.episode).trim()
 
 // ================ GET ALL ================ //
 exports.getAll = async (req, res, next) => {
-  const { name, episode } = req.query
-  const { skip } = req.payload
-
-  const { results, count } = await Episode.findAndCount({
-    name, episode, skip
-  })
+  const { count, results } = await handleMultiple(Episode, req)
 
   req.payload = {
     ...req.payload,

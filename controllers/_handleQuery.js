@@ -1,6 +1,6 @@
 const { message, collection } = require('../utils/helpers')
 
-module.exports = async (Col, id, res) => {
+exports.handleSingle = async (Col, id, res) => {
 
   // Check if the param is an array
   if (Array.isArray(id)) {
@@ -23,4 +23,15 @@ module.exports = async (Col, id, res) => {
   }
 
   return res.json(Col.structure(data))
+}
+
+exports.handleMultiple = async (Col, req) => {
+  const opt = Object.assign(req.query, { skip: req.payload.skip })
+
+  const { results, count } = await Col.findAndCount(opt)
+
+  return {
+    count,
+    results
+  }
 }
