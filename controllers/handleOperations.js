@@ -1,10 +1,5 @@
 const { handleSingle, handleMultiple } = require('./handleQuery')
-
-const models = {
-  character: require('../models/Character'),
-  location: require('../models/Location'),
-  episode: require('../models/Episode')
-}
+const models = require('../models')
 
 const getAll = async (req, res, next) => {
   const Model = models[req.path.replace(/\//g, '')]
