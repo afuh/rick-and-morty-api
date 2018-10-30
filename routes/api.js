@@ -5,7 +5,6 @@ const { sanitizeQuery } = require('express-validator/filter')
 
 const { catchErrors } = require('../handlers/errors')
 const { site, collection } = require('../utils/helpers')
-const rateLimit = require('../handlers/rate')
 
 const operations = require('../controllers/handleOperations')
 const { pagination, checkArray, showData, checkData } = require('./middlewares')
@@ -16,8 +15,6 @@ const hooks = {
   find: [pagination, catchErrors(operations.getAll), checkData, showData],
   findById: [checkArray, catchErrors(operations.getById)]
 }
-
-router.all('/*', rateLimit)
 
 router.get('/', (req, res) => {
   res.json({

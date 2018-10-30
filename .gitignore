@@ -1,5 +1,6 @@
 .DS_Store
 ecosystem.config.js
+deploy.js
 .cache/
 node_modules
 .env
