@@ -11,7 +11,7 @@
     "dev": "nodemon ./server.js",
     "data": "mongorestore --host=localhost:27017 --db=rickmorty-api --drop ./data",
     "test": "nyc --check-coverage --lines 95 mocha --timeout 10000 --exit && nyc report --reporter=text-lcov | coveralls",
-    "test:watch": "mocha --watch"
+    "test:watch": "nodemon --ext js ./test --exec 'mocha --reporter min'"
   },
   "nyc": {
     "exclude": [
