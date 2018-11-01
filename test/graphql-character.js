@@ -87,17 +87,6 @@ describe('Graphql: Character type (Query character(id))', async () => {
     expect(character[0].location.residents).to.deep.include({ name })
   })
 
-  it('Gets a character\'s name inside an Episode', async () => {
-    const query = '{ character(id: 1) { name episode { characters { name }} } }'
-    const { character } = await test(query)
-
-    const [ { name } ] = character
-
-    expect(name).to.equal(result.character)
-    expect(character[0].episode[0].characters).to.be.an('array')
-    expect(character[0].episode[0].characters).to.deep.include({ name })
-  })
-
   it('Gets all properties', async () => {
     const query = charFragment(`{ character(id: 1) { ...allProperties } }`)
     const { character } = await test(query)
@@ -105,7 +94,6 @@ describe('Graphql: Character type (Query character(id))', async () => {
     expect(Object.keys(character[0])).to.deep.equal(keys)
   })
 })
-
 
 describe('Graphql: Character type (Query allCharacters)', async () => {
   it('Gets multiple characters', async () => {
@@ -141,17 +129,6 @@ describe('Graphql: Character type (Query allCharacters)', async () => {
     expect(name).to.equal(result.character)
     expect(results[0].location.residents).to.be.an('array')
     expect(results[0].location.residents).to.deep.include({ name })
-  })
-
-  it('Gets a character\'s name inside an Episode', async () => {
-    const query = '{ allCharacters { results { name episode { characters { name }} } } }'
-    const { allCharacters: { results } } = await test(query)
-
-    const [ { name } ] = results
-
-    expect(name).to.equal(result.character)
-    expect(results[0].episode[0].characters).to.be.an('array')
-    expect(results[0].episode[0].characters).to.deep.include({ name })
   })
 
   it('Gets all properties', async () => {

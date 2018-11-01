@@ -62,17 +62,6 @@ describe('Graphql: Location type (Query location(id))', async () => {
     expect(location[0].residents[0].name).to.equal(result.character)
   })
 
-  it('Gets a location\'s name inside a character', async () => {
-    const query = '{ location(id: 1) { name residents { origin { name }} } }'
-    const { location } = await test(query)
-
-    const [ { name } ] = location
-
-    expect(name).to.equal(result.location)
-    expect(location[0].residents).to.be.an('array')
-    expect(location[0].residents[0].origin).to.deep.include({ name })
-  })
-
   it('Gets all properties', async () => {
     const query = locFragment(`{ location(id: 1) { ...allProperties } }`)
     const { location } = await test(query)
@@ -80,7 +69,6 @@ describe('Graphql: Location type (Query location(id))', async () => {
     expect(Object.keys(location[0])).to.deep.equal(keys)
   })
 })
-
 
 describe('Graphql: Location type (Query allLocations)', async () => {
   it('Gets multiple locations', async () => {
@@ -97,17 +85,6 @@ describe('Graphql: Location type (Query allLocations)', async () => {
 
     expect(results[0].residents).to.be.an('array')
     expect(results[0].residents[0].name).to.equal(result.character)
-  })
-
-  it('Gets a location\'s name inside a character', async () => {
-    const query = '{ allLocations { results { name residents { origin { name } } } } }'
-    const { allLocations: { results } } = await test(query)
-
-    const [ { name } ] = results
-
-    expect(name).to.equal(result.location)
-    expect(results[0].residents).to.be.an('array')
-    expect(results[0].residents[0].origin).to.deep.include({ name })
   })
 
   it('Gets all properties', async () => {

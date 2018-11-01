@@ -24,8 +24,6 @@ const urlToId = url => Array.isArray(url) ? url.map(item => getId(item)) : getId
 // Takes an URL with a page query
 // Return the page number
 const getPage = url => {
-  if (!url) return null
-
   const params = new URL(url)
   return parseInt(params.searchParams.get('page'))
 }

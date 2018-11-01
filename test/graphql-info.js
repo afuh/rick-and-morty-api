@@ -55,6 +55,43 @@ describe('Graphql: Info', async () => {
     const query = `{ allCharacters(page: 2) { info { count pages next prev } } }`
     const { allCharacters: { info } } = await test(query)
 
+    expect(info.count).to.be.an("number")
+    expect(info.pages).to.be.an("number")
+    expect(info.next).to.be.an("number")
     expect(info.prev).to.be.an("number")
+  })
+
+  it('Gets null data ', async () => {
+    const query = `{ allCharacters(page: 2000) { results { id } info { count pages next prev } } }`
+    const { allCharacters: { info, results } } = await test(query)
+
+    expect(info.count).to.be.null
+    expect(info.pages).to.be.null
+    expect(info.next).to.be.null
+    expect(info.prev).to.be.null
+
+    expect(results).to.be.null
+  })
+
+  it('Prevents deep nesting', async () => {
+    const query = `
+      {
+      	allCharacters {
+          results {
+            origin {
+              residents {
+                name
+                origin {
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    `
+    const res = await test(query)
+    
+    expect(res).to.be.undefined
   })
 })

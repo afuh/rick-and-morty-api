@@ -62,17 +62,6 @@ describe('Graphql: Episode type (Query episode(id))', async () => {
     expect(episode[0].characters[0].name).to.equal(result.character)
   })
 
-  it('Gets an episode\'s name inside a character', async () => {
-    const query = '{ episode(id: 1) { name characters { episode { name }} } }'
-    const { episode } = await test(query)
-
-    const [ { name } ] = episode
-
-    expect(name).to.equal(result.episode)
-    expect(episode[0].characters).to.be.an('array')
-    expect(episode[0].characters[0].episode[0]).to.deep.include({ name })
-  })
-
   it('Gets all properties', async () => {
     const query = epFragment(`{ episode(id: 1) { ...allProperties } }`)
     const { episode } = await test(query)
@@ -80,7 +69,6 @@ describe('Graphql: Episode type (Query episode(id))', async () => {
     expect(Object.keys(episode[0])).to.deep.equal(keys)
   })
 })
-
 
 describe('Graphql: Episode type (Query allEpisodes)', async () => {
   it('Gets multiple episodes', async () => {
@@ -97,17 +85,6 @@ describe('Graphql: Episode type (Query allEpisodes)', async () => {
 
     expect(results[0].characters).to.be.an('array')
     expect(results[0].characters[0].name).to.equal(result.character)
-  })
-
-  it('Gets an episode\'s name inside a character', async () => {
-    const query = '{ allEpisodes { results { name characters { episode { name } } } } }'
-    const { allEpisodes: { results } } = await test(query)
-
-    const [ { name } ] = results
-
-    expect(name).to.equal(result.episode)
-    expect(results[0].characters).to.be.an('array')
-    expect(results[0].characters[0].episode[0]).to.deep.include({ name })
   })
 
   it('Gets all properties', async () => {
