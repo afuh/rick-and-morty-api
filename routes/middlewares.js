@@ -2,14 +2,14 @@ const { site, message, collection } = require('../utils/helpers')
 
 const pagination = (req, res, next) => {
   req.payload = {
-    page: req.query.page > 0 && req.query.page || 1
+    page: (req.query.page > 0 && req.query.page) || 1
   }
   req.payload.skip = (req.payload.page * collection.limit) - collection.limit
 
   next()
 }
 
-const checkData = (req, res, next) => { 
+const checkData = (req, res, next) => {
   const { count, page } = req.payload
   const pages = Math.ceil(count / collection.limit)
 
