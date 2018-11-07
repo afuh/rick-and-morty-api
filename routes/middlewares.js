@@ -1,41 +1,35 @@
-const { site, message } = require('../utils/helpers')
+const { site, message, collection } = require('../utils/helpers')
 
 const pagination = (req, res, next) => {
-  req.body.limit = 20
-  req.body.page = req.query.page > 0 && req.query.page || 1
-  req.body.skip = (req.body.page * req.body.limit) - req.body.limit
+  req.payload = {
+    page: (req.query.page > 0 && req.query.page) || 1
+  }
+  req.payload.skip = (req.payload.page * collection.limit) - collection.limit
+
   next()
 }
 
 const checkData = (req, res, next) => {
-  const { count, limit, page, results } = req.payload
-  const pages = Math.ceil(count / limit)
+  const { count, page } = req.payload
+  const pages = Math.ceil(count / collection.limit)
 
   if (page > pages) {
     res.status(404).json({ error: message.noPage })
     return
   }
-  req.body.results = results
-  req.body.count = count
-  req.body.pages = pages
+
+  req.payload.pages = pages
 
   next()
 }
 
 const showData = (req, res) => {
-  const { results, count, page, pages } = req.body
+  const { results, count, page, pages } = req.payload
   const path = req.path.replace(/\//g, '')
-
-  // Allowed queries for each path
-  const pass = {
-    character: ['name', 'status', 'species', 'type', 'gender'],
-    episode: ['name', 'episode'],
-    location: ['name', 'dimension', 'type']
-  }
 
   const qr = Object.keys(req.query).reduce((acc, key) => {
     // if the query isn't undefined and it's an allowed query for the path
-    if (req.query[key] && pass[path].includes(key)) {
+    if (req.query[key] && collection.queries[path].includes(key)) {
       // add it to the url
       acc+= `&${key}=${req.query[key]}`
     }

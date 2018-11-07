@@ -9,7 +9,7 @@
 > Hey, did you ever want to hold a terry fold?,
 >  I got one right here, grab my terry flap.
 
-[The Rick and Morty API](https://rickandmortyapi.com) (or ShlaAPI) is a RESTful API based on the television show [Rick and Morty](https://www.adultswim.com/videos/rick-and-morty). You will access to data about hundreds of characters, images, locations and episodes.
+[The Rick and Morty API](https://rickandmortyapi.com) (or ShlaAPI) is a RESTful and GraphQL API based on the television show [Rick and Morty](https://www.adultswim.com/videos/rick-and-morty). You will access to data about hundreds of characters, images, locations and episodes.
 
 **To get started check the documentation on [rickandmortyapi.com](https://rickandmortyapi.com/documentation) or just keep reading ;)**
 
@@ -19,7 +19,8 @@ You can check the code of the site [here](https://github.com/afuh/rick-and-morty
 
 - [Introduction](#introduction)
   - [Rate limit](#rate-limit)
-  - [Base URL](#base-url)
+  - [GraphQL](#graphql)
+  - [REST](#rest)
   - [Info and pagination](#info-and-pagination)
 - [Character](#character)
   - [Character schema](#character-schema)
@@ -54,8 +55,33 @@ This documentation will help you get familiar with the resources of the **Rick a
 ### Rate limit
 The **Rick and Morty API** is an open API, no authentication is required for use. Nonetheless, to prevent malicious usage of the API there is a limit on the number of requests a given IP address can make. This limit is 10000 requests per day. If you happen to hit the limit you'll receive a `429` status (Too Many Requests) on all your requests during a period of 12 hours.
 
-### Base URL
-`https://rickandmortyapi.com/api/`
+### GraphQL
+https://rickandmortyapi.com/graphql/   
+
+*Sample query*
+```graphql
+query {
+  allCharacters(page: 2, filter: { name: "rick" }) {
+    info {
+      count
+    }
+    results {
+      name
+    }
+  }
+  location(id: [1, 200]) {
+    name
+  }
+  episode(id: 1) {
+    id
+  }
+}
+```
+Check [here](#filter-characters) to know more about how to filter.   
+> *New to GraphQL? check the docs [here](https://graphql.org/learn/)*
+
+### REST
+**Base url:** https://rickandmortyapi.com/api/
 
 The base url contains information about all available API's resources.
 All requests are `GET` requests and go over `https`. All responses will return data in `json`.

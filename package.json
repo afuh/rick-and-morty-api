@@ -11,7 +11,7 @@
     "dev": "nodemon ./server.js",
     "data": "mongorestore --host=localhost:27017 --db=rickmorty-api --drop ./data",
     "test": "nyc --check-coverage --lines 95 mocha --timeout 10000 --exit && nyc report --reporter=text-lcov | coveralls",
-    "test:watch": "mocha --watch"
+    "test:watch": "nodemon --ext js ./test --exec 'mocha --reporter min'"
   },
   "nyc": {
     "exclude": [
@@ -21,11 +21,14 @@
   "author": "Axel Fuhrmann",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "apollo-server-express": "^2.1.0",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "express-brute": "^1.0.1",
     "express-brute-mongoose": "^1.0.2",
     "express-validator": "^5.3.0",
+    "graphql": "^14.0.2",
+    "graphql-depth-limit": "^1.1.0",
     "moment": "^2.22.2",
     "mongoose": "^5.3.1",
     "mongoose-mongodb-errors": "0.0.2",
