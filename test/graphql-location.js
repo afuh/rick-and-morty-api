@@ -37,7 +37,7 @@ const result = {
   character: 'Beth Smith'
 }
 
-describe('Graphql: Location type (Query location(id))', async () => {
+describe('Graphql: Location type (Query location(id))', () => {
   it('Gets a location by ID', async () => {
     const query = '{ location(id: 1) { name } }'
     const { location } = await test(query)
@@ -70,7 +70,7 @@ describe('Graphql: Location type (Query location(id))', async () => {
   })
 })
 
-describe('Graphql: Location type (Query allLocations)', async () => {
+describe('Graphql: Location type (Query allLocations)', () => {
   it('Gets multiple locations', async () => {
     const query = `{ allLocations { results { name } } }`
     const { allLocations: { results } } = await test(query)
@@ -95,7 +95,7 @@ describe('Graphql: Location type (Query allLocations)', async () => {
   })
 })
 
-describe('Graphql: Location type (Query allLocations(filter))', async () => {
+describe('Graphql: Location type (Query allLocations(filter))', () => {
   it('Filters a location by name', async () => {
     const query = `{ allLocations(filter: { name: "earth" }) { results { name } } }`
     const { allLocations: { results } } = await test(query)

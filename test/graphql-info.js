@@ -18,7 +18,7 @@ const test = async query => {
 
 const keys = ['count', 'pages', 'next', 'prev']
 
-describe('Graphql: Info', async () => {
+describe('Graphql: Info', () => {
   it('Gets info about allCharacters', async () => {
     const query = `{ allCharacters { info { count } } }`
     const { allCharacters: { info } } = await test(query)
@@ -91,7 +91,7 @@ describe('Graphql: Info', async () => {
       }
     `
     const res = await test(query)
-    
+
     expect(res).to.be.undefined
   })
 })

@@ -24,8 +24,6 @@ const server = new ApolloServer({
   validationRules: [ handle.depth(4) ]
 })
 
-server.applyMiddleware({ app })
-
 mongoose.connect(db, { useNewUrlParser: true })
 mongoose.Promise = global.Promise
 mongoose.set('useCreateIndex', true)
@@ -48,6 +46,8 @@ app.use(bodyParser.json())
 app.use('*', handle.limit)
 app.get('/', (req, res) => res.redirect('/api'))
 app.use('/api', api)
+
+server.applyMiddleware({ app })
 
 app.use(handle.error.notFound)
 app.use(handle.error.productionErrors)

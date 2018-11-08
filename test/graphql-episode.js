@@ -37,7 +37,7 @@ const result = {
   character: 'Rick Sanchez'
 }
 
-describe('Graphql: Episode type (Query episode(id))', async () => {
+describe('Graphql: Episode type (Query episode(id))', () => {
   it('Gets an episode by ID', async () => {
     const query = '{ episode(id: 1) { name } }'
     const { episode } = await test(query)
@@ -70,7 +70,7 @@ describe('Graphql: Episode type (Query episode(id))', async () => {
   })
 })
 
-describe('Graphql: Episode type (Query allEpisodes)', async () => {
+describe('Graphql: Episode type (Query allEpisodes)', () => {
   it('Gets multiple episodes', async () => {
     const query = `{ allEpisodes { results { name } } }`
     const { allEpisodes: { results } } = await test(query)
@@ -95,7 +95,7 @@ describe('Graphql: Episode type (Query allEpisodes)', async () => {
   })
 })
 
-describe('Graphql: Episode type (Query allEpisodes(filter))', async () => {
+describe('Graphql: Episode type (Query allEpisodes(filter))', () => {
   it('Filters a episode by name', async () => {
     const query = `{ allEpisodes(filter: { name: "Pilot" }) { results { name } } }`
     const { allEpisodes: { results } } = await test(query)
