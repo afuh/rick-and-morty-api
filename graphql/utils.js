@@ -31,7 +31,7 @@ const getPage = url => {
 // Use native promises with "request"
 const request = (endpoint, qs) => new Promise((resolve, reject) => {
   _req.get({
-    baseUrl: `http://localhost:${process.env.PORT}/api/`,
+    baseUrl: `http://localhost:${process.env.PORT || 8080}/api/`,
     url: endpoint,
     qs
   })
