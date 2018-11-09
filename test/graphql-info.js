@@ -19,30 +19,30 @@ const test = async query => {
 const keys = ['count', 'pages', 'next', 'prev']
 
 describe('Graphql: Info', () => {
-  it('Gets info about allCharacters', async () => {
-    const query = `{ allCharacters { info { count } } }`
-    const { allCharacters: { info } } = await test(query)
+  it('Gets info about characters', async () => {
+    const query = `{ characters { info { count } } }`
+    const { characters: { info } } = await test(query)
 
     expect(info).to.be.an('object')
   })
 
-  it('Gets info about allLocations', async () => {
-    const query = `{ allLocations { info { count } } }`
-    const { allLocations: { info } } = await test(query)
+  it('Gets info about locations', async () => {
+    const query = `{ locations { info { count } } }`
+    const { locations: { info } } = await test(query)
 
     expect(info).to.be.an('object')
   })
 
-  it('Gets info about allEpisodes', async () => {
-    const query = `{ allEpisodes { info { count } } }`
-    const { allEpisodes: { info } } = await test(query)
+  it('Gets info about episodes', async () => {
+    const query = `{ episodes { info { count } } }`
+    const { episodes: { info } } = await test(query)
 
     expect(info).to.be.an('object')
   })
 
   it('Shows the full info section', async () => {
-    const query = `{ allCharacters { info { count pages next prev } } }`
-    const { allCharacters: { info } } = await test(query)
+    const query = `{ characters { info { count pages next prev } } }`
+    const { characters: { info } } = await test(query)
 
     expect(Object.keys(info)).to.deep.equal(keys)
     expect(info.count).to.be.an("number")
@@ -52,8 +52,8 @@ describe('Graphql: Info', () => {
   })
 
   it('Gets the next page ', async () => {
-    const query = `{ allCharacters(page: 2) { info { count pages next prev } } }`
-    const { allCharacters: { info } } = await test(query)
+    const query = `{ characters(page: 2) { info { count pages next prev } } }`
+    const { characters: { info } } = await test(query)
 
     expect(info.count).to.be.an("number")
     expect(info.pages).to.be.an("number")
@@ -62,8 +62,8 @@ describe('Graphql: Info', () => {
   })
 
   it('Gets null data ', async () => {
-    const query = `{ allCharacters(page: 2000) { results { id } info { count pages next prev } } }`
-    const { allCharacters: { info, results } } = await test(query)
+    const query = `{ characters(page: 2000) { results { id } info { count pages next prev } } }`
+    const { characters: { info, results } } = await test(query)
 
     expect(info.count).to.be.null
     expect(info.pages).to.be.null
@@ -76,7 +76,7 @@ describe('Graphql: Info', () => {
   it('Prevents deep nesting', async () => {
     const query = `
       {
-      	allCharacters {
+      	characters {
           results {
             origin {
               residents {
