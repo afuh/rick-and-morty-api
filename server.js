@@ -56,8 +56,8 @@ const PORT = process.env.PORT || 8080
 app.listen(PORT, () => console.log('\x1b[34m%s\x1b[0m', `
   ${app.get('env').toUpperCase()}
 
-  Port      → http://localhost:${PORT}
-  GraphQL   → http://localhost:${PORT}${server.graphqlPath}
+  REST      → http://localhost:${PORT}/api/
+  GraphQL   → http://localhost:${PORT}${server.graphqlPath}/
   Database  → ${mongoose.connection.host}/${mongoose.connection.name}
   `
 ))
