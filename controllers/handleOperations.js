@@ -1,8 +1,10 @@
 const { handleSingle, handleMultiple } = require('./handleQuery')
 const models = require('../models')
 
+const name = req => req.path.split("/")[1]
+
 const getAll = async (req, res, next) => {
-  const Model = models[req.path.replace(/\//g, '')]
+  const Model = models[name(req)]
 
   const { count, results } = await handleMultiple(Model, req)
 
@@ -16,7 +18,7 @@ const getAll = async (req, res, next) => {
 }
 
 const getById = async (req, res) => {
-  const Model = models[req.path.replace(/(\/|\d|\[|\]|,)/g, '')]
+  const Model = models[name(req)]
 
   await handleSingle(Model, req.params.id, res)
 }
