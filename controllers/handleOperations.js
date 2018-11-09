@@ -20,7 +20,13 @@ const getAll = async (req, res, next) => {
 const getById = async (req, res) => {
   const Model = models[name(req)]
 
-  await handleSingle(Model, req.params.id, res)
+  const { data, error, status } = await handleSingle(Model, req.params.id)
+
+  if (error) {
+    return res.status(status).json({ error })
+  }
+
+  return res.json(data)
 }
 
 module.exports = {
