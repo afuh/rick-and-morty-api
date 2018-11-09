@@ -18,12 +18,12 @@ const resolvers = {
     },
     location: async ({ location }) => {
       if (location.name === 'unknown') return location
-      const [ res ] = await get('location', { id: urlToId(location.url) })
+      const res = await get('location', { id: urlToId(location.url) })
       return res
     },
     origin: async ({ origin }) => {
       if (origin.name === 'unknown') return origin
-      const [ res ] = await get('location', { id: urlToId(origin.url) })
+      const res = await get('location', { id: urlToId(origin.url) })
       return res
     }
   },
