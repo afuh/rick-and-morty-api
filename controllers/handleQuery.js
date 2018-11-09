@@ -1,6 +1,6 @@
 const { message, collection } = require('../utils/helpers')
 
-const handleSingle = async (Col, id, res) => {
+const handleSingle = async (Col, id) => {
 
   // Check if the param is an array
   if (Array.isArray(id)) {
@@ -8,21 +8,21 @@ const handleSingle = async (Col, id, res) => {
       id: { $in: id }
     }).select(collection.exclude)
 
-    return res.json(Col.structure(data))
+    return { data: Col.structure(data) }
   }
 
   // Check if the param is a number
   if (Number.isNaN(parseInt(id))) {
-    return res.status(500).json({ error: message.badParam })
+    return { error: message.badParam, status: 500 }
   }
 
   const data = await Col.findOne({ id }).select(collection.exclude)
 
   if (!data) {
-    return res.status(404).json({ error: message[`no${Col.modelName}`] })
+    return { error: message[`no${Col.modelName}`], status: 404 }
   }
 
-  return res.json(Col.structure(data))
+  return { data: Col.structure(data) }
 }
 
 const handleMultiple = async (Col, req) => {
