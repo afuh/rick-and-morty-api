@@ -1,4 +1,4 @@
-const { handleSingle, handleMultiple } = require('./handleQuery')
+const { queryById, queryByFilter } = require('./handleQuery')
 const models = require('../models')
 
 const name = req => req.path.split("/")[1]
@@ -6,7 +6,7 @@ const name = req => req.path.split("/")[1]
 const getAll = async (req, res, next) => {
   const Model = models[name(req)]
 
-  const { count, results } = await handleMultiple(Model, req)
+  const { count, results } = await queryByFilter(Model, req)
 
   req.payload = {
     ...req.payload,
@@ -20,7 +20,7 @@ const getAll = async (req, res, next) => {
 const getById = async (req, res) => {
   const Model = models[name(req)]
 
-  const { data, error, status } = await handleSingle(Model, req.params.id)
+  const { data, error, status } = await queryById(Model, req.params.id)
 
   if (error) {
     return res.status(status).json({ error })

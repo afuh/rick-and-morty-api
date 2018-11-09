@@ -1,6 +1,6 @@
 const { message, collection } = require('../utils/helpers')
 
-const handleSingle = async (Col, id) => {
+const queryById = async (Col, id) => {
 
   // Check if the param is an array
   if (Array.isArray(id)) {
@@ -25,7 +25,7 @@ const handleSingle = async (Col, id) => {
   return { data: Col.structure(data) }
 }
 
-const handleMultiple = async (Col, req) => {
+const queryByFilter = async (Col, req) => {
   const opt = Object.assign(req.query, { skip: req.payload.skip })
 
   const { results, count } = await Col.findAndCount(opt)
@@ -37,6 +37,6 @@ const handleMultiple = async (Col, req) => {
 }
 
 module.exports = {
-  handleSingle,
-  handleMultiple
+  queryById,
+  queryByFilter
 }
