@@ -2,11 +2,8 @@ const { gql } = require('apollo-server-express')
 
 const typeDefs = gql`
   type Query {
-    """Get a specific characters by ID"""
+    """Get a specific character by ID"""
     character(id: ID): Character
-
-    """Get several characters by ID"""
-    characterByIds(id: [ID!]!): [Character]
 
     """Get the list of all characters"""
     characters(page: Int, filter: FilterCharacter): Characters
@@ -14,17 +11,11 @@ const typeDefs = gql`
     """Get a specific locations by ID"""
     location(id: ID): Location
 
-    """Get several locations by ID"""
-    locationByIds(id: [ID]!): [Location]
-
     """Get the list of all locations"""
     locations(page: Int, filter: FilterLocation): Locations
 
     """Get a specific episode by ID"""
     episode(id: ID): Episode
-
-    """Get several episodes by ID"""
-    episodeByIds(id: [ID]!): [Episode]
 
     """Get the list of all episodes"""
     episodes(page: Int, filter: FilterEpisode): Episodes

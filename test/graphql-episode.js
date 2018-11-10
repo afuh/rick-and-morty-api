@@ -46,12 +46,12 @@ describe('Graphql: Episode type (Query episode(id))', () => {
     expect(episode.name).to.equal(result.episode)
   })
 
-  it('Gets two episodes by ID', async () => {
-    const query = '{ episodeByIds(id: [1, 2]) { name } }'
-    const { episodeByIds } = await test(query)
+  it('Gets a different episode', async () => {
+    const query = '{ episode(id: 2) { name } }'
+    const { episode } = await test(query)
 
-    expect(episodeByIds[0].name).to.equal(result.episode)
-    expect(episodeByIds[1].name).to.equal('Lawnmower Dog')
+    expect(episode).to.be.an('object')
+    expect(episode.name).to.equal("Lawnmower Dog")
   })
 
   it('Gets a Charcter type', async () => {

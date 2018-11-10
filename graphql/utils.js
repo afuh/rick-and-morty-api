@@ -7,9 +7,8 @@ const modelNames = () => {
 
   return resources.reduce((acc, resource) => {
     const resources = `${resource}s`
-    const resourceByIds = `${resource}ByIds`
 
-    return [...acc, { resource, resourceByIds, resources } ]
+    return [...acc, { resource, resources } ]
   }, [])
 }
 

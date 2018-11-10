@@ -46,12 +46,12 @@ describe('Graphql: Location type (Query location(id))', () => {
     expect(location.name).to.equal(result.location)
   })
 
-  it('Gets two locations by ID', async () => {
-    const query = '{ locationByIds(id: [1, 2]) { name } }'
-    const { locationByIds } = await test(query)
+  it('Gets a different location', async () => {
+    const query = '{ location(id: 2) { name } }'
+    const { location } = await test(query)
 
-    expect(locationByIds[0].name).to.equal(result.location)
-    expect(locationByIds[1].name).to.equal('Abadango')
+    expect(location).to.be.an('object')
+    expect(location.name).to.equal("Abadango")
   })
 
   it('Gets a Charcter type', async () => {

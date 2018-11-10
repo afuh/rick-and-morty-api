@@ -2,10 +2,9 @@ const { get, urlToId, modelNames } = require('./utils')
 
 const names = modelNames()
 
-const Query = names.reduce((acc, { resource, resourceByIds, resources }) => ({
+const Query = names.reduce((acc, { resource, resources }) => ({
   ...acc,
   [resource]: async (_, { id }) => await get(resource, { id }),
-  [resourceByIds]: async (_, { id }) => await get(resource, { id }),
   [resources]: async (_, { page, filter }) => await get(resource, { page, filter })
 }), {})
 

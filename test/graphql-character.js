@@ -52,12 +52,12 @@ describe('Graphql: Character type (Query character(id))', () => {
     expect(character.name).to.equal(result.character)
   })
 
-  it('Gets two characters by ID', async () => {
-    const query = '{ characterByIds(id: [1, 2]) { name } }'
-    const { characterByIds } = await test(query)
+  it('Gets a different character', async () => {
+    const query = '{ character(id: 2) { name } }'
+    const { character } = await test(query)
 
-    expect(characterByIds[0].name).to.equal(result.character)
-    expect(characterByIds[1].name).to.equal('Morty Smith')
+    expect(character).to.be.an('object')
+    expect(character.name).to.equal("Morty Smith")
   })
 
   it('Gets a Location type', async () => {
