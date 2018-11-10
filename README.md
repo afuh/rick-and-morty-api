@@ -61,16 +61,13 @@ https://rickandmortyapi.com/graphql/
 *Sample query*
 ```graphql
 query {
-  allCharacters(page: 2, filter: { name: "rick" }) {
+  characters(page: 2, filter: { name: "rick" }) {
     info {
       count
     }
     results {
       name
     }
-  }
-  location(id: [1, 200]) {
-    name
   }
   episode(id: 1) {
     id
