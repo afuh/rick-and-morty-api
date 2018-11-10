@@ -6,9 +6,9 @@ const modelNames = () => {
   const resources = Object.keys(models)
 
   return resources.reduce((acc, resource) => {
-    const allResources = `all${resource.charAt(0).toUpperCase() + resource.slice(1)}s`
+    const resources = `${resource}s`
 
-    return [...acc, { resource, allResources } ]
+    return [...acc, { resource, resources } ]
   }, [])
 }
 
@@ -49,7 +49,7 @@ const request = (endpoint, qs) => new Promise((resolve, reject) => {
 const get = async (col, args) => {
   if (args.id) {
     const res = await request(`${col}/${args.id}`)
-    return Array.isArray(res) ? res : [ res ]
+    return res
   }
 
   const { results, info: stats } = await request(`${col}/`, { ...args.filter, page: args.page })
