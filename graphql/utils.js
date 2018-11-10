@@ -1,6 +1,5 @@
 const _req = require('request')
 const models = require('../models')
-const { URL } = require('url') // Remove this in Node 10
 
 // Returns the query names
 const modelNames = () => {
