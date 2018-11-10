@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const mongodbErrorHandler = require('mongoose-mongodb-errors')
 
-const { exclude } = require('../utils/helpers')
+const { collection } = require('../utils/helpers')
 
 const characterSchema = new mongoose.Schema({
   id: {
@@ -68,28 +68,23 @@ characterSchema.statics.structure = ch => {
   return Array.isArray(ch) ? ch.map(ch => m(ch)) : m(ch)
 }
 
-characterSchema.statics.findAndCount = async function({ name, type, status, species, gender, skip, limit }) {
+characterSchema.statics.findAndCount = async function({ name, type, status, species, gender, skip }) {
   const q = key => new RegExp(key && ( /^male/i.test(key) ? `^${key}` : key.replace(/[^\w\s]/g, "\\$&") ), "i")
 
-  const [loc, count] = await Promise.all([
-    this.find({
-      name: q(name),
-      status: q(status),
-      species: q(species),
-      type: q(type),
-      gender: q(gender)
-    }).sort({ id: 1 }).select(exclude).skip(skip).limit(limit),
+  const query = {
+    name: q(name),
+    status: q(status),
+    species: q(species),
+    type: q(type),
+    gender: q(gender)
+  }
 
-    this.find({
-      name: q(name),
-      status: q(status),
-      species: q(species),
-      type: q(type),
-      gender: q(gender)
-    }).countDocuments()
+  const [data, count] = await Promise.all([
+    this.find(query).sort({ id: 1 }).select(collection.exclude).limit(collection.limit).skip(skip),
+    this.find(query).countDocuments()
   ])
 
-  const results = this.structure(loc)
+  const results = this.structure(data)
 
   return { results, count }
 }
