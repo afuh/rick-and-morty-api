@@ -32,7 +32,7 @@ const bruteforce = new ExpressBrute(store, {
   refreshTimeoutOnRequest: false,
   minWait: 13*60*60*1000,
   maxWait: 13*60*60*1000,
-  lifetime: 12*60*60,
+  lifetime: 24*60*60,
   failCallback,
   handleStoreError
 })

@@ -33,7 +33,7 @@ mongoose.connection.on('error', err => {
 })
 
 if (app.get('env') !== 'test') {
-  app.use(morgan('dev'))
+  app.use(morgan(':status | :method :url :response-time ms | :remote-addr'))
 }
 
 app.set('trust proxy', 1)
