@@ -42,6 +42,7 @@ You can check the code of the site [here](https://github.com/afuh/rick-and-morty
   - [Filter episodes](#filter-episodes)
 - [Libraries](#libraries)
   - [Elixir](#elixir)
+  - [Go](#go)
   - [GraphQL](#graphql)
   - [JavaScript](#javascript)
   - [.NET](#net)
@@ -634,6 +635,9 @@ Here you will find a list of helper libraries to use the Rick and Morty API with
 
 #### Elixir
 - [ExShla - The Rick and Morty API Wrapper](https://github.com/l1h3r/ex_shla) by [l1h3r](https://github.com/l1h3r)
+
+#### Go
+- [The Rick and Morty API Go client](https://github.com/pitakill/rickandmortyapigowrapper) by [Leopoldo Caballero](https://github.com/pitakill)
 
 #### GraphQL
 - [The Rick and Morty GraphQL API](https://github.com/arthurdenner/rick-and-morty-graphql-api) by [Arthur Denner](https://github.com/arthurdenner)
