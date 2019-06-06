@@ -1,4 +1,4 @@
-const { get, urlToId, modelNames } = require('./utils')
+const { get, urlToId, modelNames, checkArray } = require('./utils')
 
 const names = modelNames()
 
@@ -13,7 +13,7 @@ const resolvers = {
   Character: {
     episode: async ({ episode }) => {
       const res = await get('episode', { id: urlToId(episode) })
-      return res
+      return checkArray(res)
     },
     location: async ({ location }) => {
       if (location.name === 'unknown') return location
@@ -29,13 +29,13 @@ const resolvers = {
   Location: {
     residents: async ({ residents }) => {
       const res = await get('character', { id: urlToId(residents) })
-      return res
+      return checkArray(res)
     }
   },
   Episode: {
     characters: async ({ characters }) => {
       const res = await get('character', { id: urlToId(characters) })
-      return res
+      return checkArray(res)
     }
   }
 }
