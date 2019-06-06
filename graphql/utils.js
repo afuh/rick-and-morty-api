@@ -1,6 +1,8 @@
 const _req = require('request')
 const models = require('../models')
 
+const checkArray = res => Array.isArray(res) ? res : [ res ]
+
 // Returns the query names
 const modelNames = () => {
   const resources = Object.keys(models)
@@ -64,5 +66,8 @@ const get = async (col, args) => {
 }
 
 module.exports = {
-  get, urlToId, modelNames
+  get,
+  urlToId,
+  modelNames,
+  checkArray
 }
