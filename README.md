@@ -47,6 +47,7 @@ You can check the code of the site [here](https://github.com/afuh/rick-and-morty
   - [JavaScript](#javascript)
   - [.NET](#net)
   - [Python](#python)
+  - [R](#r)
   - [Ruby](#ruby)
 - [Run the API locally](#run-the-api-locally)
 
@@ -650,6 +651,9 @@ Here you will find a list of helper libraries to use the Rick and Morty API with
 
 #### Python
 - [Python implementation for the Rick and Morty API](https://github.com/curiousrohan/ramapi) by [Rohan Hazra](https://github.com/curiousrohan)
+
+#### R
+- [mortyr](https://github.com/MikeJohnPage/mortyr) by [Mike Page](https://github.com/MikeJohnPage)
 
 #### Ruby
 - [The Rick and Morty API Gem](https://github.com/spielhoelle/rick-and-morty-gem) by [Tommy Spielhoelle](https://github.com/spielhoelle)
