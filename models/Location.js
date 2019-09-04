@@ -3,28 +3,16 @@ const mongodbErrorHandler = require('mongoose-mongodb-errors')
 
 const { collection } = require('../utils/helpers')
 
-const locationSchema = new mongoose.Schema({
-  id: {
-    type: Number, unique: true
-  },
-  name: {
-    type: String, trim: true, required: true
-  },
-  type: {
-    type: String, trim: true, default: 'unknown'
-  },
-  dimension: {
-    type: String, trim: true, default: 'unknown'
-  },
-  residents: Array,
+const { Schema } = mongoose
+
+const locationSchema = new Schema({
+  id: Number,
+  name: String,
+  type: String,
+  dimension: String,
+  residents: [ String ],
   url: String,
-  author: {
-    type: mongoose.Schema.ObjectId, ref: 'User'
-  },
-  created: {
-    type: Date, default: Date.now
-  },
-  edited: Date
+  created: Date
 })
 
 locationSchema.statics.structure = ch => {
