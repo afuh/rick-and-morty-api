@@ -671,7 +671,16 @@ npm install
 npm run data
 npm run dev
 ```
-Use to http://localhost:8080/api to access the API.
+
+Or you can run the application from scratch with docker.
+
+```
+git clone https://github.com/afuh/rick-and-morty-api.git
+cd rick-and-morty-api
+docker-compose up -d
+```
+
+Browse to http://localhost:8080/api to access the API.
 
 ---
 
