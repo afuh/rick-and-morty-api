@@ -5,14 +5,19 @@ services:
   mongo:
     image: mongo:4
     restart: always
-    ports:
-      - 127.0.0.1:27017:27017
 
-#  mongo-express:
-#    image: mongo-express
-#    restart: always
-#    ports:
-#      - 8081:8081
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+
+  mongo-seed:
+    build: ./data
+    environment:
+      DATABASE: mongodb://mongo:27017/rickmorty-api
+    depends_on:
+      - mongo
 
   api:
     build: .
@@ -24,3 +29,4 @@ services:
       DATABASE: mongodb://mongo:27017/rickmorty-api
     depends_on:
       - mongo
+      - mongo-seed
