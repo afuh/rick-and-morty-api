@@ -38,6 +38,11 @@ if (app.get('env') !== 'test') {
 
 app.set('trust proxy', 1)
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  next()
+})
+
 app.use(express.static(path.join(__dirname, 'static')))
 
 app.use(bodyParser.urlencoded({ extended: true }))
