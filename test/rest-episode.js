@@ -11,7 +11,7 @@ const { message } = require('../utils/helpers')
 
 const test = async (pathname = '') => await chai.request(server).get(`/api/episode/${pathname}`)
 
-const keys = ['id', 'name', 'air_date', 'episode', 'characters', 'url', 'created']
+const keys = ['id', 'name', 'air_date', 'episode', 'image', 'characters', 'url', 'created']
 
 const expectStructure = body => {
   expect(body).to.be.an('object')

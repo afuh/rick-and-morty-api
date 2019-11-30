@@ -22,15 +22,17 @@ const episodeSchema = new mongoose.Schema({
   created: {
     type: Date, default: Date.now
   },
-  edited: Date
+  edited: Date,
+  image: String
 })
 
 episodeSchema.statics.structure = ch => {
-  const m = ({ id, name, air_date, episode, characters, url, created }) => ({
+  const m = ({ id, name, air_date, episode, image, characters, url, created }) => ({
     id,
     name,
     air_date,
     episode,
+    image,
     characters,
     url,
     created

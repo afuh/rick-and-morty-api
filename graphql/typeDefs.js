@@ -107,6 +107,12 @@ const typeDefs = gql`
     """The code of the episode."""
     episode: String
 
+    """
+    Link to the character's image.
+    All images are 350x197px and most are medium shots or portraits since they are intended to be used as cover.
+    """
+    image: String
+
     """List of characters who have been seen in the episode."""
     characters: [Character]
 
