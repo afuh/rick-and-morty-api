@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const path = require('path')
 const morgan = require('morgan')
+const cors = require('cors')
 const { ApolloServer } = require('apollo-server-express')
 
 const app = express()
@@ -15,7 +16,7 @@ const resolvers = require('./graphql/resolvers')
 const handle = require('./handlers')
 const api = require('./routes/api')
 
-const db = process.env.NODE_ENV === "production" ? process.env.DATABASE : 'mongodb://localhost:27017/rickmorty-api'
+const db = process.env.NODE_ENV === "production" ? process.env.DATABASE : 'mongodb://localhost:27017/rickmorty'
 
 const server = new ApolloServer({
   typeDefs,
@@ -36,15 +37,25 @@ if (app.get('env') !== 'test') {
   app.use(morgan(':status | :method :url :response-time ms | :remote-addr'))
 }
 
+app.use(cors())
+
 app.set('trust proxy', 1)
 
-app.use(express.static(path.join(__dirname, 'static')))
+app.use(handle.limit, express.static(path.join(__dirname, 'static')))
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.use('*', handle.limit)
-app.get('/', (req, res) => res.redirect('/api'))
+app.get('*', (req, res, next) => {
+  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+
+  if (ip.indexOf("127.0.0.1") > 0) {
+    return next()
+  }
+
+  handle.limit(req, res, next)
+})
+
 app.use('/api', api)
 
 server.applyMiddleware({ app })
