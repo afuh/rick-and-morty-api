@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const { sanitizeQuery } = require('express-validator/filter')
+const { sanitizeQuery } = require('express-validator')
 
 const { catchErrors } = require('../handlers/errors')
 const { site, collection } = require('../utils/helpers')
