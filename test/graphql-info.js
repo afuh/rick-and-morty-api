@@ -91,7 +91,6 @@ describe('Graphql: Info', () => {
       }
     `
     const res = await test(query)
-    console.log({ res })
     expect(res).to.be.undefined
   })
 })
