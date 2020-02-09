@@ -58,7 +58,7 @@ This documentation will help you get familiar with the resources of the **Rick a
 The **Rick and Morty API** is an open API, no authentication is required for use. Nonetheless, to prevent malicious usage of the API there is a limit on the number of requests a given IP address can make. This limit is 10000 requests per day. If you happen to hit the limit you'll receive a `429` status (Too Many Requests) on all your requests during a period of 12 hours.
 
 ### GraphQL
-https://rickandmortyapi.com/graphql/   
+https://rickandmortyapi.com/graphql/
 
 *Sample query*
 ```graphql
@@ -76,7 +76,7 @@ query {
   }
 }
 ```
-Check [here](#filter-characters) to know more about how to filter.   
+Check [here](#filter-characters) to know more about how to filter.
 > *New to GraphQL? check the docs [here](https://graphql.org/learn/)*
 
 ### REST
@@ -632,7 +632,7 @@ Available parameters:
 If you want to know how to use queries, check [here](#filter-characters)
 
 ## Libraries
-Here you will find a list of helper libraries to use the Rick and Morty API with your preferred language.   
+Here you will find a list of helper libraries to use the Rick and Morty API with your preferred language.
 
 #### Elixir
 - [ExShla - The Rick and Morty API Wrapper](https://github.com/l1h3r/ex_shla) by [l1h3r](https://github.com/l1h3r)
@@ -642,6 +642,9 @@ Here you will find a list of helper libraries to use the Rick and Morty API with
 
 #### GraphQL
 - [The Rick and Morty GraphQL API](https://github.com/arthurdenner/rick-and-morty-graphql-api) by [Arthur Denner](https://github.com/arthurdenner)
+
+#### Java
+- [Rick and Morty API Java Client](https://github.com/adrianoluis/rickandmortyapi-java) by [Adriano Rocha](https://github.com/adrianoluis)
 
 #### JavaScript
 - [The Rick and Morty API Node client](https://github.com/afuh/rick-and-morty-api-node) by [Simple Rick](https://github.com/afuh)

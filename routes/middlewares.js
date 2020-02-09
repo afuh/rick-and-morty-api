@@ -41,8 +41,8 @@ const showData = (req, res) => {
     info: {
       count,
       pages,
-      next: `${page >= pages ? '' : `${site}${req.path}?page=${parseInt(page) + 1 }${qr}` }`,
-      prev: `${page < 2 ? '' : `${site}${req.path}?page=${parseInt(page) - 1 }${qr}` }`
+      next: page >= pages ? "" : `${site}${req.path}?page=${parseInt(page) + 1}${qr}`,
+      prev: page < 2 ? "" : `${site}${req.path}?page=${parseInt(page) - 1}${qr}`
     },
     results
   })

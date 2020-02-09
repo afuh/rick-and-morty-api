@@ -3,41 +3,21 @@ const mongodbErrorHandler = require('mongoose-mongodb-errors')
 
 const { collection } = require('../utils/helpers')
 
-const characterSchema = new mongoose.Schema({
-  id: {
-    type: Number, unique: true
-  },
-  name: {
-    type: String, trim: true, required: true
-  },
-  species: {
-    type: String, trim: true, default: 'unknown'
-  },
-  type: {
-    type: String, trim: true, default: 'unknown'
-  },
-  status: {
-    type: String, trim: true, default: 'unknown'
-  },
-  location: {
-    type: mongoose.Schema.ObjectId, ref: 'Location'
-  },
-  origin: {
-    type: mongoose.Schema.ObjectId, ref: 'Location'
-  },
-  gender: {
-    type: String, trim: true, default: 'unknown'
-  },
-  episode: Array,
+const { Schema } = mongoose
+
+const characterSchema = new Schema({
+  id: Number,
+  name: String,
+  species: String,
+  type: String,
+  status: String,
+  location: { type: Schema.ObjectId, ref: 'Location' },
+  origin: { type: Schema.ObjectId, ref: 'Location' },
+  gender: String,
+  episode: [ String ],
   image: String,
   url: String,
-  author: {
-    type: mongoose.Schema.ObjectId, ref: 'User'
-  },
-  created: {
-    type: Date, default: Date.now
-  },
-  edited: Date
+  created: Date
 })
 
 function autopopulate(next) {
