@@ -22,6 +22,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
+  playground: true,
   validationRules: [ handle.depth(4) ]
 })
 
