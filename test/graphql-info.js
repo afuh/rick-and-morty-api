@@ -63,14 +63,9 @@ describe('Graphql: Info', () => {
 
   it('Gets null data ', async () => {
     const query = `{ characters(page: 2000) { results { id } info { count pages next prev } } }`
-    const { characters: { info, results } } = await test(query)
+    const { characters } = await test(query)
 
-    expect(info.count).to.be.null
-    expect(info.pages).to.be.null
-    expect(info.next).to.be.null
-    expect(info.prev).to.be.null
-
-    expect(results).to.be.null
+    expect(characters).to.be.null
   })
 
   it('Prevents deep nesting', async () => {

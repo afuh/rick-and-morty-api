@@ -12,6 +12,7 @@ const app = express()
 
 const typeDefs = require('./graphql/typeDefs')
 const resolvers = require('./graphql/resolvers')
+const { Character, Location, Episode } = require('./graphql/sources')
 
 const handle = require('./handlers')
 const api = require('./routes/api')
@@ -23,7 +24,12 @@ const server = new ApolloServer({
   resolvers,
   introspection: true,
   playground: true,
-  validationRules: [ handle.depth(4) ]
+  validationRules: [ handle.depth(4) ],
+  dataSources: () => ({
+    character: new Character(),
+    location: new Location(),
+    episode: new Episode()
+  })
 })
 
 mongoose.connect(db, { useNewUrlParser: true })
