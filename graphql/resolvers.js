@@ -28,6 +28,7 @@ const resolvers = {
   },
   Location: {
     residents: async ({ residents }) => {
+      if (!residents) return
       const res = await get('character', { id: urlToId(residents) })
       return checkArray(res)
     }

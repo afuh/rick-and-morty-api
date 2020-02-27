@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node ./server.js",
     "dev": "nodemon ./server.js",
-    "data": "mongorestore --host=localhost:27017 --db=rickmorty-api --drop ./data",
+    "data": "mongorestore --host=localhost:27017 --db=rickmorty --drop ./data",
     "test": "nyc --check-coverage --lines 95 mocha --timeout 10000 --exit && nyc report --reporter=text-lcov | coveralls",
     "test:watch": "nodemon --ext js ./test --exec 'mocha --reporter min'"
   },
@@ -21,28 +21,28 @@
   "author": "Axel Fuhrmann",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "apollo-server-express": "^2.9.13",
+    "apollo-server-express": "^2.10.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-brute": "^1.0.1",
     "express-brute-mongoose": "^1.1.0",
-    "express-validator": "^6.3.0",
-    "graphql": "^14.5.8",
+    "express-validator": "^6.4.0",
+    "graphql": "^14.6.0",
     "graphql-depth-limit": "^1.1.0",
     "moment": "^2.24.0",
-    "mongoose": "^5.8.0",
+    "mongoose": "^5.9.2",
     "mongoose-mongodb-errors": "0.0.2",
     "morgan": "^1.9.1",
-    "request": "^2.88.0"
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "coveralls": "^3.0.9",
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "mocha": "^6.2.2",
-    "nodemon": "^2.0.1",
+    "nodemon": "^2.0.2",
     "nyc": "^14.1.1"
   },
   "directories": {

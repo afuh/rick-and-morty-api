@@ -1,15 +1,14 @@
 const express = require('express')
-const router = express.Router()
-
-const { sanitizeQuery } = require('express-validator')
+const { query } = require('express-validator')
 
 const { catchErrors } = require('../handlers/errors')
 const { site, collection } = require('../utils/helpers')
-
 const operations = require('../controllers/handleOperations')
 const { pagination, checkArray, showData, checkData } = require('./middlewares')
 
-const sanitize = model => sanitizeQuery(collection.queries[model]).trim()
+const router = express.Router()
+
+const sanitize = model => query(collection.queries[model]).trim()
 
 const hooks = {
   find: [pagination, catchErrors(operations.getAll), checkData, showData],
