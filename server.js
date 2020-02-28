@@ -41,7 +41,9 @@ mongoose.connection.on('error', err => {
 })
 
 if (app.get('env') !== 'test') {
-  app.use(morgan(':status | :method :url :response-time ms | :remote-addr'))
+  app.use(morgan(':status | :method :url :response-time ms | :remote-addr', {
+    skip: req => req.method !== 'GET'
+  }))
 }
 
 app.use(cors())
