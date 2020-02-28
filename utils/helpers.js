@@ -5,7 +5,7 @@ exports.message = {
   noCharacter: 'Character not found',
   noLocation: 'Location not found',
   noEpisode: 'Episode not found',
-  badParam: 'Hey! that parameter is not allowed, try with a number instead ;)',
+  badParam: 'Hey! you must provide an id',
   badArray: 'Bad... bad array :/'
 }
 
