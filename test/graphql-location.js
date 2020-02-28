@@ -51,7 +51,7 @@ describe('Graphql: Location type (Query location(id))', () => {
     const { location } = await test(query)
 
     expect(location).to.be.an('object')
-    expect(location.name).to.equal("Abadango")
+    expect(location.name).to.equal('Abadango')
   })
 
   it('Gets a Charcter type', async () => {
@@ -63,7 +63,7 @@ describe('Graphql: Location type (Query location(id))', () => {
   })
 
   it('Gets all properties', async () => {
-    const query = locFragment(`{ location(id: 1) { ...allProperties } }`)
+    const query = locFragment('{ location(id: 1) { ...allProperties } }')
     const { location } = await test(query)
 
     expect(Object.keys(location)).to.deep.equal(keys)
@@ -72,7 +72,7 @@ describe('Graphql: Location type (Query location(id))', () => {
 
 describe('Graphql: Location type (Query locations)', () => {
   it('Gets multiple locations', async () => {
-    const query = `{ locations { results { name } } }`
+    const query = '{ locations { results { name } } }'
     const { locations: { results } } = await test(query)
 
     expect(results).to.be.an('array')
@@ -80,7 +80,7 @@ describe('Graphql: Location type (Query locations)', () => {
   })
 
   it('Gets a Character type', async () => {
-    const query = `{ locations { results { residents { name } } } }`
+    const query = '{ locations { results { residents { name } } } }'
     const { locations: { results } } = await test(query)
 
     expect(results[0].residents).to.be.an('array')
@@ -88,7 +88,7 @@ describe('Graphql: Location type (Query locations)', () => {
   })
 
   it('Gets all properties', async () => {
-    const query = locFragment(`{ locations { results { ...allProperties } } }`)
+    const query = locFragment('{ locations { results { ...allProperties } } }')
     const { locations: { results } } = await test(query)
 
     expect(Object.keys(results[0])).to.deep.equal(keys)
@@ -97,21 +97,21 @@ describe('Graphql: Location type (Query locations)', () => {
 
 describe('Graphql: Location type (Query locations(filter))', () => {
   it('Filters a location by name', async () => {
-    const query = `{ locations(filter: { name: "earth" }) { results { name } } }`
+    const query = '{ locations(filter: { name: "earth" }) { results { name } } }'
     const { locations: { results } } = await test(query)
 
     expect(results).to.deep.include({ name: result.location })
   })
 
   it('Filters an episode by episode code', async () => {
-    const query = `{ locations(filter: { type: "planet" }) { results { type } } }`
+    const query = '{ locations(filter: { type: "planet" }) { results { type } } }'
     const { locations: { results } } = await test(query)
 
     expect(results).to.deep.include({ type: 'Planet' })
   })
 
   it('Filters a character by using more than one filter', async () => {
-    const query = `{ locations(filter: { name: "earth" type: "planet" }) { results { name type } } }`
+    const query = '{ locations(filter: { name: "earth" type: "planet" }) { results { name type } } }'
     const { locations: { results } } = await test(query)
 
     expect(results).to.deep.include({ name: result.location, type: 'Planet' })

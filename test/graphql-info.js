@@ -20,49 +20,49 @@ const keys = ['count', 'pages', 'next', 'prev']
 
 describe('Graphql: Info', () => {
   it('Gets info about characters', async () => {
-    const query = `{ characters { info { count } } }`
+    const query = '{ characters { info { count } } }'
     const { characters: { info } } = await test(query)
 
     expect(info).to.be.an('object')
   })
 
   it('Gets info about locations', async () => {
-    const query = `{ locations { info { count } } }`
+    const query = '{ locations { info { count } } }'
     const { locations: { info } } = await test(query)
 
     expect(info).to.be.an('object')
   })
 
   it('Gets info about episodes', async () => {
-    const query = `{ episodes { info { count } } }`
+    const query = '{ episodes { info { count } } }'
     const { episodes: { info } } = await test(query)
 
     expect(info).to.be.an('object')
   })
 
   it('Shows the full info section', async () => {
-    const query = `{ characters { info { count pages next prev } } }`
+    const query = '{ characters { info { count pages next prev } } }'
     const { characters: { info } } = await test(query)
 
     expect(Object.keys(info)).to.deep.equal(keys)
-    expect(info.count).to.be.an("number")
-    expect(info.pages).to.be.an("number")
-    expect(info.next).to.be.an("number")
+    expect(info.count).to.be.an('number')
+    expect(info.pages).to.be.an('number')
+    expect(info.next).to.be.an('number')
     expect(info.prev).to.be.null
   })
 
   it('Gets the next page ', async () => {
-    const query = `{ characters(page: 2) { info { count pages next prev } } }`
+    const query = '{ characters(page: 2) { info { count pages next prev } } }'
     const { characters: { info } } = await test(query)
 
-    expect(info.count).to.be.an("number")
-    expect(info.pages).to.be.an("number")
-    expect(info.next).to.be.an("number")
-    expect(info.prev).to.be.an("number")
+    expect(info.count).to.be.an('number')
+    expect(info.pages).to.be.an('number')
+    expect(info.next).to.be.an('number')
+    expect(info.prev).to.be.an('number')
   })
 
   it('Gets null data ', async () => {
-    const query = `{ characters(page: 2000) { results { id } info { count pages next prev } } }`
+    const query = '{ characters(page: 2000) { results { id } info { count pages next prev } } }'
     const { characters } = await test(query)
 
     expect(characters).to.be.null

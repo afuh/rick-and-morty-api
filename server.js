@@ -17,7 +17,7 @@ const { Character, Location, Episode } = require('./graphql/sources')
 const handle = require('./handlers')
 const api = require('./routes/api')
 
-const db = process.env.NODE_ENV === "production" ? process.env.DATABASE : 'mongodb://localhost:27017/rickmorty'
+const db = process.env.NODE_ENV === 'production' ? process.env.DATABASE : 'mongodb://localhost:27017/rickmorty'
 
 const server = new ApolloServer({
   typeDefs,
@@ -58,7 +58,7 @@ app.use(bodyParser.json())
 app.get('*', (req, res, next) => {
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
 
-  if (ip.includes("::ffff:127.0.0.1")) {
+  if (ip.includes('::ffff:127.0.0.1')) {
     return next()
   }
 

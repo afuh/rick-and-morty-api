@@ -13,11 +13,6 @@
     "test": "nyc --check-coverage --lines 95 mocha --timeout 10000 --exit && nyc report --reporter=text-lcov | coveralls",
     "test:watch": "nodemon --ext js ./test --exec 'mocha --reporter min'"
   },
-  "nyc": {
-    "exclude": [
-      "./helpers/*"
-    ]
-  },
   "author": "Axel Fuhrmann",
   "license": "BSD-3-Clause",
   "dependencies": {

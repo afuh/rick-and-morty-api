@@ -57,7 +57,7 @@ describe('Graphql: Character type (Query character(id))', () => {
     const { character } = await test(query)
 
     expect(character).to.be.an('object')
-    expect(character.name).to.equal("Morty Smith")
+    expect(character.name).to.equal('Morty Smith')
   })
 
   it('Gets a Location type', async () => {
@@ -88,7 +88,7 @@ describe('Graphql: Character type (Query character(id))', () => {
   })
 
   it('Gets all properties', async () => {
-    const query = charFragment(`{ character(id: 1) { ...allProperties } }`)
+    const query = charFragment('{ character(id: 1) { ...allProperties } }')
     const { character } = await test(query)
 
     expect(Object.keys(character)).to.deep.equal(keys)
@@ -97,7 +97,7 @@ describe('Graphql: Character type (Query character(id))', () => {
 
 describe('Graphql: Character type (Query characters)', () => {
   it('Gets multiple characters', async () => {
-    const query = `{ characters { results { name } } }`
+    const query = '{ characters { results { name } } }'
     const { characters: { results } } = await test(query)
 
     expect(results).to.be.an('array')
@@ -105,7 +105,7 @@ describe('Graphql: Character type (Query characters)', () => {
   })
 
   it('Gets a Location type', async () => {
-    const query = `{ characters { results { origin { name } } } }`
+    const query = '{ characters { results { origin { name } } } }'
     const { characters: { results } } = await test(query)
 
     expect(results[0].origin).to.be.an('object')
@@ -113,7 +113,7 @@ describe('Graphql: Character type (Query characters)', () => {
   })
 
   it('Gets a Episode type', async () => {
-    const query = `{ characters { results { episode { name }  } } }`
+    const query = '{ characters { results { episode { name }  } } }'
     const { characters: { results } } = await test(query)
 
     expect(results[0].episode).to.be.an('array')
@@ -121,7 +121,7 @@ describe('Graphql: Character type (Query characters)', () => {
   })
 
   it('Gets a character\'s name as resident', async () => {
-    const query = `{ characters { results { name location { residents { name }}  } } }`
+    const query = '{ characters { results { name location { residents { name }}  } } }'
     const { characters: { results } } = await test(query)
 
     const [ { name } ] = results
@@ -132,7 +132,7 @@ describe('Graphql: Character type (Query characters)', () => {
   })
 
   it('Gets all properties', async () => {
-    const query = charFragment(`{ characters { results { ...allProperties }} }`)
+    const query = charFragment('{ characters { results { ...allProperties }} }')
     const { characters: { results } } = await test(query)
 
     expect(Object.keys(results[0])).to.deep.equal(keys)
@@ -141,42 +141,42 @@ describe('Graphql: Character type (Query characters)', () => {
 
 describe('Graphql: Character type (Query characters(filter))', () => {
   it('Filters a character by name', async () => {
-    const query = `{ characters(filter: {name: "Rick Sanchez"}) { results { name } } }`
+    const query = '{ characters(filter: {name: "Rick Sanchez"}) { results { name } } }'
     const { characters: { results } } = await test(query)
 
     expect(results).to.deep.include({ name: result.character })
   })
 
   it('Filters a character by status', async () => {
-    const query = `{ characters(filter: {status: "dead"}) { results { status } } }`
+    const query = '{ characters(filter: {status: "dead"}) { results { status } } }'
     const { characters: { results } } = await test(query)
 
     expect(results).to.deep.include({ status: 'Dead' })
   })
 
   it('Filters a character by species', async () => {
-    const query = `{ characters(filter: {species: "Human"}) { results { species } } }`
+    const query = '{ characters(filter: {species: "Human"}) { results { species } } }'
     const { characters: { results } } = await test(query)
 
     expect(results).to.deep.include({ species: 'Human' })
   })
 
   it('Filters a character by type', async () => {
-    const query = `{ characters(filter: {type: "Parasite"}) { results { type } } }`
+    const query = '{ characters(filter: {type: "Parasite"}) { results { type } } }'
     const { characters: { results } } = await test(query)
 
     expect(results).to.deep.include({ type: 'Parasite' })
   })
 
   it('Filters a character by gender', async () => {
-    const query = `{ characters(filter: {gender: "female"}) { results { gender } } }`
+    const query = '{ characters(filter: {gender: "female"}) { results { gender } } }'
     const { characters: { results } } = await test(query)
 
     expect(results).to.deep.include({ gender: 'Female' })
   })
 
   it('Filters a character by using more than one filter', async () => {
-    const query = `{ characters(filter: { name: "rick" gender: "female" }) { results { name gender } } }`
+    const query = '{ characters(filter: { name: "rick" gender: "female" }) { results { name gender } } }'
     const { characters: { results } } = await test(query)
 
     expect(results).to.deep.include({ name: 'Woman Rick', gender: 'Female' })
