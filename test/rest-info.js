@@ -9,7 +9,7 @@ chai.use(chaiHttp)
 
 const { message } = require('../utils/helpers')
 
-const test = async (pathname = '') => await chai.request(server).get(`/api/${pathname}`)
+const test = async (pathname = '') => chai.request(server).get(`/api/${pathname}`)
 
 const keys = {
   endpoints: ['characters', 'locations', 'episodes'],
