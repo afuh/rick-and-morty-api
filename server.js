@@ -12,18 +12,24 @@ const app = express()
 
 const typeDefs = require('./graphql/typeDefs')
 const resolvers = require('./graphql/resolvers')
+const { Character, Location, Episode } = require('./graphql/sources')
 
 const handle = require('./handlers')
 const api = require('./routes/api')
 
-const db = process.env.NODE_ENV === "production" ? process.env.DATABASE : 'mongodb://localhost:27017/rickmorty'
+const db = process.env.NODE_ENV === 'production' ? process.env.DATABASE : 'mongodb://localhost:27017/rickmorty'
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
   playground: true,
-  validationRules: [ handle.depth(4) ]
+  validationRules: [ handle.depth(4) ],
+  dataSources: () => ({
+    character: new Character(),
+    location: new Location(),
+    episode: new Episode()
+  })
 })
 
 mongoose.connect(db, { useNewUrlParser: true })
@@ -35,7 +41,9 @@ mongoose.connection.on('error', err => {
 })
 
 if (app.get('env') !== 'test') {
-  app.use(morgan(':status | :method :url :response-time ms | :remote-addr'))
+  app.use(morgan(':status | :method :url :response-time ms | :remote-addr', {
+    skip: req => req.method !== 'GET'
+  }))
 }
 
 app.use(cors())
@@ -50,7 +58,7 @@ app.use(bodyParser.json())
 app.get('*', (req, res, next) => {
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
 
-  if (ip.includes("::ffff:127.0.0.1")) {
+  if (ip.includes('::ffff:127.0.0.1')) {
     return next()
   }
 

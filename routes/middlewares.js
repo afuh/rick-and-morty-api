@@ -41,8 +41,8 @@ const showData = (req, res) => {
     info: {
       count,
       pages,
-      next: page >= pages ? "" : `${site}${req.path}?page=${parseInt(page) + 1}${qr}`,
-      prev: page < 2 ? "" : `${site}${req.path}?page=${parseInt(page) - 1}${qr}`
+      next: page >= pages ? '' : `${site}${req.path}?page=${parseInt(page) + 1}${qr}`,
+      prev: page < 2 ? '' : `${site}${req.path}?page=${parseInt(page) - 1}${qr}`
     },
     results
   })
@@ -62,7 +62,7 @@ const checkArray = (req, res, next) => {
   }
 
   if ( id.includes(',') && !/\[|\]/.test(id) && id.length > 1 ) {
-    req.params.id = id.split(",").map(Number)
+    req.params.id = id.split(',').map(Number)
     return next()
   }
 

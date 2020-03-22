@@ -1,41 +1,76 @@
-const { get, urlToId, modelNames, checkArray } = require('./utils')
+const checkArray = res => Array.isArray(res) ? res : [ res ]
 
-const names = modelNames()
+const urlToId = url => {
+  const getId = url => parseInt(url.match(/\d+$/))
+  return Array.isArray(url) ? url.map(item => getId(item)) : getId(url)
+}
 
-const Query = names.reduce((acc, { resource, resources }) => ({
-  ...acc,
-  [resource]: async (_, { id }) => await get(resource, { id }),
-  [resources]: async (_, { page, filter }) => await get(resource, { page, filter })
-}), {})
+const handleInfo = ({ stats }) => {
+  const getPage = url => {
+    const params = new URL(url)
+    return parseInt(params.searchParams.get('page'))
+  }
+
+  return ({
+    ...stats,
+    next: () => stats && stats.next ? getPage(stats.next) : null,
+    prev: () => stats && stats.prev ? getPage(stats.prev) : null
+  })
+}
 
 const resolvers = {
-  Query,
+  Query: {
+    characters: async (_, { page, filter }, { dataSources }) => {
+      const { results, info: stats } = await dataSources.character.characters({ page, filter })
+      const info = handleInfo({ stats })
+      return { results, info }
+    },
+    character: async (_, { id }, { dataSources }) => (
+      dataSources.character.character({ id })
+    ),
+    locations: async (_, { page, filter }, { dataSources }) => {
+      const { results, info: stats } = await dataSources.location.locations({ page, filter })
+      const info = handleInfo({ stats })
+      return { results, info }
+    },
+    location: async (_, { id }, { dataSources }) => (
+      dataSources.location.location({ id })
+    ),
+    episodes: async (_, { page, filter }, { dataSources }) => {
+      const { results, info: stats } = await dataSources.episode.episodes({ page, filter })
+      const info = handleInfo({ stats })
+      return { results, info }
+    },
+    episode: async (_, { id }, { dataSources }) => (
+      dataSources.episode.episode({ id })
+    )
+  },
   Character: {
-    episode: async ({ episode }) => {
-      const res = await get('episode', { id: urlToId(episode) })
+    episode: async ({ episode }, _, { dataSources }) => {
+      const res = await dataSources.episode.episode({ id: urlToId(episode) })
       return checkArray(res)
     },
-    location: async ({ location }) => {
+    location: async ({ location }, _, { dataSources }) => {
       if (location.name === 'unknown') return location
-      const res = await get('location', { id: urlToId(location.url) })
+      const res = await dataSources.location.location({ id: urlToId(location.url) })
       return res
     },
-    origin: async ({ origin }) => {
+    origin: async ({ origin }, _, { dataSources }) => {
       if (origin.name === 'unknown') return origin
-      const res = await get('location', { id: urlToId(origin.url) })
+      const res = await dataSources.location.location({ id: urlToId(origin.url) })
       return res
     }
   },
   Location: {
-    residents: async ({ residents }) => {
+    residents: async ({ residents }, _, { dataSources }) => {
       if (!residents) return
-      const res = await get('character', { id: urlToId(residents) })
+      const res = await dataSources.character.character({ id: urlToId(residents) })
       return checkArray(res)
     }
   },
   Episode: {
-    characters: async ({ characters }) => {
-      const res = await get('character', { id: urlToId(characters) })
+    characters: async ({ characters }, _, { dataSources }) => {
+      const res = await dataSources.character.character({ id: urlToId(characters) })
       return checkArray(res)
     }
   }

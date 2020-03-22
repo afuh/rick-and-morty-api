@@ -1,7 +1,7 @@
 const { queryById, queryByFilter } = require('./handleQuery')
 const models = require('../models')
 
-const name = req => req.path.split("/")[1]
+const name = req => req.path.split('/')[1]
 
 const getAll = async (req, res, next) => {
   const Model = models[name(req)]

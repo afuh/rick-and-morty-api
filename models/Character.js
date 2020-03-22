@@ -49,7 +49,7 @@ characterSchema.statics.structure = ch => {
 }
 
 characterSchema.statics.findAndCount = async function({ name, type, status, species, gender, skip }) {
-  const q = key => new RegExp(key && ( /^male/i.test(key) ? `^${key}` : key.replace(/[^\w\s]/g, "\\$&") ), "i")
+  const q = key => new RegExp(key && ( /^male/i.test(key) ? `^${key}` : key.replace(/[^\w\s]/g, '\\$&') ), 'i')
 
   const query = {
     name: q(name),

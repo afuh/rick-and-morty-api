@@ -29,7 +29,7 @@ locationSchema.statics.structure = ch => {
 }
 
 locationSchema.statics.findAndCount = async function({ name, type, dimension, skip }) {
-  const q = key => new RegExp(key && key.replace(/[^\w\s]/g, "\\$&"), "i")
+  const q = key => new RegExp(key && key.replace(/[^\w\s]/g, '\\$&'), 'i')
 
   const query = {
     name: q(name),

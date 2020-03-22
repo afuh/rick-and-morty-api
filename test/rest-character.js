@@ -9,7 +9,7 @@ chai.use(chaiHttp)
 
 const { message } = require('../utils/helpers')
 
-const test = async (pathname = '') => await chai.request(server).get(`/api/character/${pathname}`)
+const test = async (pathname = '') => chai.request(server).get(`/api/character/${pathname}`)
 
 const keys = ['id', 'name', 'status', 'species', 'type', 'gender', 'origin', 'location', 'image', 'episode', 'url', 'created']
 
@@ -225,7 +225,7 @@ describe('/GET pages', () => {
 
     expectStructure(body)
     expect(body.info.prev).to.have.lengthOf(0)
-    expect(body.info.next.slice(-1)).to.equal("2")
+    expect(body.info.next.slice(-1)).to.equal('2')
     expect(body.results).to.have.lengthOf(20)
 
     expect(body.results[0]).to.include({ id: 1 })
@@ -236,8 +236,8 @@ describe('/GET pages', () => {
     const { body } = await test('?page=2')
 
     expectStructure(body)
-    expect(body.info.prev.slice(-1)).to.equal("1")
-    expect(body.info.next.slice(-1)).to.equal("3")
+    expect(body.info.prev.slice(-1)).to.equal('1')
+    expect(body.info.next.slice(-1)).to.equal('3')
     expect(body.results).to.have.lengthOf(20)
 
     expect(body.results[0]).to.include({ id: 21 })

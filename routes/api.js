@@ -25,13 +25,13 @@ router.get('/', (req, res) => {
 
 router.get('/character/avatar', (req, res) => res.redirect('/api/character'))
 
-router.get('/character', sanitize("character"), hooks.find)
+router.get('/character', sanitize('character'), hooks.find)
 router.get('/character/:id', hooks.findById)
 
-router.get('/location', sanitize("location"), hooks.find)
+router.get('/location', sanitize('location'), hooks.find)
 router.get('/location/:id', hooks.findById)
 
-router.get('/episode', sanitize("episode"), hooks.find)
+router.get('/episode', sanitize('episode'), hooks.find)
 router.get('/episode/:id', hooks.findById)
 
 module.exports = router

@@ -1,9 +1,8 @@
 const ExpressBrute = require('express-brute')
 const MongooseStore = require('express-brute-mongoose')
-const moment = require('moment')
 const mongoose = require('mongoose')
 
-const { log } = console
+const { message } = require('../utils/helpers')
 
 const bruteForceSchema = new mongoose.Schema({
   _id: String,
@@ -20,11 +19,11 @@ const Limit = mongoose.model('Limit', bruteForceSchema)
 const store = process.env.NODE_ENV === 'production' ? new MongooseStore(Limit) : new ExpressBrute.MemoryStore()
 
 const failCallback = (req, res, next, nextValidRequestDate) => {
-  res.status(429).json({ error: `Ohh yea, you gotta get schwifty!. You've reached the maximum request limit, please try again ${moment(nextValidRequestDate).fromNow()}` })
+  res.status(429).json({ error: message.rateLimit(nextValidRequestDate) })
   return
 }
 
-const handleStoreError = error => log(error)
+const handleStoreError = error => console.log(error)
 
 const bruteforce = new ExpressBrute(store, {
   freeRetries: 10000,
