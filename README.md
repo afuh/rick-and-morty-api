@@ -18,7 +18,6 @@ You can check the code of the site [here](https://github.com/afuh/rick-and-morty
 ### Contents
 
 - [Introduction](#introduction)
-  - [Rate limit](#rate-limit)
   - [GraphQL](#graphql)
   - [REST](#rest)
   - [Info and pagination](#info-and-pagination)
@@ -53,9 +52,6 @@ You can check the code of the site [here](https://github.com/afuh/rick-and-morty
 
 ## Introduction
 This documentation will help you get familiar with the resources of the **Rick and Morty API** and show you how to make different queries, so that you can get the most out of it.
-
-### Rate limit
-The **Rick and Morty API** is an open API, no authentication is required for use. Nonetheless, to prevent malicious usage of the API there is a limit on the number of requests a given IP address can make. This limit is 10000 requests per day. If you happen to hit the limit you'll receive a `429` status (Too Many Requests) on all your requests during a period of 12 hours.
 
 ### GraphQL
 https://rickandmortyapi.com/graphql/

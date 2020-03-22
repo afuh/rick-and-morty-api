@@ -1,5 +1,3 @@
-const moment = require('moment')
-
 exports.site = 'https://rickandmortyapi.com/api'
 
 exports.message = {
@@ -8,8 +6,7 @@ exports.message = {
   noLocation: 'Location not found',
   noEpisode: 'Episode not found',
   badParam: 'Hey! you must provide an id',
-  badArray: 'Bad... bad array :/',
-  rateLimit: time => `Ohh yea, you gotta get schwifty!. You've reached the maximum request limit, please try again ${moment(time).fromNow()}`
+  badArray: 'Bad... bad array :/'
 }
 
 exports.collection = {

@@ -21,12 +21,9 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-brute": "^1.0.1",
-    "express-brute-mongoose": "^1.1.0",
     "express-validator": "^6.4.0",
     "graphql": "^14.6.0",
     "graphql-depth-limit": "^1.1.0",
-    "moment": "^2.24.0",
     "mongoose": "^5.9.5",
     "mongoose-mongodb-errors": "0.0.2",
     "morgan": "^1.10.0"
