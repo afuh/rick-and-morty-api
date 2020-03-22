@@ -50,20 +50,10 @@ app.use(cors())
 
 app.set('trust proxy', 1)
 
-app.use(handle.limit, express.static(path.join(__dirname, 'static')))
+app.use(express.static(path.join(__dirname, 'static')))
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-
-app.get('*', (req, res, next) => {
-  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-
-  if (ip.includes('::ffff:127.0.0.1')) {
-    return next()
-  }
-
-  handle.limit(req, res, next)
-})
 
 app.use('/api', api)
 
