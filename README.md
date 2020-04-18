@@ -48,6 +48,7 @@ You can check the code of the site [here](https://github.com/afuh/rick-and-morty
   - [Python](#python)
   - [R](#r)
   - [Ruby](#ruby)
+  - [Swift](#swift)
 - [Run the API locally](#run-the-api-locally)
 
 ## Introduction
@@ -656,6 +657,9 @@ Here you will find a list of helper libraries to use the Rick and Morty API with
 
 #### Ruby
 - [The Rick and Morty API Gem](https://github.com/spielhoelle/rick-and-morty-gem) by [Tommy Spielhoelle](https://github.com/spielhoelle)
+
+#### Swift
+- [The Rick and Morty API Swift Client](https://github.com/benjaminbruch/rick-morty-swift-api) by [Benjamin Bruch](https://github.com/benjaminbruch)
 
 ---
 
