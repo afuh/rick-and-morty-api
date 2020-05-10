@@ -3,11 +3,11 @@ process.env.NODE_ENV = 'test'
 const chai = require('chai')
 const { expect } = chai
 const chaiHttp = require('chai-http')
+
 const server = require('../server')
+const { message } = require('../utils/helpers')
 
 chai.use(chaiHttp)
-
-const { message } = require('../utils/helpers')
 
 const test = async (pathname = '') => chai.request(server).get(`/api/${pathname}`)
 

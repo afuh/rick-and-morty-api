@@ -663,19 +663,4 @@ Here you will find a list of helper libraries to use the Rick and Morty API with
 
 ---
 
-## Run the API locally
-
-Assuming that [MongoDB](https://docs.mongodb.com/manual/tutorial/manage-mongodb-processes/) is running locally.
-
-```
-git clone https://github.com/afuh/rick-and-morty-api.git`
-cd rick-and-morty-api
-npm install
-npm run data
-npm run dev
-```
-Use to http://localhost:8080/api to access the API.
-
----
-
 [go to top](https://github.com/afuh/rick-and-morty-api/tree/develop#the-rick-and-morty-api)

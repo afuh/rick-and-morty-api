@@ -3,11 +3,11 @@ process.env.NODE_ENV = 'test'
 const chai = require('chai')
 const { expect } = chai
 const chaiHttp = require('chai-http')
+
 const server = require('../server')
+const { message } = require('../utils/helpers')
 
 chai.use(chaiHttp)
-
-const { message } = require('../utils/helpers')
 
 const test = async (pathname = '') => chai.request(server).get(`/api/character/${pathname}`)
 
@@ -237,7 +237,7 @@ describe('/GET pages', () => {
 
     expectStructure(body)
     expect(body.info.prev.slice(-1)).to.equal('1')
-    expect(body.info.next.slice(-1)).to.equal('3')
+    expect(body.info.next.slice(-1)).to.equal('')
     expect(body.results).to.have.lengthOf(20)
 
     expect(body.results[0]).to.include({ id: 21 })

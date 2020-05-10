@@ -3,11 +3,11 @@ process.env.NODE_ENV = 'test'
 const chai = require('chai')
 const { expect } = chai
 const chaiHttp = require('chai-http')
+
 const server = require('../server')
+const { message } = require('../utils/helpers')
 
 chai.use(chaiHttp)
-
-const { message } = require('../utils/helpers')
 
 const test = async (pathname = '') => chai.request(server).get(`/api/episode/${pathname}`)
 
@@ -24,7 +24,7 @@ describe('/GET All episodes', () => {
     const { body } = await test()
 
     expectStructure(body)
-    expect(body.results).to.have.lengthOf(20)
+    expect(body.results).to.have.lengthOf(10)
   })
 
   it('should be the same length as the info count', async () => {
@@ -160,21 +160,10 @@ describe('/GET pages', () => {
 
     expectStructure(body)
     expect(body.info.prev).to.have.lengthOf(0)
-    expect(body.info.next.slice(-1)).to.equal('2')
-    expect(body.results).to.have.lengthOf(20)
+    expect(body.info.next.slice(-1)).to.equal('')
+    expect(body.results).to.have.lengthOf(10)
 
     expect(body.results[0]).to.include({ id: 1 })
-    expect(body.results[19]).to.include({ id: 20 })
-  })
-
-  it('should get page: 2', async () => {
-    const { body } = await test('?page=2')
-
-    expectStructure(body)
-    expect(body.info.prev.slice(-1)).to.equal('1')
-    expect(body.info.next).to.have.lengthOf(0)
-
-    expect(body.results[0]).to.include({ id: 21 })
   })
 })
 
