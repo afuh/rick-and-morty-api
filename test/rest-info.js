@@ -3,11 +3,11 @@ process.env.NODE_ENV = 'test'
 const chai = require('chai')
 const { expect } = chai
 const chaiHttp = require('chai-http')
+
 const server = require('../server')
+const { message } = require('../utils/helpers')
 
 chai.use(chaiHttp)
-
-const { message } = require('../utils/helpers')
 
 const test = async (pathname = '') => chai.request(server).get(`/api/${pathname}`)
 
@@ -34,7 +34,7 @@ describe('Info Object', () => {
     expect(body.info.count).to.be.an('number')
     expect(body.info.pages).to.be.an('number')
     expect(body.info.next).to.be.an('string')
-    expect(body.info.prev).to.be.an('string')
+    expect(body.info.prev).to.be.null
   })
 })
 

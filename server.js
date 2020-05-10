@@ -17,7 +17,8 @@ const { Character, Location, Episode } = require('./graphql/sources')
 const handle = require('./handlers')
 const api = require('./routes/api')
 
-const db = process.env.NODE_ENV === 'production' ? process.env.DATABASE : 'mongodb://localhost:27017/rickmorty'
+const LOCAL = `mongodb://localhost:27017/rickmorty${process.env.NODE_ENV === 'test' ? '-test' : ''}`
+const db = process.env.NODE_ENV === 'production' ? process.env.DATABASE : LOCAL
 
 const server = new ApolloServer({
   typeDefs,
@@ -32,9 +33,8 @@ const server = new ApolloServer({
   })
 })
 
-mongoose.connect(db, { useNewUrlParser: true })
+mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 mongoose.Promise = global.Promise
-mongoose.set('useCreateIndex', true)
 
 mongoose.connection.on('error', err => {
   console.error(`→ ${err.message}`)

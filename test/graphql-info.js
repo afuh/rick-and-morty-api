@@ -57,7 +57,7 @@ describe('Graphql: Info', () => {
 
     expect(info.count).to.be.an('number')
     expect(info.pages).to.be.an('number')
-    expect(info.next).to.be.an('number')
+    expect(info.next).to.be.null
     expect(info.prev).to.be.an('number')
   })
 

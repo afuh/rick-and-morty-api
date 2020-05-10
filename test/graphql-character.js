@@ -176,9 +176,9 @@ describe('Graphql: Character type (Query characters(filter))', () => {
   })
 
   it('Filters a character by using more than one filter', async () => {
-    const query = '{ characters(filter: { name: "rick" gender: "female" }) { results { name gender } } }'
+    const query = '{ characters(filter: { name: "rick" status: "dead" }) { results { name status } } }'
     const { characters: { results } } = await test(query)
 
-    expect(results).to.deep.include({ name: 'Woman Rick', gender: 'Female' })
+    expect(results).to.deep.include({ name: 'Adjudicator Rick', status: 'Dead' })
   })
 })
