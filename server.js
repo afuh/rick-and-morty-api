@@ -33,9 +33,8 @@ const server = new ApolloServer({
   })
 })
 
-mongoose.connect(db, { useNewUrlParser: true })
+mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 mongoose.Promise = global.Promise
-mongoose.set('useCreateIndex', true)
 
 mongoose.connection.on('error', err => {
   console.error(`→ ${err.message}`)
