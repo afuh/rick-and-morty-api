@@ -190,8 +190,8 @@ describe('/GET pages', () => {
     const { body } = await test('?page=1')
 
     expectStructure(body)
-    expect(body.info.prev).to.have.lengthOf(0)
-    expect(body.info.next.slice(-1)).to.equal('')
+    expect(body.info.prev).to.be.null
+    expect(body.info.next).to.be.null
     expect(body.results).to.have.lengthOf(20)
 
     expect(body.results[0]).to.include({ id: 1 })

@@ -34,7 +34,7 @@ describe('Info Object', () => {
     expect(body.info.count).to.be.an('number')
     expect(body.info.pages).to.be.an('number')
     expect(body.info.next).to.be.an('string')
-    expect(body.info.prev).to.be.an('string')
+    expect(body.info.prev).to.be.null
   })
 })
 
