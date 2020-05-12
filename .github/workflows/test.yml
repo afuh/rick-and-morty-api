@@ -1,6 +1,6 @@
 on: [pull_request]
 
-name: Test
+name: Tests
 
 jobs:
   test:
