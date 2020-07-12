@@ -1,0 +1,22 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Push to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PREVIEW_HOST }}
+          username: ${{ secrets.PREVIEW_USER }}
+          key: ${{ secrets.PREVIEW_KEY }}
+          script: |
+            cd ${{ secrets.PREVIEW_PATH }}
+            git pull
+            npm i --only=prod
+            pm2 reload api
