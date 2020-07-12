@@ -11,9 +11,22 @@ chai.use(chaiHttp)
 
 const test = async (pathname = '') => chai.request(server).get(`/api/character/${pathname}`)
 
-const keys = ['id', 'name', 'status', 'species', 'type', 'gender', 'origin', 'location', 'image', 'episode', 'url', 'created']
+const keys = [
+  'id',
+  'name',
+  'status',
+  'species',
+  'type',
+  'gender',
+  'origin',
+  'location',
+  'image',
+  'episode',
+  'url',
+  'created',
+]
 
-const expectStructure = body => {
+const expectStructure = (body) => {
   expect(body).to.be.an('object')
   expect(body.info).to.be.an('object')
   expect(body.results).to.be.an('array')
@@ -45,7 +58,7 @@ describe('/GET All characters', () => {
     const { count } = body.info
     const ids = Array.from({ length: count }, (v, i) => i + 1)
 
-    ids.forEach(async id => {
+    ids.forEach(async (id) => {
       const { type } = await test(`/avatar/${id}.jpeg`)
 
       expect(type).to.equal('image/jpeg')
@@ -68,7 +81,6 @@ describe('/GET Single character with id: 1', () => {
   })
 })
 
-
 describe('/GET five characters', () => {
   it('should get five characters with an array', async () => {
     const ids = [1, 2, 3, 4, 5]
@@ -77,7 +89,7 @@ describe('/GET five characters', () => {
     expect(body).to.be.an('array')
     expect(body).to.have.lengthOf(ids.length)
 
-    body.forEach(item => {
+    body.forEach((item) => {
       expect(ids).to.include(item.id)
     })
   })
@@ -89,7 +101,7 @@ describe('/GET five characters', () => {
     expect(body).to.be.an('array')
     expect(body).to.have.lengthOf(ids.replace(/,/g, '').length)
 
-    body.forEach(item => {
+    body.forEach((item) => {
       expect(ids).to.include(item.id)
     })
   })
@@ -142,7 +154,7 @@ describe('/GET characters with single query', () => {
     const { body } = await test('?name=Rick')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('name').include('Rick')
     })
   })
@@ -151,7 +163,7 @@ describe('/GET characters with single query', () => {
     const { body } = await test('?status=alive')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('status').include('Alive')
     })
   })
@@ -160,7 +172,7 @@ describe('/GET characters with single query', () => {
     const { body } = await test('?species=alien')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('species').include('Alien')
     })
   })
@@ -169,28 +181,27 @@ describe('/GET characters with single query', () => {
     const { body } = await test('?type=parasite')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('type').include('Parasite')
     })
-
   })
 
   it('should get characters with gender: Female', async () => {
     const { body } = await test('?gender=female')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('gender').include('Female')
     })
   })
 })
 
 describe('/GET characters with multiple queries', () => {
-  it('should get characters with name: Rick, stauts: Alive, gender: Male and species: Human', async () => {
+  it('should get characters with name: Rick, status: Alive, gender: Male and species: Human', async () => {
     const { body } = await test('?name=Rick&status=alive&gender=Male&species=Human')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('name').include('Rick')
       expect(char).to.have.property('status').include('Alive')
       expect(char).to.have.property('gender').include('Male')
@@ -204,7 +215,7 @@ describe('/GET special characters', () => {
     const { body } = await test('?name=(')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('name').include('(')
     })
   })
@@ -213,7 +224,7 @@ describe('/GET special characters', () => {
     const { body } = await test('?name=-')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('name').include('-')
     })
   })

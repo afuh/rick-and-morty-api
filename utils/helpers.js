@@ -6,7 +6,7 @@ const message = {
   noLocation: 'Location not found',
   noEpisode: 'Episode not found',
   badParam: 'Hey! you must provide an id',
-  badArray: 'Bad... bad array :/'
+  badArray: 'Bad... bad array :/',
 }
 
 const collection = {
@@ -15,12 +15,12 @@ const collection = {
   queries: {
     character: ['name', 'status', 'species', 'type', 'gender'],
     episode: ['name', 'episode'],
-    location: ['name', 'dimension', 'type']
-  }
+    location: ['name', 'dimension', 'type'],
+  },
 }
 
 module.exports = {
   site,
   message,
-  collection
+  collection,
 }

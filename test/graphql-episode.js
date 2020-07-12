@@ -7,16 +7,13 @@ const server = require('../server')
 
 chai.use(chaiHttp)
 
-const test = async query => {
-  const res = await chai.request(server)
-    .post('/graphql')
-    .set('content-type', 'application/json')
-    .send({ query })
+const test = async (query) => {
+  const res = await chai.request(server).post('/graphql').set('content-type', 'application/json').send({ query })
 
   return res.body.data
 }
 
-const epFragment = query => (
+const epFragment = (query) =>
   `
   ${query}
     fragment allProperties on Episode {
@@ -28,13 +25,12 @@ const epFragment = query => (
       created
     }
   `
-)
 
 const keys = ['id', 'name', 'air_date', 'episode', 'characters', 'created']
 
 const result = {
   episode: 'Pilot',
-  character: 'Rick Sanchez'
+  character: 'Rick Sanchez',
 }
 
 describe('Graphql: Episode type (Query episode(id))', () => {
@@ -73,7 +69,9 @@ describe('Graphql: Episode type (Query episode(id))', () => {
 describe('Graphql: Episode type (Query episodes)', () => {
   it('Gets multiple episodes', async () => {
     const query = '{ episodes { results { name } } }'
-    const { episodes: { results } } = await test(query)
+    const {
+      episodes: { results },
+    } = await test(query)
 
     expect(results).to.be.an('array')
     expect(results[0].name).to.equal(result.episode)
@@ -81,7 +79,9 @@ describe('Graphql: Episode type (Query episodes)', () => {
 
   it('Gets a Character type', async () => {
     const query = '{ episodes { results { characters { name } } } }'
-    const { episodes: { results } } = await test(query)
+    const {
+      episodes: { results },
+    } = await test(query)
 
     expect(results[0].characters).to.be.an('array')
     expect(results[0].characters[0].name).to.equal(result.character)
@@ -89,7 +89,9 @@ describe('Graphql: Episode type (Query episodes)', () => {
 
   it('Gets all properties', async () => {
     const query = epFragment('{ episodes { results { ...allProperties } } }')
-    const { episodes: { results } } = await test(query)
+    const {
+      episodes: { results },
+    } = await test(query)
 
     expect(Object.keys(results[0])).to.deep.equal(keys)
   })
@@ -98,21 +100,27 @@ describe('Graphql: Episode type (Query episodes)', () => {
 describe('Graphql: Episode type (Query episodes(filter))', () => {
   it('Filters a episode by name', async () => {
     const query = '{ episodes(filter: { name: "Pilot" }) { results { name } } }'
-    const { episodes: { results } } = await test(query)
+    const {
+      episodes: { results },
+    } = await test(query)
 
     expect(results).to.deep.include({ name: result.episode })
   })
 
   it('Filters an episode by episode code', async () => {
     const query = '{ episodes(filter: { episode: "s01e01" }) { results { episode } } }'
-    const { episodes: { results } } = await test(query)
+    const {
+      episodes: { results },
+    } = await test(query)
 
     expect(results).to.deep.include({ episode: 'S01E01' })
   })
 
   it('Filters a character by using more than one filter', async () => {
     const query = '{ episodes(filter: { name: "pilot" episode: "s01e01" }) { results { name episode } } }'
-    const { episodes: { results } } = await test(query)
+    const {
+      episodes: { results },
+    } = await test(query)
 
     expect(results).to.deep.include({ name: result.episode, episode: 'S01E01' })
   })

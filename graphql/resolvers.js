@@ -1,21 +1,21 @@
-const checkArray = res => Array.isArray(res) ? res : [ res ]
+const checkArray = (res) => (Array.isArray(res) ? res : [res])
 
-const urlToId = url => {
-  const getId = url => parseInt(url.match(/\d+$/))
-  return Array.isArray(url) ? url.map(item => getId(item)) : getId(url)
+const urlToId = (url) => {
+  const getId = (str) => parseInt(str.match(/\d+$/))
+  return Array.isArray(url) ? url.map((item) => getId(item)) : getId(url)
 }
 
 const handleInfo = ({ stats }) => {
-  const getPage = url => {
+  const getPage = (url) => {
     const params = new URL(url)
     return parseInt(params.searchParams.get('page'))
   }
 
-  return ({
+  return {
     ...stats,
-    next: () => stats && stats.next ? getPage(stats.next) : null,
-    prev: () => stats && stats.prev ? getPage(stats.prev) : null
-  })
+    next: () => (stats && stats.next ? getPage(stats.next) : null),
+    prev: () => (stats && stats.prev ? getPage(stats.prev) : null),
+  }
 }
 
 const resolvers = {
@@ -25,25 +25,25 @@ const resolvers = {
       const info = handleInfo({ stats })
       return { results, info }
     },
-    character: async (_, { id }, { dataSources }) => (
-      dataSources.character.character({ id })
-    ),
+    character: async (_, { id }, { dataSources }) => {
+      return dataSources.character.character({ id })
+    },
     locations: async (_, { page, filter }, { dataSources }) => {
       const { results, info: stats } = await dataSources.location.locations({ page, filter })
       const info = handleInfo({ stats })
       return { results, info }
     },
-    location: async (_, { id }, { dataSources }) => (
-      dataSources.location.location({ id })
-    ),
+    location: async (_, { id }, { dataSources }) => {
+      return dataSources.location.location({ id })
+    },
     episodes: async (_, { page, filter }, { dataSources }) => {
       const { results, info: stats } = await dataSources.episode.episodes({ page, filter })
       const info = handleInfo({ stats })
       return { results, info }
     },
-    episode: async (_, { id }, { dataSources }) => (
-      dataSources.episode.episode({ id })
-    )
+    episode: async (_, { id }, { dataSources }) => {
+      return dataSources.episode.episode({ id })
+    },
   },
   Character: {
     episode: async ({ episode }, _, { dataSources }) => {
@@ -59,21 +59,21 @@ const resolvers = {
       if (origin.name === 'unknown') return origin
       const res = await dataSources.location.location({ id: urlToId(origin.url) })
       return res
-    }
+    },
   },
   Location: {
     residents: async ({ residents }, _, { dataSources }) => {
       if (!residents) return
       const res = await dataSources.character.character({ id: urlToId(residents) })
       return checkArray(res)
-    }
+    },
   },
   Episode: {
     characters: async ({ characters }, _, { dataSources }) => {
       const res = await dataSources.character.character({ id: urlToId(characters) })
       return checkArray(res)
-    }
-  }
+    },
+  },
 }
 
 module.exports = resolvers

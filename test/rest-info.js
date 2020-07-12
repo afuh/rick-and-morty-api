@@ -13,7 +13,7 @@ const test = async (pathname = '') => chai.request(server).get(`/api/${pathname}
 
 const keys = {
   endpoints: ['characters', 'locations', 'episodes'],
-  info: ['count', 'pages', 'next', 'prev']
+  info: ['count', 'pages', 'next', 'prev'],
 }
 
 describe('Endpoints list', () => {
@@ -26,7 +26,7 @@ describe('Endpoints list', () => {
 })
 
 describe('Info Object', () => {
-  it('should GET an Info object with determinated keys', async () => {
+  it('should GET an Info object with determined keys', async () => {
     const { body } = await test('character')
 
     expect(body).to.be.an('object')

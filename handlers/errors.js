@@ -1,4 +1,4 @@
-const catchErrors = fn => (req, res, next) => fn(req, res, next).catch(next)
+const catchErrors = (fn) => (req, res, next) => fn(req, res, next).catch(next)
 
 const notFound = (req, res, next) => {
   const err = new Error('There is nothing here.')
@@ -15,5 +15,5 @@ const productionErrors = (err, req, res, next) => {
 module.exports = {
   catchErrors,
   notFound,
-  productionErrors
+  productionErrors,
 }
