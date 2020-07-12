@@ -1,10 +1,15 @@
+const { query } = require('express-validator')
+
+const { getAll, getById } = require('../handlers/operations')
 const { site, message, collection } = require('../utils/helpers')
+
+const sanitizeQueryParams = (model) => query(collection.queries[model]).trim()
 
 const pagination = (req, res, next) => {
   req.payload = {
-    page: (req.query.page > 0 && req.query.page) || 1
+    page: (req.query.page > 0 && req.query.page) || 1,
   }
-  req.payload.skip = (req.payload.page * collection.limit) - collection.limit
+  req.payload.skip = req.payload.page * collection.limit - collection.limit
 
   next()
 }
@@ -31,8 +36,9 @@ const showData = (req, res) => {
     // if the query isn't undefined and it's an allowed query for the path
     if (req.query[key] && collection.queries[path].includes(key)) {
       // add it to the url
-      acc+= `&${key}=${req.query[key]}`
+      return acc + `&${key}=${req.query[key]}`
     }
+
     return acc
   }, '')
 
@@ -42,9 +48,9 @@ const showData = (req, res) => {
       count,
       pages,
       next: page >= pages ? null : `${site}${req.path}?page=${parseInt(page) + 1}${qr}`,
-      prev: page < 2 ? null : `${site}${req.path}?page=${parseInt(page) - 1}${qr}`
+      prev: page < 2 ? null : `${site}${req.path}?page=${parseInt(page) - 1}${qr}`,
     },
-    results
+    results,
   })
 }
 
@@ -55,13 +61,12 @@ const checkArray = (req, res, next) => {
     try {
       req.params.id = JSON.parse(id)
       return next()
-    }
-    catch (e) {
+    } catch (e) {
       return res.status(500).json({ error: message.badArray })
     }
   }
 
-  if ( id.includes(',') && !/\[|\]/.test(id) && id.length > 1 ) {
+  if (id.includes(',') && !/\[|\]/.test(id) && id.length > 1) {
     req.params.id = id.split(',').map(Number)
     return next()
   }
@@ -73,9 +78,7 @@ const checkArray = (req, res, next) => {
   next()
 }
 
-module.exports = {
-  pagination,
-  showData,
-  checkData,
-  checkArray
-}
+module.exports = (model) => ({
+  find: [sanitizeQueryParams(model), pagination, getAll, checkData, showData],
+  findById: [checkArray, getById],
+})

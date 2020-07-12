@@ -13,7 +13,7 @@ const test = async (pathname = '') => chai.request(server).get(`/api/location/${
 
 const keys = ['id', 'name', 'type', 'dimension', 'residents', 'url', 'created']
 
-const expectStructure = body => {
+const expectStructure = (body) => {
   expect(body).to.be.an('object')
   expect(body.info).to.be.an('object')
   expect(body.results).to.be.an('array')
@@ -63,7 +63,7 @@ describe('/GET five locations', () => {
     expect(body).to.be.an('array')
     expect(body).to.have.lengthOf(ids.length)
 
-    body.forEach(item => {
+    body.forEach((item) => {
       expect(ids).to.include(item.id)
     })
   })
@@ -75,7 +75,7 @@ describe('/GET five locations', () => {
     expect(body).to.be.an('array')
     expect(body).to.have.lengthOf(ids.replace(/,/g, '').length)
 
-    body.forEach(item => {
+    body.forEach((item) => {
       expect(ids).to.include(item.id)
     })
   })
@@ -128,7 +128,7 @@ describe('/GET locations with single query', () => {
     const { body } = await test('?name=Earth')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('name').include('Earth')
     })
   })
@@ -137,7 +137,7 @@ describe('/GET locations with single query', () => {
     const { body } = await test('?type=planet')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('type').include('Planet')
     })
   })
@@ -146,7 +146,7 @@ describe('/GET locations with single query', () => {
     const { body } = await test('?dimension=C-137')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('dimension').include('C-137')
     })
   })
@@ -157,7 +157,7 @@ describe('/GET locations with multiple queries', () => {
     const { body } = await test('?name=earth&type=planet&dimension=c-137')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('name').include('Earth')
       expect(char).to.have.property('type').include('Planet')
       expect(char).to.have.property('dimension').include('C-137')
@@ -170,7 +170,7 @@ describe('/GET special characters', () => {
     const { body } = await test('?name=(')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('name').include('(')
     })
   })
@@ -179,7 +179,7 @@ describe('/GET special characters', () => {
     const { body } = await test('?name=-')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('name').include('-')
     })
   })

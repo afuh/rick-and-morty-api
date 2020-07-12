@@ -7,16 +7,13 @@ const server = require('../server')
 
 chai.use(chaiHttp)
 
-const test = async query => {
-  const res = await chai.request(server)
-    .post('/graphql')
-    .set('content-type', 'application/json')
-    .send({ query })
+const test = async (query) => {
+  const res = await chai.request(server).post('/graphql').set('content-type', 'application/json').send({ query })
 
   return res.body.data
 }
 
-const charFragment = query => (
+const charFragment = (query) =>
   `
   ${query}
     fragment allProperties on Character {
@@ -33,14 +30,13 @@ const charFragment = query => (
       created
     }
   `
-)
 
 const keys = ['id', 'name', 'status', 'species', 'type', 'gender', 'origin', 'location', 'image', 'episode', 'created']
 
 const result = {
   episode: 'Pilot',
   location: 'Earth (C-137)',
-  character: 'Rick Sanchez'
+  character: 'Rick Sanchez',
 }
 
 describe('Graphql: Character type (Query character(id))', () => {
@@ -76,7 +72,7 @@ describe('Graphql: Character type (Query character(id))', () => {
     expect(character.episode[0].name).to.equal(result.episode)
   })
 
-  it('Gets a character\'s name as resident', async () => {
+  it("Gets a character's name as resident", async () => {
     const query = '{ character(id: 1) { name location { residents { name }} } }'
     const { character } = await test(query)
 
@@ -98,7 +94,9 @@ describe('Graphql: Character type (Query character(id))', () => {
 describe('Graphql: Character type (Query characters)', () => {
   it('Gets multiple characters', async () => {
     const query = '{ characters { results { name } } }'
-    const { characters: { results } } = await test(query)
+    const {
+      characters: { results },
+    } = await test(query)
 
     expect(results).to.be.an('array')
     expect(results[0].name).to.equal(result.character)
@@ -106,7 +104,9 @@ describe('Graphql: Character type (Query characters)', () => {
 
   it('Gets a Location type', async () => {
     const query = '{ characters { results { origin { name } } } }'
-    const { characters: { results } } = await test(query)
+    const {
+      characters: { results },
+    } = await test(query)
 
     expect(results[0].origin).to.be.an('object')
     expect(results[0].origin.name).to.equal(result.location)
@@ -114,17 +114,21 @@ describe('Graphql: Character type (Query characters)', () => {
 
   it('Gets a Episode type', async () => {
     const query = '{ characters { results { episode { name }  } } }'
-    const { characters: { results } } = await test(query)
+    const {
+      characters: { results },
+    } = await test(query)
 
     expect(results[0].episode).to.be.an('array')
     expect(results[0].episode[0].name).to.equal(result.episode)
   })
 
-  it('Gets a character\'s name as resident', async () => {
+  it("Gets a character's name as resident", async () => {
     const query = '{ characters { results { name location { residents { name }}  } } }'
-    const { characters: { results } } = await test(query)
+    const {
+      characters: { results },
+    } = await test(query)
 
-    const [ { name } ] = results
+    const [{ name }] = results
 
     expect(name).to.equal(result.character)
     expect(results[0].location.residents).to.be.an('array')
@@ -133,7 +137,9 @@ describe('Graphql: Character type (Query characters)', () => {
 
   it('Gets all properties', async () => {
     const query = charFragment('{ characters { results { ...allProperties }} }')
-    const { characters: { results } } = await test(query)
+    const {
+      characters: { results },
+    } = await test(query)
 
     expect(Object.keys(results[0])).to.deep.equal(keys)
   })
@@ -142,42 +148,54 @@ describe('Graphql: Character type (Query characters)', () => {
 describe('Graphql: Character type (Query characters(filter))', () => {
   it('Filters a character by name', async () => {
     const query = '{ characters(filter: {name: "Rick Sanchez"}) { results { name } } }'
-    const { characters: { results } } = await test(query)
+    const {
+      characters: { results },
+    } = await test(query)
 
     expect(results).to.deep.include({ name: result.character })
   })
 
   it('Filters a character by status', async () => {
     const query = '{ characters(filter: {status: "dead"}) { results { status } } }'
-    const { characters: { results } } = await test(query)
+    const {
+      characters: { results },
+    } = await test(query)
 
     expect(results).to.deep.include({ status: 'Dead' })
   })
 
   it('Filters a character by species', async () => {
     const query = '{ characters(filter: {species: "Human"}) { results { species } } }'
-    const { characters: { results } } = await test(query)
+    const {
+      characters: { results },
+    } = await test(query)
 
     expect(results).to.deep.include({ species: 'Human' })
   })
 
   it('Filters a character by type', async () => {
     const query = '{ characters(filter: {type: "Parasite"}) { results { type } } }'
-    const { characters: { results } } = await test(query)
+    const {
+      characters: { results },
+    } = await test(query)
 
     expect(results).to.deep.include({ type: 'Parasite' })
   })
 
   it('Filters a character by gender', async () => {
     const query = '{ characters(filter: {gender: "female"}) { results { gender } } }'
-    const { characters: { results } } = await test(query)
+    const {
+      characters: { results },
+    } = await test(query)
 
     expect(results).to.deep.include({ gender: 'Female' })
   })
 
   it('Filters a character by using more than one filter', async () => {
     const query = '{ characters(filter: { name: "rick" status: "dead" }) { results { name status } } }'
-    const { characters: { results } } = await test(query)
+    const {
+      characters: { results },
+    } = await test(query)
 
     expect(results).to.deep.include({ name: 'Adjudicator Rick', status: 'Dead' })
   })
