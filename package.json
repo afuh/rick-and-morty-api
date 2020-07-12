@@ -28,13 +28,19 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "coveralls": "^3.1.0",
     "eslint": "^6.8.0",
+    "eslint-config-afuh": "^0.1.31",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "mocha": "^7.2.0",
     "nodemon": "^2.0.4",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "prettier": "^2.0.5"
   },
   "directories": {
     "doc": "docs",
