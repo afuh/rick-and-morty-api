@@ -15,7 +15,7 @@ const resolvers = require('./graphql/resolvers')
 const { Character, Location, Episode } = require('./graphql/sources')
 
 const handle = require('./handlers')
-const api = require('./routes/api')
+const routes = require('./routes')
 
 const LOCAL = `mongodb://localhost:27017/rickmorty${process.env.NODE_ENV === 'test' ? '-test' : ''}`
 const db = process.env.NODE_ENV === 'production' ? process.env.DATABASE : LOCAL
@@ -55,7 +55,7 @@ app.use(express.static(path.join(__dirname, 'static')))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.use('/api', api)
+app.use('/api', routes)
 
 server.applyMiddleware({ app })
 

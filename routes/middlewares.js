@@ -1,4 +1,9 @@
+const { query } = require('express-validator')
+
+const { getAll, getById } = require('../handlers/operations')
 const { site, message, collection } = require('../utils/helpers')
+
+const sanitizeQueryParams = model => query(collection.queries[model]).trim()
 
 const pagination = (req, res, next) => {
   req.payload = {
@@ -73,9 +78,16 @@ const checkArray = (req, res, next) => {
   next()
 }
 
-module.exports = {
-  pagination,
-  showData,
-  checkData,
-  checkArray
-}
+module.exports = model => ({
+  find: [
+    sanitizeQueryParams(model),
+    pagination,
+    getAll,
+    checkData,
+    showData
+  ],
+  findById: [
+    checkArray,
+    getById
+  ]
+})
