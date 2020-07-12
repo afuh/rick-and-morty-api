@@ -13,7 +13,7 @@ const test = async (pathname = '') => chai.request(server).get(`/api/episode/${p
 
 const keys = ['id', 'name', 'air_date', 'episode', 'characters', 'url', 'created']
 
-const expectStructure = body => {
+const expectStructure = (body) => {
   expect(body).to.be.an('object')
   expect(body.info).to.be.an('object')
   expect(body.results).to.be.an('array')
@@ -63,7 +63,7 @@ describe('/GET five episodes', () => {
     expect(body).to.be.an('array')
     expect(body).to.have.lengthOf(ids.length)
 
-    body.forEach(item => {
+    body.forEach((item) => {
       expect(ids).to.include(item.id)
     })
   })
@@ -75,7 +75,7 @@ describe('/GET five episodes', () => {
     expect(body).to.be.an('array')
     expect(body).to.have.lengthOf(ids.replace(/,/g, '').length)
 
-    body.forEach(item => {
+    body.forEach((item) => {
       expect(ids).to.include(item.id)
     })
   })
@@ -128,7 +128,7 @@ describe('/GET episodes with single query', () => {
     const { body } = await test('?name=Pilot')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('name').include('Pilot')
     })
   })
@@ -137,7 +137,7 @@ describe('/GET episodes with single query', () => {
     const { body } = await test('?episode=S01E01')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('episode').include('S01E01')
     })
   })
@@ -148,7 +148,7 @@ describe('/GET special characters', () => {
     const { body } = await test('?name=-')
 
     expectStructure(body)
-    body.results.forEach(char => {
+    body.results.forEach((char) => {
       expect(char).to.have.property('name').include('-')
     })
   })

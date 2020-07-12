@@ -1,0 +1,3 @@
+apps:
+  name: api
+  script: server.js

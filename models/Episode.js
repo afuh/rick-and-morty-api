@@ -10,36 +10,36 @@ const episodeSchema = new Schema({
   name: String,
   episode: String,
   air_date: String,
-  characters: [ String ],
+  characters: [String],
   url: String,
-  created: Date
+  created: Date,
 })
 
-episodeSchema.statics.structure = ch => {
-  const m = ({ id, name, air_date, episode, characters, url, created }) => ({
+episodeSchema.statics.structure = (res) => {
+  const sortSchema = ({ id, name, air_date, episode, characters, url, created }) => ({
     id,
     name,
     air_date,
     episode,
     characters,
     url,
-    created
+    created,
   })
 
-  return Array.isArray(ch) ? ch.map(ch => m(ch)) : m(ch)
+  return Array.isArray(res) ? res.map(sortSchema) : sortSchema(res)
 }
 
-episodeSchema.statics.findAndCount = async function({ name, episode, skip }) {
-  const q = key => new RegExp(key && key.replace(/[^\w\s]/g, '\\$&'), 'i')
+episodeSchema.statics.findAndCount = async function ({ name, episode, skip }) {
+  const q = (key) => new RegExp(key && key.replace(/[^\w\s]/g, '\\$&'), 'i')
 
   const query = {
     name: q(name),
-    episode: q(episode)
+    episode: q(episode),
   }
 
   const [data, count] = await Promise.all([
     this.find(query).sort({ id: 1 }).select(collection.exclude).limit(collection.limit).skip(skip),
-    this.find(query).countDocuments()
+    this.find(query).countDocuments(),
   ])
 
   const results = this.structure(data)
