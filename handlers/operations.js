@@ -44,14 +44,16 @@ const queryById = async (Model, id) => {
 }
 
 const getAll = async (req, res, next) => {
+  const page = (req.query.page > 0 && req.query.page) || 1
+  const skip = page * collection.limit - collection.limit
   const [, name] = req.path.split('/')
   const Model = models[name]
-  const opt = Object.assign(req.query, { skip: req.payload.skip })
+  const opt = Object.assign(req.query, { skip })
 
   const { results, count } = await Model.findAndCount(opt)
 
   req.payload = {
-    ...req.payload,
+    page,
     count,
     results,
   }
@@ -59,7 +61,7 @@ const getAll = async (req, res, next) => {
   next()
 }
 
-const getById = async (req, res) => {
+const getById = async (req, res, next) => {
   const [, name] = req.path.split('/')
   const Model = models[name]
   const { data, error } = await queryById(Model, req.params.id)
@@ -68,7 +70,8 @@ const getById = async (req, res) => {
     return res.status(error.status).json({ error: error.message })
   }
 
-  return res.json(data)
+  req.payload = data
+  next()
 }
 
 module.exports = {
