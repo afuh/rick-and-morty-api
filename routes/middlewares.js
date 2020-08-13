@@ -5,17 +5,8 @@ const { site, message, collection } = require('../utils/helpers')
 
 const sanitizeQueryParams = (model) => query(collection.queries[model]).trim()
 
-const pagination = (req, res, next) => {
-  req.payload = {
-    page: (req.query.page > 0 && req.query.page) || 1,
-  }
-  req.payload.skip = req.payload.page * collection.limit - collection.limit
-
-  next()
-}
-
-const checkData = (req, res, next) => {
-  const { count, page } = req.payload
+const generatePageUrls = (req, res, next) => {
+  const { results, count, page } = req.payload
   const pages = Math.ceil(count / collection.limit)
 
   if (page > pages) {
@@ -23,13 +14,6 @@ const checkData = (req, res, next) => {
     return
   }
 
-  req.payload.pages = pages
-
-  next()
-}
-
-const showData = (req, res) => {
-  const { results, count, page, pages } = req.payload
   const path = req.path.replace(/\//g, '')
 
   const qr = Object.keys(req.query).reduce((acc, key) => {
@@ -42,8 +26,7 @@ const showData = (req, res) => {
     return acc
   }, '')
 
-  // Show data
-  res.json({
+  req.payload = {
     info: {
       count,
       pages,
@@ -51,10 +34,11 @@ const showData = (req, res) => {
       prev: page < 2 ? null : `${site}${req.path}?page=${parseInt(page) - 1}${qr}`,
     },
     results,
-  })
+  }
+  next()
 }
 
-const checkArray = (req, res, next) => {
+const validateArrayParams = (req, res, next) => {
   const { id } = req.params
 
   if (/\[.+\]$/.test(id)) {
@@ -78,7 +62,11 @@ const checkArray = (req, res, next) => {
   next()
 }
 
+const sendRes = (req, res) => {
+  res.json(req.payload)
+}
+
 module.exports = (model) => ({
-  find: [sanitizeQueryParams(model), pagination, getAll, checkData, showData],
-  findById: [checkArray, getById],
+  find: [sanitizeQueryParams(model), getAll, generatePageUrls, sendRes],
+  findById: [validateArrayParams, getById, sendRes],
 })
