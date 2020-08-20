@@ -15,7 +15,7 @@ class Character extends RESTDataSource {
 
   async charactersByIds({ ids }) {
     const data = await this.get('/' + ids)
-    return data
+    return Array.isArray(data) ? data : [data]
   }
   async character({ id }) {
     const data = await this.get('/' + id)
