@@ -23,6 +23,11 @@ const typeDefs = gql`
     locations(page: Int, filter: FilterLocation): Locations
 
     """
+    Get a list of locations selected by ids
+    """
+    locationsByIds(ids: [ID]): [Location]
+
+    """
     Get a specific episode by ID
     """
     episode(id: ID): Episode

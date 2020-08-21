@@ -33,6 +33,9 @@ const resolvers = {
       const info = handleInfo({ stats })
       return { results, info }
     },
+    locationsByIds: async (_, { ids }, { dataSources }) => {
+      return dataSources.location.locationsByIds({ ids })
+    },
     location: async (_, { id }, { dataSources }) => {
       return dataSources.location.location({ id })
     },
