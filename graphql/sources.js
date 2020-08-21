@@ -44,6 +44,10 @@ class Episode extends RESTDataSource {
     const data = await this.get('/', { ...filter, page })
     return data
   }
+  async episodesByIds({ ids }) {
+    const data = await this.get('/' + ids)
+    return Array.isArray(data) ? data : [data]
+  }
   async episode({ id }) {
     const data = await this.get('/' + id)
     return data

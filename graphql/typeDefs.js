@@ -31,6 +31,11 @@ const typeDefs = gql`
     Get the list of all episodes
     """
     episodes(page: Int, filter: FilterEpisode): Episodes
+
+    """
+    Get a list of episodes selected by ids
+    """
+    episodesByIds(ids: [ID]): [Episode]
   }
 
   type Characters {

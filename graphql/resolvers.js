@@ -41,6 +41,9 @@ const resolvers = {
       const info = handleInfo({ stats })
       return { results, info }
     },
+    episodesByIds: async (_, { ids }, { dataSources }) => {
+      return dataSources.episode.episodesByIds({ ids })
+    },
     episode: async (_, { id }, { dataSources }) => {
       return dataSources.episode.episode({ id })
     },
