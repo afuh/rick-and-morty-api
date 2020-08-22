@@ -91,6 +91,32 @@ describe('Graphql: Character type (Query character(id))', () => {
   })
 })
 
+describe('Graphql. Character type (Query charactersByIds(ids))', () => {
+  it('Gets one characters by Ids', async () => {
+    const query = '{ charactersByIds(ids: [1]) { name } }'
+    const { charactersByIds } = await test(query)
+
+    expect(charactersByIds).to.be.an('array')
+    expect(charactersByIds[0].name).to.equal(result.character)
+  })
+
+  it('Gets two characters by Ids', async () => {
+    const query = '{ charactersByIds(ids: [1, 2]) { name } }'
+    const { charactersByIds } = await test(query)
+
+    expect(charactersByIds).to.be.an('array')
+    expect(charactersByIds).to.deep.equal([{ name: 'Rick Sanchez' }, { name: 'Morty Smith' }])
+  })
+
+  it('Gets five characters by Ids', async () => {
+    const query = `{ charactersByIds(ids: [1, 2, 3, 4, 5]) { id } }`
+    const { charactersByIds } = await test(query)
+
+    expect(charactersByIds).to.be.an('array')
+    expect(charactersByIds).to.have.lengthOf(5)
+  })
+})
+
 describe('Graphql: Character type (Query characters)', () => {
   it('Gets multiple characters', async () => {
     const query = '{ characters { results { name } } }'
