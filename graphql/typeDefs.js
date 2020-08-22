@@ -13,6 +13,11 @@ const typeDefs = gql`
     characters(page: Int, filter: FilterCharacter): Characters
 
     """
+    Get a list of characters selected by ids
+    """
+    charactersByIds(ids: [ID]): [Character]
+
+    """
     Get a specific locations by ID
     """
     location(id: ID): Location
@@ -21,6 +26,11 @@ const typeDefs = gql`
     Get the list of all locations
     """
     locations(page: Int, filter: FilterLocation): Locations
+
+    """
+    Get a list of locations selected by ids
+    """
+    locationsByIds(ids: [ID]): [Location]
 
     """
     Get a specific episode by ID

@@ -25,6 +25,9 @@ const resolvers = {
       const info = handleInfo({ stats })
       return { results, info }
     },
+    charactersByIds: async (_, { ids }, { dataSources }) => {
+      return dataSources.character.charactersByIds({ ids })
+    },
     character: async (_, { id }, { dataSources }) => {
       return dataSources.character.character({ id })
     },
@@ -32,6 +35,9 @@ const resolvers = {
       const { results, info: stats } = await dataSources.location.locations({ page, filter })
       const info = handleInfo({ stats })
       return { results, info }
+    },
+    locationsByIds: async (_, { ids }, { dataSources }) => {
+      return dataSources.location.locationsByIds({ ids })
     },
     location: async (_, { id }, { dataSources }) => {
       return dataSources.location.location({ id })
