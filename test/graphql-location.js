@@ -66,6 +66,32 @@ describe('Graphql: Location type (Query location(id))', () => {
   })
 })
 
+describe('Graphql. Location type (Query locationsByIds(ids))', () => {
+  it('Gets one location by Ids', async () => {
+    const query = '{ locationsByIds(ids: [1]) { name } }'
+    const { locationsByIds } = await test(query)
+
+    expect(locationsByIds).to.be.an('array')
+    expect(locationsByIds[0].name).to.equal(result.location)
+  })
+
+  it('Gets multiple locations by Ids', async () => {
+    const query = '{ locationsByIds(ids: [1, 2]) { name } }'
+    const { locationsByIds } = await test(query)
+
+    expect(locationsByIds).to.be.an('array')
+    expect(locationsByIds).to.deep.equal([{ name: 'Earth (C-137)' }, { name: 'Abadango' }])
+  })
+
+  it('Gets five locations by Ids', async () => {
+    const query = `{ locationsByIds(ids: [1, 2, 3, 4, 5]) { id } }`
+    const { locationsByIds } = await test(query)
+
+    expect(locationsByIds).to.be.an('array')
+    expect(locationsByIds).to.have.lengthOf(5)
+  })
+})
+
 describe('Graphql: Location type (Query locations)', () => {
   it('Gets multiple locations', async () => {
     const query = '{ locations { results { name } } }'

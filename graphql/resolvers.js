@@ -25,6 +25,9 @@ const resolvers = {
       const info = handleInfo({ stats })
       return { results, info }
     },
+    charactersByIds: async (_, { ids }, { dataSources }) => {
+      return dataSources.character.charactersByIds({ ids })
+    },
     character: async (_, { id }, { dataSources }) => {
       return dataSources.character.character({ id })
     },
@@ -33,6 +36,9 @@ const resolvers = {
       const info = handleInfo({ stats })
       return { results, info }
     },
+    locationsByIds: async (_, { ids }, { dataSources }) => {
+      return dataSources.location.locationsByIds({ ids })
+    },
     location: async (_, { id }, { dataSources }) => {
       return dataSources.location.location({ id })
     },
@@ -40,6 +46,9 @@ const resolvers = {
       const { results, info: stats } = await dataSources.episode.episodes({ page, filter })
       const info = handleInfo({ stats })
       return { results, info }
+    },
+    episodesByIds: async (_, { ids }, { dataSources }) => {
+      return dataSources.episode.episodesByIds({ ids })
     },
     episode: async (_, { id }, { dataSources }) => {
       return dataSources.episode.episode({ id })

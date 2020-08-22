@@ -12,6 +12,11 @@ class Character extends RESTDataSource {
     const data = await this.get('/', { ...filter, page })
     return data
   }
+
+  async charactersByIds({ ids }) {
+    const data = await this.get('/' + ids)
+    return Array.isArray(data) ? data : [data]
+  }
   async character({ id }) {
     const data = await this.get('/' + id)
     return data
@@ -28,6 +33,10 @@ class Location extends RESTDataSource {
     const data = await this.get('/', { ...filter, page })
     return data
   }
+  async locationsByIds({ ids }) {
+    const data = await this.get('/' + ids)
+    return Array.isArray(data) ? data : [data]
+  }
   async location({ id }) {
     const data = await this.get('/' + id)
     return data
@@ -43,6 +52,10 @@ class Episode extends RESTDataSource {
   async episodes({ filter, page }) {
     const data = await this.get('/', { ...filter, page })
     return data
+  }
+  async episodesByIds({ ids }) {
+    const data = await this.get('/' + ids)
+    return Array.isArray(data) ? data : [data]
   }
   async episode({ id }) {
     const data = await this.get('/' + id)

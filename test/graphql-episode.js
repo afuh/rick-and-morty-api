@@ -50,7 +50,7 @@ describe('Graphql: Episode type (Query episode(id))', () => {
     expect(episode.name).to.equal('Lawnmower Dog')
   })
 
-  it('Gets a Charcter type', async () => {
+  it('Gets a Character type', async () => {
     const query = '{ episode(id: 1) { characters { name } } }'
     const { episode } = await test(query)
 
@@ -63,6 +63,32 @@ describe('Graphql: Episode type (Query episode(id))', () => {
     const { episode } = await test(query)
 
     expect(Object.keys(episode)).to.deep.equal(keys)
+  })
+})
+
+describe('Graphql. Episode type (Query episodesByIds(ids))', () => {
+  it('Gets one episode by Ids', async () => {
+    const query = '{ episodesByIds(ids: [1]) { name } }'
+    const { episodesByIds } = await test(query)
+
+    expect(episodesByIds).to.be.an('array')
+    expect(episodesByIds[0].name).to.equal(result.episode)
+  })
+
+  it('Gets multiple episode by Ids', async () => {
+    const query = '{ episodesByIds(ids: [1, 2]) { name } }'
+    const { episodesByIds } = await test(query)
+
+    expect(episodesByIds).to.be.an('array')
+    expect(episodesByIds).to.deep.equal([{ name: 'Pilot' }, { name: 'Lawnmower Dog' }])
+  })
+
+  it('Gets five episodes by Ids', async () => {
+    const query = `{ episodesByIds(ids: [1, 2, 3, 4, 5]) { id } }`
+    const { episodesByIds } = await test(query)
+
+    expect(episodesByIds).to.be.an('array')
+    expect(episodesByIds).to.have.lengthOf(5)
   })
 })
 
