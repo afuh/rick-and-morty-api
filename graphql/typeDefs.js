@@ -5,7 +5,7 @@ const typeDefs = gql`
     """
     Get a specific character by ID
     """
-    character(id: ID): Character
+    character(id: ID!): Character
 
     """
     Get the list of all characters
@@ -15,12 +15,12 @@ const typeDefs = gql`
     """
     Get a list of characters selected by ids
     """
-    charactersByIds(ids: [ID]): [Character]
+    charactersByIds(ids: [ID!]!): [Character]
 
     """
     Get a specific locations by ID
     """
-    location(id: ID): Location
+    location(id: ID!): Location
 
     """
     Get the list of all locations
@@ -30,12 +30,12 @@ const typeDefs = gql`
     """
     Get a list of locations selected by ids
     """
-    locationsByIds(ids: [ID]): [Location]
+    locationsByIds(ids: [ID!]!): [Location]
 
     """
     Get a specific episode by ID
     """
-    episode(id: ID): Episode
+    episode(id: ID!): Episode
 
     """
     Get the list of all episodes
@@ -45,7 +45,7 @@ const typeDefs = gql`
     """
     Get a list of episodes selected by ids
     """
-    episodesByIds(ids: [ID]): [Episode]
+    episodesByIds(ids: [ID!]!): [Episode]
   }
 
   type Characters {

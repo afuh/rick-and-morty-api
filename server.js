@@ -40,6 +40,7 @@ mongoose.connection.on('error', (err) => {
   console.error(`→ ${err.message}`)
 })
 
+/* istanbul ignore next */
 if (app.get('env') !== 'test') {
   app.use(
     morgan(':status | :method :url :response-time ms | :remote-addr', {
