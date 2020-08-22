@@ -25,6 +25,9 @@ const resolvers = {
       const info = handleInfo({ stats })
       return { results, info }
     },
+    charactersByIds: async (_, { ids }, { dataSources }) => {
+      return dataSources.character.charactersByIds({ ids })
+    },
     character: async (_, { id }, { dataSources }) => {
       return dataSources.character.character({ id })
     },

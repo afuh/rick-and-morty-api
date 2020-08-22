@@ -13,6 +13,11 @@ const typeDefs = gql`
     characters(page: Int, filter: FilterCharacter): Characters
 
     """
+    Get a list of characters selected by ids
+    """
+    charactersByIds(ids: [ID]): [Character]
+
+    """
     Get a specific locations by ID
     """
     location(id: ID): Location
