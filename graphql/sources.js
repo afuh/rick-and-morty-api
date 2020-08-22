@@ -33,6 +33,10 @@ class Location extends RESTDataSource {
     const data = await this.get('/', { ...filter, page })
     return data
   }
+  async locationsByIds({ ids }) {
+    const data = await this.get('/' + ids)
+    return Array.isArray(data) ? data : [data]
+  }
   async location({ id }) {
     const data = await this.get('/' + id)
     return data
