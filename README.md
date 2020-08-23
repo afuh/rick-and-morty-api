@@ -2,7 +2,7 @@
 
 # The Rick and Morty API
 
-[![Tests](https://github.com/afuh/rick-and-morty-api/workflows/Tests/badge.svg)(https://github.com/afuh/rick-and-morty-api/actions?query=workflow:Tests)]
+[![Tests](https://github.com/afuh/rick-and-morty-api/workflows/Tests/badge.svg)](https://github.com/afuh/rick-and-morty-api/actions?query=workflow:Tests)
 [![Coveralls github branch](https://img.shields.io/coveralls/github/afuh/rick-and-morty-api/master.svg?style=flat-square)](https://coveralls.io/github/afuh/rick-and-morty-api?branch=develop)
 [![Twitter Follow](https://img.shields.io/twitter/follow/rickandmortyapi.svg?style=flat-square&label=Follow)](https://twitter.com/rickandmortyapi)
 
