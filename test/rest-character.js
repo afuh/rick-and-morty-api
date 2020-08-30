@@ -32,7 +32,7 @@ const expectStructure = (body) => {
   expect(body.results).to.be.an('array')
 }
 
-describe('/GET All characters', () => {
+describe('[REST][Character] All characters', () => {
   it('should get all characters', async () => {
     const { body } = await test()
 
@@ -53,20 +53,13 @@ describe('/GET All characters', () => {
   })
 
   it('should have an image/jpeg that matches the char. ID', async () => {
-    const { body } = await test()
+    const { type } = await test(`avatar/1.jpeg`)
 
-    const { count } = body.info
-    const ids = Array.from({ length: count }, (v, i) => i + 1)
-
-    ids.forEach(async (id) => {
-      const { type } = await test(`/avatar/${id}.jpeg`)
-
-      expect(type).to.equal('image/jpeg')
-    })
+    expect(type).to.equal('image/jpeg')
   })
 })
 
-describe('/GET Single character with id: 1', () => {
+describe('[REST][Character] Single character with id: 1', () => {
   it('should get one character with id: 1', async () => {
     const { body } = await test(1)
 
@@ -81,7 +74,7 @@ describe('/GET Single character with id: 1', () => {
   })
 })
 
-describe('/GET five characters', () => {
+describe('[REST][Character] five characters', () => {
   it('should get five characters with an array', async () => {
     const ids = [1, 2, 3, 4, 5]
     const { body } = await test(ids)
@@ -107,7 +100,7 @@ describe('/GET five characters', () => {
   })
 })
 
-describe('/GET Error messages', () => {
+describe('[REST][Character] Error messages', () => {
   it('should get an error message with id:12345', async () => {
     const res = await test('12345')
 
@@ -149,7 +142,7 @@ describe('/GET Error messages', () => {
   })
 })
 
-describe('/GET characters with single query', () => {
+describe('[REST][Character] characters with single query', () => {
   it('should get characters with name: Rick', async () => {
     const { body } = await test('?name=Rick')
 
@@ -196,7 +189,7 @@ describe('/GET characters with single query', () => {
   })
 })
 
-describe('/GET characters with multiple queries', () => {
+describe('[REST][Character] characters with multiple queries', () => {
   it('should get characters with name: Rick, status: Alive, gender: Male and species: Human', async () => {
     const { body } = await test('?name=Rick&status=alive&gender=Male&species=Human')
 
@@ -210,7 +203,7 @@ describe('/GET characters with multiple queries', () => {
   })
 })
 
-describe('/GET special characters', () => {
+describe('[REST][Character] special characters', () => {
   it('should get characters with name: (', async () => {
     const { body } = await test('?name=(')
 
@@ -230,7 +223,7 @@ describe('/GET special characters', () => {
   })
 })
 
-describe('/GET pages', () => {
+describe('[REST][Character] pages', () => {
   it('should get page: 1', async () => {
     const { body } = await test('?page=1')
 
@@ -260,6 +253,15 @@ describe('/GET pages', () => {
 
     expect(res).to.have.status(404)
     expect(res.body).to.be.an('object')
+    expect(res.body).to.have.property('error').include(message.noPage)
+  })
+})
+
+describe('[REST][Character] Avatar 404', () => {
+  it('should get an error message', async () => {
+    const res = await test('avatar')
+
+    expect(res).to.have.status(404)
     expect(res.body).to.have.property('error').include(message.noPage)
   })
 })

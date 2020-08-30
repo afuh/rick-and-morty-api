@@ -33,7 +33,7 @@ const result = {
   character: 'Beth Smith',
 }
 
-describe('Graphql: Location type (Query location(id))', () => {
+describe('[Graphql][Location] - location(id)', () => {
   it('Gets a location by ID', async () => {
     const query = '{ location(id: 1) { name } }'
     const { location } = await test(query)
@@ -66,7 +66,7 @@ describe('Graphql: Location type (Query location(id))', () => {
   })
 })
 
-describe('Graphql. Location type (Query locationsByIds(ids))', () => {
+describe('[Graphql][Location] - locationsByIds(ids)', () => {
   it('Gets one location by Ids', async () => {
     const query = '{ locationsByIds(ids: [1]) { name } }'
     const { locationsByIds } = await test(query)
@@ -92,7 +92,7 @@ describe('Graphql. Location type (Query locationsByIds(ids))', () => {
   })
 })
 
-describe('Graphql: Location type (Query locations)', () => {
+describe('[Graphql][Location] - locations', () => {
   it('Gets multiple locations', async () => {
     const query = '{ locations { results { name } } }'
     const {
@@ -123,7 +123,7 @@ describe('Graphql: Location type (Query locations)', () => {
   })
 })
 
-describe('Graphql: Location type (Query locations(filter))', () => {
+describe('[Graphql][Location] - locations(filter)', () => {
   it('Filters a location by name', async () => {
     const query = '{ locations(filter: { name: "earth" }) { results { name } } }'
     const {

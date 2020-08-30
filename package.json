@@ -43,10 +43,6 @@
     "nyc": "^15.1.0",
     "prettier": "^2.0.5"
   },
-  "directories": {
-    "doc": "docs",
-    "test": "test"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/afuh/rick-and-morty-api.git"

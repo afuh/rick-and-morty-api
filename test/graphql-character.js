@@ -39,7 +39,7 @@ const result = {
   character: 'Rick Sanchez',
 }
 
-describe('Graphql: Character type (Query character(id))', () => {
+describe('[Graphql][Character] - character(id)', () => {
   it('Gets a character by ID', async () => {
     const query = '{ character(id: 1) { name } }'
     const { character } = await test(query)
@@ -91,7 +91,7 @@ describe('Graphql: Character type (Query character(id))', () => {
   })
 })
 
-describe('Graphql. Character type (Query charactersByIds(ids))', () => {
+describe('[Graphql][Character] - charactersByIds(ids)', () => {
   it('Gets one characters by Ids', async () => {
     const query = '{ charactersByIds(ids: [1]) { name } }'
     const { charactersByIds } = await test(query)
@@ -117,7 +117,7 @@ describe('Graphql. Character type (Query charactersByIds(ids))', () => {
   })
 })
 
-describe('Graphql: Character type (Query characters)', () => {
+describe('[Graphql][Character] - characters', () => {
   it('Gets multiple characters', async () => {
     const query = '{ characters { results { name } } }'
     const {
@@ -171,7 +171,7 @@ describe('Graphql: Character type (Query characters)', () => {
   })
 })
 
-describe('Graphql: Character type (Query characters(filter))', () => {
+describe('[Graphql][Character] - characters(filter)', () => {
   it('Filters a character by name', async () => {
     const query = '{ characters(filter: {name: "Rick Sanchez"}) { results { name } } }'
     const {

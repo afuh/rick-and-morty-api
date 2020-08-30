@@ -19,7 +19,7 @@ const expectStructure = (body) => {
   expect(body.results).to.be.an('array')
 }
 
-describe('/GET All locations', () => {
+describe('[REST][Location] All locations', () => {
   it('should get all locations', async () => {
     const { body } = await test()
 
@@ -40,7 +40,7 @@ describe('/GET All locations', () => {
   })
 })
 
-describe('/GET Single location with id: 1', () => {
+describe('[REST][Location] Single location with id: 1', () => {
   it('should get one location with id: 1', async () => {
     const { body } = await test(1)
 
@@ -55,7 +55,7 @@ describe('/GET Single location with id: 1', () => {
   })
 })
 
-describe('/GET five locations', () => {
+describe('[REST][Location] five locations', () => {
   it('should get five locations with an array', async () => {
     const ids = [1, 2, 3, 4, 5]
     const { body } = await test(ids)
@@ -81,7 +81,7 @@ describe('/GET five locations', () => {
   })
 })
 
-describe('/GET Error messages', () => {
+describe('[REST][Location] Error messages', () => {
   it('should get an error message with id:12345', async () => {
     const res = await test('12345')
 
@@ -123,7 +123,7 @@ describe('/GET Error messages', () => {
   })
 })
 
-describe('/GET locations with single query', () => {
+describe('[REST][Location] locations with single query', () => {
   it('should get locations with name: Earth', async () => {
     const { body } = await test('?name=Earth')
 
@@ -152,7 +152,7 @@ describe('/GET locations with single query', () => {
   })
 })
 
-describe('/GET locations with multiple queries', () => {
+describe('[REST][Location] locations with multiple queries', () => {
   it('should get locations with name: Earth, type: Planet, dimension: C-137', async () => {
     const { body } = await test('?name=earth&type=planet&dimension=c-137')
 
@@ -165,7 +165,7 @@ describe('/GET locations with multiple queries', () => {
   })
 })
 
-describe('/GET special characters', () => {
+describe('[REST][Location] special characters', () => {
   it('should get location with name: (', async () => {
     const { body } = await test('?name=(')
 
@@ -185,7 +185,7 @@ describe('/GET special characters', () => {
   })
 })
 
-describe('/GET pages', () => {
+describe('[REST][Location] pages', () => {
   it('should get page: 1', async () => {
     const { body } = await test('?page=1')
 
@@ -199,7 +199,7 @@ describe('/GET pages', () => {
   })
 })
 
-describe('/GET ?page=12345 ', async () => {
+describe('[REST][Location] ?page=12345 ', async () => {
   const res = await test('?page=12345')
 
   expect(res).to.have.status(404)

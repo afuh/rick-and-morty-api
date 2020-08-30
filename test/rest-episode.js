@@ -19,7 +19,7 @@ const expectStructure = (body) => {
   expect(body.results).to.be.an('array')
 }
 
-describe('/GET All episodes', () => {
+describe('[REST][Episode] All episodes', () => {
   it('should get all episodes', async () => {
     const { body } = await test()
 
@@ -40,7 +40,7 @@ describe('/GET All episodes', () => {
   })
 })
 
-describe('/GET Single episode with id: 1', () => {
+describe('[REST][Episode] Single episode with id: 1', () => {
   it('should get one episode with id: 1', async () => {
     const { body } = await test(1)
 
@@ -55,7 +55,7 @@ describe('/GET Single episode with id: 1', () => {
   })
 })
 
-describe('/GET five episodes', () => {
+describe('[REST][Episode] five episodes', () => {
   it('should get five episodes with an array', async () => {
     const ids = [1, 2, 3, 4, 5]
     const { body } = await test(ids)
@@ -81,7 +81,7 @@ describe('/GET five episodes', () => {
   })
 })
 
-describe('/GET Error messages', () => {
+describe('[REST][Episode] Error messages', () => {
   it('should get an error message with id:12345', async () => {
     const res = await test('12345')
 
@@ -123,7 +123,7 @@ describe('/GET Error messages', () => {
   })
 })
 
-describe('/GET episodes with single query', () => {
+describe('[REST][Episode] episodes with single query', () => {
   it('should get episodes with name: Pilot', async () => {
     const { body } = await test('?name=Pilot')
 
@@ -143,7 +143,7 @@ describe('/GET episodes with single query', () => {
   })
 })
 
-describe('/GET special characters', () => {
+describe('[REST][Episode] special characters', () => {
   it('should get episodes with name: -', async () => {
     const { body } = await test('?name=-')
 
@@ -154,7 +154,7 @@ describe('/GET special characters', () => {
   })
 })
 
-describe('/GET pages', () => {
+describe('[REST][Episode] pages', () => {
   it('should get page: 1', async () => {
     const { body } = await test('?page=1')
 
@@ -167,7 +167,7 @@ describe('/GET pages', () => {
   })
 })
 
-describe('/GET ?page=12345 ', async () => {
+describe('[REST][Episode] ?page=12345 ', async () => {
   const res = await test('?page=12345')
 
   expect(res).to.have.status(404)
