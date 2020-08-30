@@ -53,11 +53,10 @@ app.use(cors())
 
 app.set('trust proxy', 1)
 
-app.use(express.static(path.join(__dirname, 'static')))
-
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+app.use('/api/character/avatar', express.static(path.join(__dirname, 'images')))
 app.use('/api', routes)
 
 server.applyMiddleware({ app })
