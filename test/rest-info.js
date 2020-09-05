@@ -16,7 +16,7 @@ const keys = {
   info: ['count', 'pages', 'next', 'prev'],
 }
 
-describe('Endpoints list', () => {
+describe('[REST][INFO] Endpoints list', () => {
   it('should GET a list of endpoints', async () => {
     const { body } = await test()
 
@@ -25,7 +25,7 @@ describe('Endpoints list', () => {
   })
 })
 
-describe('Info Object', () => {
+describe('[REST][INFO] Info Object', () => {
   it('should GET an Info object with determined keys', async () => {
     const { body } = await test('character')
 
@@ -38,21 +38,11 @@ describe('Info Object', () => {
   })
 })
 
-describe('API 404', () => {
+describe('[REST] API 404', () => {
   it('should get an error message', async () => {
-    const res = await test('/wubbalubbadubdub')
+    const res = await test('wubbalubbadubdub')
 
     expect(res).to.have.status(404)
-    expect(res.body).to.be.an('object')
     expect(res.body).to.have.property('error').include(message.noPage)
-  })
-})
-
-describe('Avatar redirect', () => {
-  it('should redirect to /character', async () => {
-    const res = await test('/character/avatar')
-
-    expect(res).to.redirect
-    expect(res.req.path).to.equal('/api/character/')
   })
 })

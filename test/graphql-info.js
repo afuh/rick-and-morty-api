@@ -15,7 +15,7 @@ const test = async (query) => {
 
 const keys = ['count', 'pages', 'next', 'prev']
 
-describe('Graphql: Info', () => {
+describe('[GraphQL][Info] - info', () => {
   it('Gets info about characters', async () => {
     const query = '{ characters { info { count } } }'
     const {

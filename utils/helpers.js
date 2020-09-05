@@ -1,4 +1,4 @@
-const site = 'https://rickandmortyapi.com/api'
+const baseUrl = 'https://rickandmortyapi.com/api'
 
 const message = {
   noPage: 'There is nothing here',
@@ -20,7 +20,7 @@ const collection = {
 }
 
 module.exports = {
-  site,
+  baseUrl,
   message,
   collection,
 }

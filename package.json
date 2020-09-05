@@ -11,6 +11,7 @@
     "dev": "nodemon ./server.js",
     "test": "nyc --check-coverage --lines 95 mocha --exit && nyc report --reporter=lcov",
     "test:watch": "nodemon --ext js ./test --exec 'mocha --reporter min'",
+    "test:mock": "mongorestore --host=localhost:27017 --db=rickmorty-test --drop ./test/data",
     "lint": "eslint ."
   },
   "author": "Axel Fuhrmann",
@@ -42,10 +43,6 @@
     "nodemon": "^2.0.4",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5"
-  },
-  "directories": {
-    "doc": "docs",
-    "test": "test"
   },
   "repository": {
     "type": "git",

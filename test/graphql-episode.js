@@ -33,7 +33,7 @@ const result = {
   character: 'Rick Sanchez',
 }
 
-describe('Graphql: Episode type (Query episode(id))', () => {
+describe('[GraphQL][Episode] - episode(id)', () => {
   it('Gets an episode by ID', async () => {
     const query = '{ episode(id: 1) { name } }'
     const { episode } = await test(query)
@@ -66,7 +66,7 @@ describe('Graphql: Episode type (Query episode(id))', () => {
   })
 })
 
-describe('Graphql. Episode type (Query episodesByIds(ids))', () => {
+describe('[GraphQL][Episode] - episodesByIds(ids)', () => {
   it('Gets one episode by Ids', async () => {
     const query = '{ episodesByIds(ids: [1]) { name } }'
     const { episodesByIds } = await test(query)
@@ -92,7 +92,7 @@ describe('Graphql. Episode type (Query episodesByIds(ids))', () => {
   })
 })
 
-describe('Graphql: Episode type (Query episodes)', () => {
+describe('[GraphQL][Episode] - episodes', () => {
   it('Gets multiple episodes', async () => {
     const query = '{ episodes { results { name } } }'
     const {
@@ -123,7 +123,7 @@ describe('Graphql: Episode type (Query episodes)', () => {
   })
 })
 
-describe('Graphql: Episode type (Query episodes(filter))', () => {
+describe('[GraphQL][Episode] - episodes(filter)', () => {
   it('Filters a episode by name', async () => {
     const query = '{ episodes(filter: { name: "Pilot" }) { results { name } } }'
     const {

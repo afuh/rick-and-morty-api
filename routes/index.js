@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { site } = require('../utils/helpers')
+const { baseUrl, message } = require('../utils/helpers')
 const getHandler = require('./middlewares')
 const api = require('./api')
 
@@ -8,14 +8,14 @@ const router = express.Router()
 
 router.get('/', (req, res) => {
   res.json({
-    characters: `${site}/character`,
-    locations: `${site}/location`,
-    episodes: `${site}/episode`,
+    characters: `${baseUrl}/character`,
+    locations: `${baseUrl}/location`,
+    episodes: `${baseUrl}/episode`,
   })
 })
 
 router.get('/character/avatar', (req, res) => {
-  res.redirect('/api/character')
+  res.status(404).json({ error: message.noPage })
 })
 
 api.forEach((endpoint) => {

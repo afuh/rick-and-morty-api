@@ -1,7 +1,7 @@
 const { query } = require('express-validator')
 
 const { getAll, getById } = require('../handlers/operations')
-const { site, message, collection } = require('../utils/helpers')
+const { baseUrl, message, collection } = require('../utils/helpers')
 
 const sanitizeQueryParams = (model) => query(collection.queries[model]).trim()
 
@@ -30,8 +30,8 @@ const generatePageUrls = (req, res, next) => {
     info: {
       count,
       pages,
-      next: page >= pages ? null : `${site}${req.path}?page=${parseInt(page) + 1}${qr}`,
-      prev: page < 2 ? null : `${site}${req.path}?page=${parseInt(page) - 1}${qr}`,
+      next: page >= pages ? null : `${baseUrl}${req.path}?page=${parseInt(page) + 1}${qr}`,
+      prev: page < 2 ? null : `${baseUrl}${req.path}?page=${parseInt(page) - 1}${qr}`,
     },
     results,
   }
