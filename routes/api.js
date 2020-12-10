@@ -6,6 +6,11 @@ module.exports = [
   },
   {
     model: 'character',
+    path: '/character/random',
+    handler: 'findRandom',
+  },
+  {
+    model: 'character',
     path: '/character/:id',
     handler: 'findById',
   },
@@ -16,6 +21,11 @@ module.exports = [
   },
   {
     model: 'location',
+    path: '/location/random',
+    handler: 'findRandom',
+  },
+  {
+    model: 'location',
     path: '/location/:id',
     handler: 'findById',
   },
@@ -23,6 +33,11 @@ module.exports = [
     model: 'episode',
     path: '/episode',
     handler: 'find',
+  },
+  {
+    model: 'episode',
+    path: '/episode/random',
+    handler: 'findRandom',
   },
   {
     model: 'episode',

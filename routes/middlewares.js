@@ -1,6 +1,6 @@
 const { query } = require('express-validator')
 
-const { getAll, getById } = require('../handlers/operations')
+const { getAll, getById, setRandomId } = require('../handlers/operations')
 const { baseUrl, message, collection } = require('../utils/helpers')
 
 const sanitizeQueryParams = (model) => query(collection.queries[model]).trim()
@@ -69,4 +69,5 @@ const sendRes = (req, res) => {
 module.exports = (model) => ({
   find: [sanitizeQueryParams(model), getAll, generatePageUrls, sendRes],
   findById: [validateArrayParams, getById, sendRes],
+  findRandom: [setRandomId, getById, sendRes],
 })

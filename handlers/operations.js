@@ -74,7 +74,16 @@ const getById = async (req, res, next) => {
   next()
 }
 
+const setRandomId = async (req, res, next) => {
+  const [, name] = req.path.split('/')
+  const Model = models[name]
+  const max = await Model.countDocuments({})
+  req.params.id = Math.floor(Math.random() * max + 1)
+  next()
+}
+
 module.exports = {
   getAll: catchErrors(getAll),
   getById: catchErrors(getById),
+  setRandomId: catchErrors(setRandomId),
 }
