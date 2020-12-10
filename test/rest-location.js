@@ -81,6 +81,21 @@ describe('[REST][Location] five locations', () => {
   })
 })
 
+describe('[REST][Location] Random location ', () => {
+  it('should get one location', async () => {
+    const { body } = await test('random')
+
+    expect(body).to.be.an('object')
+    expect(body).to.haveOwnProperty('id')
+  })
+
+  it('should have a keys', async () => {
+    const { body } = await test('random')
+
+    expect(Object.keys(body)).to.deep.equal(keys)
+  })
+})
+
 describe('[REST][Location] Error messages', () => {
   it('should get an error message with id:12345', async () => {
     const res = await test('12345')
