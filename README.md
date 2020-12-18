@@ -21,6 +21,7 @@
 - **Python**: [Python implementation for the Rick and Morty API](https://github.com/curiousrohan/ramapi) by [Rohan Hazra](https://github.com/curiousrohan)
 - **R**: [mortyr](https://github.com/MikeJohnPage/mortyr) by [Mike Page](https://github.com/MikeJohnPage)
 - **Ruby**: [The Rick and Morty API Gem](https://github.com/spielhoelle/rick-and-morty-gem) by [Tommy Spielhoelle](https://github.com/spielhoelle)
+- **Rust**: [rick-and-morty crate](https://github.com/dshomoye/rick-and-morty) by [dshomoye](https://github.com/dshomoye)
 - **Swift**: [The Rick and Morty API Swift Client](https://github.com/benjaminbruch/rick-morty-swift-api) by [Benjamin Bruch](https://github.com/benjaminbruch)
 
 ## Website
