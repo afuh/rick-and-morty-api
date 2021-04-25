@@ -72,7 +72,7 @@ const resolvers = {
   },
   Location: {
     residents: async ({ residents }, _, { dataSources }) => {
-      if (!residents) return
+      if (!residents.length) return []
       const res = await dataSources.character.character({ id: urlToId(residents) })
       return checkArray(res)
     },
