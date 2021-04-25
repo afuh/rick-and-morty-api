@@ -17,6 +17,7 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             cd ${{ secrets.PATH }}
+            git checkout .
             git pull
             npm i --only=prod
             pm2 reload api
