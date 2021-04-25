@@ -2,6 +2,15 @@ const { RESTDataSource } = require('apollo-datasource-rest')
 
 const baseUrl = `http://localhost:${process.env.PORT || 8080}/api`
 
+/**
+ * Filter out query parameter with `null` values. Check [#103](https://github.com/afuh/rick-and-morty-api/issues/103) for more details.
+ * @param {*} obj - query parameters.
+ */
+const pruneObject = (obj) => {
+  // eslint-disable-next-line no-unused-vars
+  return Object.fromEntries(Object.entries(obj).filter(([_, v = null]) => v !== null))
+}
+
 class Character extends RESTDataSource {
   constructor() {
     super()
@@ -9,17 +18,14 @@ class Character extends RESTDataSource {
   }
 
   async characters({ filter, page }) {
-    const data = await this.get('/', { ...filter, page })
-    return data
+    return this.get('/', pruneObject({ ...filter, page }))
   }
-
   async charactersByIds({ ids }) {
     const data = await this.get('/' + ids)
     return Array.isArray(data) ? data : [data]
   }
   async character({ id }) {
-    const data = await this.get('/' + id)
-    return data
+    return this.get('/' + id)
   }
 }
 
@@ -30,16 +36,14 @@ class Location extends RESTDataSource {
   }
 
   async locations({ filter, page }) {
-    const data = await this.get('/', { ...filter, page })
-    return data
+    return this.get('/', pruneObject({ ...filter, page }))
   }
   async locationsByIds({ ids }) {
     const data = await this.get('/' + ids)
     return Array.isArray(data) ? data : [data]
   }
   async location({ id }) {
-    const data = await this.get('/' + id)
-    return data
+    return this.get('/' + id)
   }
 }
 
@@ -50,16 +54,14 @@ class Episode extends RESTDataSource {
   }
 
   async episodes({ filter, page }) {
-    const data = await this.get('/', { ...filter, page })
-    return data
+    return this.get('/', pruneObject({ ...filter, page }))
   }
   async episodesByIds({ ids }) {
     const data = await this.get('/' + ids)
     return Array.isArray(data) ? data : [data]
   }
   async episode({ id }) {
-    const data = await this.get('/' + id)
-    return data
+    return this.get('/' + id)
   }
 }
 
