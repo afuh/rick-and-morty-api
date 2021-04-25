@@ -113,7 +113,7 @@ const typeDefs = gql`
     """
     Episodes in which this character appeared.
     """
-    episode: [Episode]
+    episode: [Episode]!
 
     """
     Time at which the character was created in the database.
@@ -145,7 +145,7 @@ const typeDefs = gql`
     """
     List of characters who have been last seen in the location.
     """
-    residents: [Character]
+    residents: [Character]!
 
     """
     Time at which the location was created in the database.
@@ -177,7 +177,7 @@ const typeDefs = gql`
     """
     List of characters who have been seen in the episode.
     """
-    characters: [Character]
+    characters: [Character]!
 
     """
     Time at which the episode was created in the database.
