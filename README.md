@@ -17,7 +17,9 @@
 - **Go**: [The Rick and Morty API Go client](https://github.com/pitakill/rickandmortyapigowrapper) by [Leopoldo Caballero](https://github.com/pitakill)
 - **Java**: [Rick and Morty API Java Client](https://github.com/adrianoluis/rickandmortyapi-java) by [Adriano Rocha](https://github.com/adrianoluis)
 - **JavaScript**: [The Rick and Morty API Node client](https://github.com/afuh/rick-and-morty-api-node) by [Simple Rick](https://github.com/afuh)
-- **.NET**: [RickAndMorty.Net.Api](https://github.com/Carlj28/RickAndMorty.Net.Api) by [Carlj28](https://github.com/Carlj28)
+- **.NET**: 
+  - [Rick.Net](https://github.com/bigdummyhead/rick.net) by [BIGDummyHead](https://github.com/bigdummyhead)
+  - [RickAndMorty.Net.Api](https://github.com/Carlj28/RickAndMorty.Net.Api) by [Carlj28](https://github.com/Carlj28)
 - **Python**: [Python implementation for the Rick and Morty API](https://github.com/curiousrohan/ramapi) by [Rohan Hazra](https://github.com/curiousrohan)
 - **R**: [mortyr](https://github.com/MikeJohnPage/mortyr) by [Mike Page](https://github.com/MikeJohnPage)
 - **Ruby**: [The Rick and Morty API Gem](https://github.com/spielhoelle/rick-and-morty-gem) by [Tommy Spielhoelle](https://github.com/spielhoelle)
