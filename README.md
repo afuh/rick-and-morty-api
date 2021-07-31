@@ -26,6 +26,9 @@
 - **Rust**: [rick-and-morty crate](https://github.com/dshomoye/rick-and-morty) by [dshomoye](https://github.com/dshomoye)
 - **Swift**: [The Rick and Morty API Swift Client](https://github.com/benjaminbruch/rick-morty-swift-api) by [Benjamin Bruch](https://github.com/benjaminbruch)
 
+## Postman collection
+[Postman collection for the Rick and Morty API](https://github.com/loopDelicious/rick-and-morty-postman) by [loopDelicious](https://github.com/loopDelicious)
+
 ## Website
 You can check the code of the website [here](https://github.com/afuh/rick-and-morty-api-site)
 
