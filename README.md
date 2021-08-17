@@ -17,7 +17,6 @@
 - **Elixir**:  [ExShla - The Rick and Morty API Wrapper](https://github.com/l1h3r/ex_shla) by [l1h3r](https://github.com/l1h3r)
 - **Go**: [The Rick and Morty API Go client](https://github.com/pitakill/rickandmortyapigowrapper) by [Leopoldo Caballero](https://github.com/pitakill)
 - **Java**: [Rick and Morty API Java Client](https://github.com/adrianoluis/rickandmortyapi-java) by [Adriano Rocha](https://github.com/adrianoluis)
-- **JavaScript**: [The Rick and Morty API Node client](https://github.com/afuh/rick-and-morty-api-node) by [Simple Rick](https://github.com/afuh)
 - **.NET**: 
   - [Rick.Net](https://github.com/bigdummyhead/rick.net) by [BIGDummyHead](https://github.com/bigdummyhead)
   - [RickAndMorty.Net.Api](https://github.com/Carlj28/RickAndMorty.Net.Api) by [Carlj28](https://github.com/Carlj28)
@@ -29,6 +28,13 @@
 
 ## Postman collection
 [Postman collection for the Rick and Morty API](https://github.com/loopDelicious/rick-and-morty-postman) by [loopDelicious](https://github.com/loopDelicious)
+
+
+## JavaScript client
+The Rick and Morty API JavaScript client is a [fully typed](https://javascript.rickandmortyapi.com/modules/interfaces.html) client that gives you access to the API and its features. 
+
+- [View on GitHub](https://github.com/afuh/rick-and-morty-api-node)
+- [Client reference](https://javascript.rickandmortyapi.com)
 
 ## Website
 You can check the code of the website [here](https://github.com/afuh/rick-and-morty-api-site)
