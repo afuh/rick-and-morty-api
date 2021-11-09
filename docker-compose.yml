@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:5.0.2
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongorestore.sh:/docker-entrypoint-initdb.d/mongorestore.sh
+      - ./test/data:/db-dump
+    networks:
+      - rick-and-morty-api-net
+  app:
+    depends_on:
+      - mongodb
+    image: rick-and-morty-api:latest
+    restart: unless-stopped
+    build:
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - DATABASE=mongodb://mongodb:27017/rickmorty
+    ports:
+      - 8080:8080
+    networks:
+      - rick-and-morty-api-net
+networks:
+  rick-and-morty-api-net:
+    driver: bridge
