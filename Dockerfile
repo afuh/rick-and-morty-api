@@ -1,6 +1,6 @@
 FROM node:current-alpine3.12
 
-RUN apk update && apk add --no-cache mongodb-tools
+RUN apk update
 
 COPY . /var/src
 
