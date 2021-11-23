@@ -248,6 +248,18 @@ describe('[REST][Character] pages', () => {
     expect(body.results[19]).to.include({ id: 40 })
   })
 
+  it('should limit items per page', async () => {
+    const { body } = await test('?page=2&limit=5')
+
+    expectStructure(body)
+    expect(body.info.prev.slice(-1)).to.equal('1')
+    expect(body.info.next.slice(-1)).to.equal('3')
+    expect(body.results).to.have.lengthOf(5)
+
+    expect(body.results[0]).to.include({ id: 21 })
+    expect(body.results[5]).to.include({ id: 25 })
+  })
+
   it('should get an error message', async () => {
     const res = await test('?page=12345')
 

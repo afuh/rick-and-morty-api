@@ -48,7 +48,7 @@ characterSchema.statics.structure = (res) => {
   return Array.isArray(res) ? res.map(sortSchema) : sortSchema(res)
 }
 
-characterSchema.statics.findAndCount = async function ({ name, type, status, species, gender, skip }) {
+characterSchema.statics.findAndCount = async function ({ name, type, status, species, gender, skip, limit }) {
   const q = (key) => new RegExp(key && (/^male/i.test(key) ? `^${key}` : key.replace(/[^\w\s]/g, '\\$&')), 'i')
 
   const query = {
@@ -60,7 +60,7 @@ characterSchema.statics.findAndCount = async function ({ name, type, status, spe
   }
 
   const [data, count] = await Promise.all([
-    this.find(query).sort({ id: 1 }).select(collection.exclude).limit(collection.limit).skip(skip),
+    this.find(query).sort({ id: 1 }).select(collection.exclude).limit(limit).skip(skip),
     this.find(query).countDocuments(),
   ])
 

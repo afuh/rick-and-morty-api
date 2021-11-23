@@ -17,8 +17,8 @@ class Character extends RESTDataSource {
     this.baseURL = `${baseUrl}/character`
   }
 
-  async characters({ filter, page }) {
-    return this.get('/', pruneObject({ ...filter, page }))
+  async characters({ filter, page, limit }) {
+    return this.get('/', pruneObject({ ...filter, page, limit }))
   }
   async charactersByIds({ ids }) {
     const data = await this.get('/' + ids)
@@ -35,8 +35,8 @@ class Location extends RESTDataSource {
     this.baseURL = `${baseUrl}/location`
   }
 
-  async locations({ filter, page }) {
-    return this.get('/', pruneObject({ ...filter, page }))
+  async locations({ filter, page, limit }) {
+    return this.get('/', pruneObject({ ...filter, page, limit }))
   }
   async locationsByIds({ ids }) {
     const data = await this.get('/' + ids)
@@ -53,8 +53,8 @@ class Episode extends RESTDataSource {
     this.baseURL = `${baseUrl}/episode`
   }
 
-  async episodes({ filter, page }) {
-    return this.get('/', pruneObject({ ...filter, page }))
+  async episodes({ filter, page, limit }) {
+    return this.get('/', pruneObject({ ...filter, page, limit }))
   }
   async episodesByIds({ ids }) {
     const data = await this.get('/' + ids)

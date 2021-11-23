@@ -6,8 +6,8 @@ const { baseUrl, message, collection } = require('../utils/helpers')
 const sanitizeQueryParams = (model) => query(collection.queries[model]).trim()
 
 const generatePageUrls = (req, res, next) => {
-  const { results, count, page } = req.payload
-  const pages = Math.ceil(count / collection.limit)
+  const { results, count, page, limit } = req.payload
+  const pages = Math.ceil(count / limit)
 
   if (page > pages) {
     res.status(404).json({ error: message.noPage })
@@ -30,6 +30,7 @@ const generatePageUrls = (req, res, next) => {
     info: {
       count,
       pages,
+      limit,
       next: page >= pages ? null : `${baseUrl}${req.path}?page=${parseInt(page) + 1}${qr}`,
       prev: page < 2 ? null : `${baseUrl}${req.path}?page=${parseInt(page) - 1}${qr}`,
     },

@@ -45,15 +45,17 @@ const queryById = async (Model, id) => {
 
 const getAll = async (req, res, next) => {
   const page = (req.query.page > 0 && req.query.page) || 1
-  const skip = page * collection.limit - collection.limit
+  const limit = req.query.page ?? 20
+  const skip = page * limit - limit
   const [, name] = req.path.split('/')
   const Model = models[name]
-  const opt = Object.assign(req.query, { skip })
+  const opt = Object.assign(req.query, { skip, limit })
 
   const { results, count } = await Model.findAndCount(opt)
 
   req.payload = {
     page,
+    limit,
     count,
     results,
   }

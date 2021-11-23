@@ -29,7 +29,7 @@ episodeSchema.statics.structure = (res) => {
   return Array.isArray(res) ? res.map(sortSchema) : sortSchema(res)
 }
 
-episodeSchema.statics.findAndCount = async function ({ name, episode, skip }) {
+episodeSchema.statics.findAndCount = async function ({ name, episode, skip, limit }) {
   const q = (key) => new RegExp(key && key.replace(/[^\w\s]/g, '\\$&'), 'i')
 
   const query = {
@@ -38,7 +38,7 @@ episodeSchema.statics.findAndCount = async function ({ name, episode, skip }) {
   }
 
   const [data, count] = await Promise.all([
-    this.find(query).sort({ id: 1 }).select(collection.exclude).limit(collection.limit).skip(skip),
+    this.find(query).sort({ id: 1 }).select(collection.exclude).limit(limit).skip(skip),
     this.find(query).countDocuments(),
   ])
 

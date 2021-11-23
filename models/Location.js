@@ -29,7 +29,7 @@ locationSchema.statics.structure = (res) => {
   return Array.isArray(res) ? res.map(sortSchema) : sortSchema(res)
 }
 
-locationSchema.statics.findAndCount = async function ({ name, type, dimension, skip }) {
+locationSchema.statics.findAndCount = async function ({ name, type, dimension, skip, limit }) {
   const q = (key) => new RegExp(key && key.replace(/[^\w\s]/g, '\\$&'), 'i')
 
   const query = {
@@ -39,7 +39,7 @@ locationSchema.statics.findAndCount = async function ({ name, type, dimension, s
   }
 
   const [data, count] = await Promise.all([
-    this.find(query).sort({ id: 1 }).select(collection.exclude).limit(collection.limit).skip(skip),
+    this.find(query).sort({ id: 1 }).select(collection.exclude).limit(limit).skip(skip),
     this.find(query).countDocuments(),
   ])
 

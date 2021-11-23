@@ -197,6 +197,18 @@ describe('[REST][Location] pages', () => {
     expect(body.results[0]).to.include({ id: 1 })
     expect(body.results[19]).to.include({ id: 20 })
   })
+
+  it('should limit items per page', async () => {
+    const { body } = await test('?page=1&limit=5')
+
+    expectStructure(body)
+    expect(body.info.prev).to.be.null
+    expect(body.info.next.slice(-1)).to.equal('2')
+    expect(body.results).to.have.lengthOf(5)
+
+    expect(body.results[0]).to.include({ id: 1 })
+    expect(body.results[4]).to.include({ id: 5 })
+  })
 })
 
 describe('[REST][Location] ?page=12345 ', async () => {

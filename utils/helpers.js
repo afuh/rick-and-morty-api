@@ -11,7 +11,6 @@ const message = {
 
 const collection = {
   exclude: '-_id -author -__v -edited',
-  limit: 20,
   queries: {
     character: ['name', 'status', 'species', 'type', 'gender'],
     episode: ['name', 'episode'],
