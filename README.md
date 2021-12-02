@@ -12,7 +12,13 @@
 ## Getting Started
 **Check out the [documentation](https://rickandmortyapi.com/documentation) to get started**
 
-## Wrappers
+## JavaScript client
+The Rick and Morty API JavaScript client is a [fully typed](https://javascript.rickandmortyapi.com/modules/interfaces.html) client that gives you access to the API and its features. 
+
+- [View on GitHub](https://github.com/afuh/rick-and-morty-api-node)
+- [Client reference](https://javascript.rickandmortyapi.com)
+
+## Community libraries
 - **Dart**: [Rick and Morty API Dart Client](https://github.com/Yash-Garg/RickandMorty-Dart-Wrapper) by [Yash Garg](https://github.com/Yash-Garg)
 - **Elixir**:  [ExShla - The Rick and Morty API Wrapper](https://github.com/l1h3r/ex_shla) by [l1h3r](https://github.com/l1h3r)
 - **Go**: [The Rick and Morty API Go client](https://github.com/pitakill/rickandmortyapigowrapper) by [Leopoldo Caballero](https://github.com/pitakill)
@@ -28,13 +34,6 @@
 
 ## Postman collection
 [Postman collection for the Rick and Morty API](https://github.com/loopDelicious/rick-and-morty-postman) by [loopDelicious](https://github.com/loopDelicious)
-
-
-## JavaScript client
-The Rick and Morty API JavaScript client is a [fully typed](https://javascript.rickandmortyapi.com/modules/interfaces.html) client that gives you access to the API and its features. 
-
-- [View on GitHub](https://github.com/afuh/rick-and-morty-api-node)
-- [Client reference](https://javascript.rickandmortyapi.com)
 
 ## Website
 You can check the code of the website [here](https://github.com/afuh/rick-and-morty-api-site)
