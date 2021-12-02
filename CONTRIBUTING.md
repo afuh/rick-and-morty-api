@@ -11,7 +11,6 @@ The process is straight-forward and it applies to the following repos:
 
 1. Fork the repo.
 2. Write your code for the [API][1], the [documentation site][2], or the [node wrapper][3].
-3. Create a Pull Request against the `develop` branch.
 
 ## Feature suggestions
 
