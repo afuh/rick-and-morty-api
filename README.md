@@ -30,8 +30,15 @@
 [Postman collection for the Rick and Morty API](https://github.com/loopDelicious/rick-and-morty-postman) by [loopDelicious](https://github.com/loopDelicious)
 
 ## Run with Docker
-You can try out `rick-and-morty-api` locally with some mock data by using [Docker](https://docs.docker.com/get-docker/) by running `docker compose up`.
-> (Tested on `Docker 20.10.8`)
+
+You can try out `rick-and-morty-api` locally with [Docker](https://docs.docker.com/get-docker/). To do this you need:
+
+1. Install Docker
+2. Clone the repo.
+3. Run `docker compose up`
+4. The API will be running on port `8080`.
+
+> Note: this Docker instance will run with test/dev resources (not the full DB available at [rickandmortyapi.com](https://rickandmortyapi.com/))
 
 ## JavaScript client
 The Rick and Morty API JavaScript client is a [fully typed](https://javascript.rickandmortyapi.com/modules/interfaces.html) client that gives you access to the API and its features. 
