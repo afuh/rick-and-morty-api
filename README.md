@@ -26,6 +26,7 @@ The Rick and Morty API JavaScript client is a [fully typed](https://javascript.r
 - **.NET**: 
   - [Rick.Net](https://github.com/bigdummyhead/rick.net) by [BIGDummyHead](https://github.com/bigdummyhead)
   - [RickAndMorty.Net.Api](https://github.com/Carlj28/RickAndMorty.Net.Api) by [Carlj28](https://github.com/Carlj28)
+- **PHP**: [Rick and Morty API PHP Client](https://github.com/nickbeen/rick-and-morty-api-php) by [Nick Been](https://github.com/nickbeen)
 - **Python**: [Python implementation for the Rick and Morty API](https://github.com/curiousrohan/ramapi) by [Rohan Hazra](https://github.com/curiousrohan)
 - **R**: [mortyr](https://github.com/MikeJohnPage/mortyr) by [Mike Page](https://github.com/MikeJohnPage)
 - **Ruby**: [The Rick and Morty API Gem](https://github.com/spielhoelle/rick-and-morty-gem) by [Tommy Spielhoelle](https://github.com/spielhoelle)
