@@ -8,7 +8,7 @@ const { Schema } = mongoose
 const episodeSchema = new Schema({
   id: Number,
   name: String,
-  episode: String,
+  code: String,
   air_date: String,
   characters: [String],
   url: String,
@@ -16,11 +16,11 @@ const episodeSchema = new Schema({
 })
 
 episodeSchema.statics.structure = (res) => {
-  const sortSchema = ({ id, name, air_date, episode, characters, url, created }) => ({
+  const sortSchema = ({ id, name, air_date, code, characters, url, created }) => ({
     id,
     name,
     air_date,
-    episode,
+    code,
     characters,
     url,
     created,
@@ -29,12 +29,12 @@ episodeSchema.statics.structure = (res) => {
   return Array.isArray(res) ? res.map(sortSchema) : sortSchema(res)
 }
 
-episodeSchema.statics.findAndCount = async function ({ name, episode, skip }) {
+episodeSchema.statics.findAndCount = async function ({ name, code, skip }) {
   const q = (key) => new RegExp(key && key.replace(/[^\w\s]/g, '\\$&'), 'i')
 
   const query = {
     name: q(name),
-    episode: q(episode),
+    code: q(code),
   }
 
   const [data, count] = await Promise.all([

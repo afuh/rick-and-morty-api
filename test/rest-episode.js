@@ -11,7 +11,7 @@ chai.use(chaiHttp)
 
 const test = async (pathname = '') => chai.request(server).get(`/api/episode/${pathname}`)
 
-const keys = ['id', 'name', 'air_date', 'episode', 'characters', 'url', 'created']
+const keys = ['id', 'name', 'air_date', 'code', 'characters', 'url', 'created']
 
 const expectStructure = (body) => {
   expect(body).to.be.an('object')
@@ -134,11 +134,11 @@ describe('[REST][Episode] episodes with single query', () => {
   })
 
   it('should get episodes with episode: S01E01', async () => {
-    const { body } = await test('?episode=S01E01')
+    const { body } = await test('?code=S01E01')
 
     expectStructure(body)
     body.results.forEach((char) => {
-      expect(char).to.have.property('episode').include('S01E01')
+      expect(char).to.have.property('code').include('S01E01')
     })
   })
 })

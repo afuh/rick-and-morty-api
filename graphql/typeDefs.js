@@ -172,7 +172,7 @@ const typeDefs = gql`
     """
     The code of the episode.
     """
-    episode: String
+    code: String
 
     """
     List of characters who have been seen in the episode.
@@ -223,7 +223,7 @@ const typeDefs = gql`
 
   input FilterEpisode {
     name: String
-    episode: String
+    code: String
   }
 `
 

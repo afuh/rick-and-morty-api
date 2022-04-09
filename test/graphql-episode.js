@@ -20,13 +20,13 @@ const epFragment = (query) =>
       id
       name
       air_date
-      episode
+      code
       characters {id}
       created
     }
   `
 
-const keys = ['id', 'name', 'air_date', 'episode', 'characters', 'created']
+const keys = ['id', 'name', 'air_date', 'code', 'characters', 'created']
 
 const result = {
   episode: 'Pilot',
@@ -134,20 +134,20 @@ describe('[GraphQL][Episode] - episodes(filter)', () => {
   })
 
   it('Filters an episode by episode code', async () => {
-    const query = '{ episodes(filter: { episode: "s01e01" }) { results { episode } } }'
+    const query = '{ episodes(filter: { code: "s01e01" }) { results { episode } } }'
     const {
       episodes: { results },
     } = await test(query)
 
-    expect(results).to.deep.include({ episode: 'S01E01' })
+    expect(results).to.deep.include({ code: 'S01E01' })
   })
 
   it('Filters a character by using more than one filter', async () => {
-    const query = '{ episodes(filter: { name: "pilot" episode: "s01e01" }) { results { name episode } } }'
+    const query = '{ episodes(filter: { name: "pilot" code: "s01e01" }) { results { name code } } }'
     const {
       episodes: { results },
     } = await test(query)
 
-    expect(results).to.deep.include({ name: result.episode, episode: 'S01E01' })
+    expect(results).to.deep.include({ name: result.episode, code: 'S01E01' })
   })
 })
