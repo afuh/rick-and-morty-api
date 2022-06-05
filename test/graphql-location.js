@@ -64,6 +64,13 @@ describe('[Graphql][Location] - location(id)', () => {
 
     expect(Object.keys(location)).to.deep.equal(keys)
   })
+
+  it('Gets a null response', async () => {
+    const query = '{ location(id: 9999999) { id } }'
+    const { location } = await test(query)
+
+    expect(location).to.be.null
+  })
 })
 
 describe('[Graphql][Location] - locationsByIds(ids)', () => {
@@ -89,6 +96,13 @@ describe('[Graphql][Location] - locationsByIds(ids)', () => {
 
     expect(locationsByIds).to.be.an('array')
     expect(locationsByIds).to.have.lengthOf(5)
+  })
+
+  it('Gets an empty response', async () => {
+    const query = '{ locationsByIds(ids: [9999999]) { id } }'
+    const { locationsByIds } = await test(query)
+
+    expect(locationsByIds).to.be.an('array').that.is.empty
   })
 })
 
@@ -124,7 +138,7 @@ describe('[Graphql][Location] - locations', () => {
 })
 
 describe('[Graphql][Location] - locations(filter)', () => {
-  it('Filters a location by name', async () => {
+  it('Filter by name', async () => {
     const query = '{ locations(filter: { name: "earth" }) { results { name } } }'
     const {
       locations: { results },
@@ -133,7 +147,7 @@ describe('[Graphql][Location] - locations(filter)', () => {
     expect(results).to.deep.include({ name: result.location })
   })
 
-  it('Filters an episode by episode code', async () => {
+  it('Filter by type', async () => {
     const query = '{ locations(filter: { type: "planet" }) { results { type } } }'
     const {
       locations: { results },
@@ -142,12 +156,21 @@ describe('[Graphql][Location] - locations(filter)', () => {
     expect(results).to.deep.include({ type: 'Planet' })
   })
 
-  it('Filters a character by using more than one filter', async () => {
+  it('Filter by multiple properties', async () => {
     const query = '{ locations(filter: { name: "earth" type: "planet" }) { results { name type } } }'
     const {
       locations: { results },
     } = await test(query)
 
     expect(results).to.deep.include({ name: result.location, type: 'Planet' })
+  })
+
+  it('Filter by using an non-existent value', async () => {
+    const query = '{ locations(filter: { name: "asdasdasd" }) { results { id } } }'
+    const {
+      locations: { results },
+    } = await test(query)
+
+    expect(results).to.be.an('array').that.is.empty
   })
 })

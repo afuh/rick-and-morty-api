@@ -18,40 +18,64 @@ const handleInfo = ({ stats }) => {
   }
 }
 
+/**
+ * @param {"ID" | "IDs" | "FILTER"} type
+ */
+const catch404 = (type, error) => {
+  if (error.extensions.response.status === 404) {
+    if (type === 'FILTER') {
+      return { results: [] }
+    } else if (type === 'IDs') {
+      return []
+    }
+    return null
+  }
+
+  throw error
+}
+
 const resolvers = {
   Query: {
     characters: async (_, { page, filter }, { dataSources }) => {
-      const { results, info: stats } = await dataSources.character.characters({ page, filter })
+      const { results, info: stats } = await dataSources.character
+        .characters({ page, filter })
+        .catch((error) => catch404('FILTER', error))
+
       const info = handleInfo({ stats })
       return { results, info }
     },
     charactersByIds: async (_, { ids }, { dataSources }) => {
-      return dataSources.character.charactersByIds({ ids })
+      return dataSources.character.charactersByIds({ ids }).catch((error) => catch404('IDs', error))
     },
     character: async (_, { id }, { dataSources }) => {
-      return dataSources.character.character({ id })
+      return dataSources.character.character({ id }).catch((error) => catch404('ID', error))
     },
     locations: async (_, { page, filter }, { dataSources }) => {
-      const { results, info: stats } = await dataSources.location.locations({ page, filter })
+      const { results, info: stats } = await dataSources.location
+        .locations({ page, filter })
+        .catch((error) => catch404('FILTER', error))
+
       const info = handleInfo({ stats })
       return { results, info }
     },
     locationsByIds: async (_, { ids }, { dataSources }) => {
-      return dataSources.location.locationsByIds({ ids })
+      return dataSources.location.locationsByIds({ ids }).catch((error) => catch404('IDs', error))
     },
     location: async (_, { id }, { dataSources }) => {
-      return dataSources.location.location({ id })
+      return dataSources.location.location({ id }).catch((error) => catch404('ID', error))
     },
     episodes: async (_, { page, filter }, { dataSources }) => {
-      const { results, info: stats } = await dataSources.episode.episodes({ page, filter })
+      const { results, info: stats } = await dataSources.episode
+        .episodes({ page, filter })
+        .catch((error) => catch404('FILTER', error))
       const info = handleInfo({ stats })
       return { results, info }
     },
     episodesByIds: async (_, { ids }, { dataSources }) => {
-      return dataSources.episode.episodesByIds({ ids })
+      return dataSources.episode.episodesByIds({ ids }).catch((error) => catch404('IDs', error))
     },
     episode: async (_, { id }, { dataSources }) => {
-      return dataSources.episode.episode({ id })
+      return dataSources.episode.episode({ id }).catch((error) => catch404('ID', error))
     },
   },
   Character: {
