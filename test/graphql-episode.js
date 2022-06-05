@@ -64,6 +64,13 @@ describe('[GraphQL][Episode] - episode(id)', () => {
 
     expect(Object.keys(episode)).to.deep.equal(keys)
   })
+
+  it('Gets a null response', async () => {
+    const query = '{ episode(id: 9999999) { id } }'
+    const { episode } = await test(query)
+
+    expect(episode).to.be.null
+  })
 })
 
 describe('[GraphQL][Episode] - episodesByIds(ids)', () => {
@@ -89,6 +96,13 @@ describe('[GraphQL][Episode] - episodesByIds(ids)', () => {
 
     expect(episodesByIds).to.be.an('array')
     expect(episodesByIds).to.have.lengthOf(5)
+  })
+
+  it('Gets an empty response', async () => {
+    const query = '{ episodesByIds(ids: [9999999]) { id } }'
+    const { episodesByIds } = await test(query)
+
+    expect(episodesByIds).to.be.an('array').that.is.empty
   })
 })
 
@@ -124,7 +138,7 @@ describe('[GraphQL][Episode] - episodes', () => {
 })
 
 describe('[GraphQL][Episode] - episodes(filter)', () => {
-  it('Filters a episode by name', async () => {
+  it('Filters by name', async () => {
     const query = '{ episodes(filter: { name: "Pilot" }) { results { name } } }'
     const {
       episodes: { results },
@@ -133,7 +147,7 @@ describe('[GraphQL][Episode] - episodes(filter)', () => {
     expect(results).to.deep.include({ name: result.episode })
   })
 
-  it('Filters an episode by episode code', async () => {
+  it('Filters by episode code', async () => {
     const query = '{ episodes(filter: { episode: "s01e01" }) { results { episode } } }'
     const {
       episodes: { results },
@@ -142,12 +156,21 @@ describe('[GraphQL][Episode] - episodes(filter)', () => {
     expect(results).to.deep.include({ episode: 'S01E01' })
   })
 
-  it('Filters a character by using more than one filter', async () => {
+  it('Filters by multiple properties', async () => {
     const query = '{ episodes(filter: { name: "pilot" episode: "s01e01" }) { results { name episode } } }'
     const {
       episodes: { results },
     } = await test(query)
 
     expect(results).to.deep.include({ name: result.episode, episode: 'S01E01' })
+  })
+
+  it('Filters by using an non-existent value', async () => {
+    const query = '{ episodes(filter: { name: "asdasdasd" }) { results { id } } }'
+    const {
+      episodes: { results },
+    } = await test(query)
+
+    expect(results).to.be.an('array').that.is.empty
   })
 })

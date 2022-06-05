@@ -89,6 +89,13 @@ describe('[Graphql][Character] - character(id)', () => {
 
     expect(Object.keys(character)).to.deep.equal(keys)
   })
+
+  it('Gets a null response', async () => {
+    const query = '{ character(id: 9999999) { id } }'
+    const { character } = await test(query)
+
+    expect(character).to.be.null
+  })
 })
 
 describe('[Graphql][Character] - charactersByIds(ids)', () => {
@@ -114,6 +121,13 @@ describe('[Graphql][Character] - charactersByIds(ids)', () => {
 
     expect(charactersByIds).to.be.an('array')
     expect(charactersByIds).to.have.lengthOf(5)
+  })
+
+  it('Gets an empty response', async () => {
+    const query = '{ charactersByIds(ids: [9999999]) { id } }'
+    const { charactersByIds } = await test(query)
+
+    expect(charactersByIds).to.be.an('array').that.is.empty
   })
 })
 
@@ -172,7 +186,7 @@ describe('[Graphql][Character] - characters', () => {
 })
 
 describe('[Graphql][Character] - characters(filter)', () => {
-  it('Filters a character by name', async () => {
+  it('Filter by name', async () => {
     const query = '{ characters(filter: {name: "Rick Sanchez"}) { results { name } } }'
     const {
       characters: { results },
@@ -181,7 +195,7 @@ describe('[Graphql][Character] - characters(filter)', () => {
     expect(results).to.deep.include({ name: result.character })
   })
 
-  it('Filters a character by status', async () => {
+  it('Filter by status', async () => {
     const query = '{ characters(filter: {status: "dead"}) { results { status } } }'
     const {
       characters: { results },
@@ -190,7 +204,7 @@ describe('[Graphql][Character] - characters(filter)', () => {
     expect(results).to.deep.include({ status: 'Dead' })
   })
 
-  it('Filters a character by species', async () => {
+  it('Filter by species', async () => {
     const query = '{ characters(filter: {species: "Human"}) { results { species } } }'
     const {
       characters: { results },
@@ -199,7 +213,7 @@ describe('[Graphql][Character] - characters(filter)', () => {
     expect(results).to.deep.include({ species: 'Human' })
   })
 
-  it('Filters a character by type', async () => {
+  it('Filter by type', async () => {
     const query = '{ characters(filter: {type: "Parasite"}) { results { type } } }'
     const {
       characters: { results },
@@ -208,7 +222,7 @@ describe('[Graphql][Character] - characters(filter)', () => {
     expect(results).to.deep.include({ type: 'Parasite' })
   })
 
-  it('Filters a character by gender', async () => {
+  it('Filter by gender', async () => {
     const query = '{ characters(filter: {gender: "female"}) { results { gender } } }'
     const {
       characters: { results },
@@ -217,12 +231,21 @@ describe('[Graphql][Character] - characters(filter)', () => {
     expect(results).to.deep.include({ gender: 'Female' })
   })
 
-  it('Filters a character by using more than one filter', async () => {
+  it('Filter by multiple properties', async () => {
     const query = '{ characters(filter: { name: "rick" status: "dead" }) { results { name status } } }'
     const {
       characters: { results },
     } = await test(query)
 
     expect(results).to.deep.include({ name: 'Adjudicator Rick', status: 'Dead' })
+  })
+
+  it('Filter by using an non-existent value', async () => {
+    const query = '{ characters(filter: { name: "asdasdasd" }) { results { id } } }'
+    const {
+      characters: { results },
+    } = await test(query)
+
+    expect(results).to.be.an('array').that.is.empty
   })
 })

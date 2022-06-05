@@ -68,11 +68,14 @@ describe('[GraphQL][Info] - info', () => {
     expect(info.prev).to.be.an('number')
   })
 
-  it('Gets null data ', async () => {
-    const query = '{ characters(page: 2000) { results { id } info { count pages next prev } } }'
+  it('Gets null info ', async () => {
+    const query = '{ characters(page: 2000) { info { count pages next prev } } }'
     const { characters } = await test(query)
 
-    expect(characters).to.be.null
+    expect(characters.info.count).to.be.null
+    expect(characters.info.pages).to.be.null
+    expect(characters.info.next).to.be.null
+    expect(characters.info.prev).to.be.null
   })
 
   it('Prevents deep nesting', async () => {
