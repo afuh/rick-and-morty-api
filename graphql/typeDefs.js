@@ -50,7 +50,9 @@ const typeDefs = gql`
 
   type Characters {
     info: Info
-    results: [Character]
+    characters: {
+      results: [Character]
+    }
   }
 
   type Locations {
