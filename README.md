@@ -32,6 +32,7 @@ The Rick and Morty API JavaScript client is a [fully typed](https://javascript.r
 - **Ruby**: [The Rick and Morty API Gem](https://github.com/spielhoelle/rick-and-morty-gem) by [Tommy Spielhoelle](https://github.com/spielhoelle)
 - **Rust**: [rick-and-morty crate](https://github.com/dshomoye/rick-and-morty) by [dshomoye](https://github.com/dshomoye)
 - **Swift**: [The Rick and Morty API Swift Client](https://github.com/benjaminbruch/rick-morty-swift-api) by [Benjamin Bruch](https://github.com/benjaminbruch)
+- **TypeScript**: [Several web clients based on Rick and Morty API](https://github.com/oxxxxxy/The-Rick-and-Morty-Catalog) by [oxxxxxy](https://github.com/oxxxxxy)
 
 ## API collections
 - [Postman collection for the Rick and Morty API](https://github.com/loopDelicious/rick-and-morty-postman) by [loopDelicious](https://github.com/loopDelicious)
