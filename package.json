@@ -1,14 +1,15 @@
 {
   "name": "rick-morty-api",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Rick and Morty API",
-  "main": "server.js",
+  "type": "module",
   "engines": {
     "node": ">= 7.10.1"
   },
   "scripts": {
-    "start": "node ./server.js",
-    "dev": "nodemon ./server.js",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
     "test": "nyc --check-coverage --lines 95 mocha --exit && nyc report --reporter=lcov",
     "test:watch": "nodemon --ext js ./test --exec 'mocha --reporter min'",
     "test:mock": "mongorestore --host=localhost:27017 --db=rickmorty-test --drop ./test/data",
@@ -17,32 +18,22 @@
   "author": "Axel Fuhrmann",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "apollo-datasource-rest": "^0.8.1",
-    "apollo-server-express": "^2.15.1",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "express-validator": "^6.6.0",
-    "graphql": "^14.7.0",
-    "graphql-depth-limit": "^1.1.0",
-    "mongoose": "^5.12.5",
-    "mongoose-mongodb-errors": "0.0.2",
-    "morgan": "^1.10.0"
+    "@hono/node-server": "^1.19.9",
+    "dotenv": "^17.2.3",
+    "hono": "^4.11.7"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
-    "coveralls": "^3.1.0",
-    "eslint": "^7.4.0",
-    "eslint-config-afuh": "^0.1.31",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "mocha": "^7.2.0",
-    "nodemon": "^2.0.4",
-    "nyc": "^15.1.0",
-    "prettier": "^2.0.5"
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^22.19.8",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "^3.8.1",
+    "tsx": "^4.7.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.54.0"
   },
   "repository": {
     "type": "git",
