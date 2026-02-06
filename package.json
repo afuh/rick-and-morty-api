@@ -10,30 +10,38 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "nyc --check-coverage --lines 95 mocha --exit && nyc report --reporter=lcov",
-    "test:watch": "nodemon --ext js ./test --exec 'mocha --reporter min'",
-    "test:mock": "mongorestore --host=localhost:27017 --db=rickmorty-test --drop ./test/data",
-    "lint": "eslint ."
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint . && tsc --noEmit"
   },
   "author": "Axel Fuhrmann",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "@graphql-tools/schema": "^10.0.31",
+    "@hono/graphql-server": "^0.7.0",
     "@hono/node-server": "^1.19.9",
+    "@types/mongoose": "^5.11.96",
     "dotenv": "^17.2.3",
-    "hono": "^4.11.7"
+    "graphql": "^16.12.0",
+    "hono": "^4.11.7",
+    "mongoose": "^9.1.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@types/node": "^22.19.8",
     "@typescript-eslint/eslint-plugin": "^8.54.0",
     "@typescript-eslint/parser": "^8.54.0",
+    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/ui": "^4.0.18",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "prettier": "^3.8.1",
     "tsx": "^4.7.1",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.54.0"
+    "typescript-eslint": "^8.54.0",
+    "vitest": "^4.0.18"
   },
   "repository": {
     "type": "git",
