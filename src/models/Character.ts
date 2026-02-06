@@ -30,7 +30,7 @@ interface CharacterModel extends Model<CharacterInterface> {
     status?: CharacterInterface['status']
     species?: CharacterInterface['species']
     gender?: CharacterInterface['gender']
-    skip: number
+    page: number
   }): Promise<ReturnType<typeof buildFindAndCountResponse>>
 }
 
@@ -88,9 +88,10 @@ characterSchema.statics.findAndCount = async function (params: {
   status?: string
   species?: string
   gender?: string
-  skip: number
+  page: number
 }) {
-  const { name, type, status, species, gender, skip } = params
+  const { name, type, status, species, gender, page } = params
+  const skip = (page - 1) * collection.limit
 
   const q = (key?: string) => {
     if (!key) return /.*/

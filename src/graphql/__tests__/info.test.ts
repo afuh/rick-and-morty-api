@@ -87,8 +87,7 @@ describe('GraphQL pagination info', () => {
     expect(characters.info.prev).toBeNull()
   })
 
-  test.skip('should prevent deep nesting', async () => {
-    // TODO: implement depth max limit.
+  test('should prevent deep nesting', async () => {
     const gql = `
       {
       	characters {
@@ -113,6 +112,6 @@ describe('GraphQL pagination info', () => {
 
     const json = await res.json()
     expect(json.errors).toBeDefined()
-    expect(json.errors[0].message).toContain('Syntax Error')
+    expect(json.errors[0].message).toContain('Query depth limit')
   }, 10000)
 })

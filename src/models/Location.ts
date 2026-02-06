@@ -17,7 +17,7 @@ interface LocationModel extends Model<LocationInterface> {
     name?: string
     type?: string
     dimension?: string
-    skip: number
+    page: number
   }): Promise<ReturnType<typeof buildFindAndCountResponse>>
 }
 
@@ -59,9 +59,10 @@ locationSchema.statics.findAndCount = async function (params: {
   name?: string
   type?: string
   dimension?: string
-  skip: number
+  page: number
 }) {
-  const { name, type, dimension, skip } = params
+  const { name, type, dimension, page } = params
+  const skip = (page - 1) * collection.limit
 
   const q = (key?: string) => {
     if (!key) return /.*/

@@ -38,16 +38,15 @@ export const buildPaginationInfo = (
 export const createGetAllHandler = <T>(Model: ModelWithStatics<T>, resource: Resource, filterKeys: string[]) => {
   return factory.createHandlers(async (c) => {
     const page = Number(c.req.query('page')) || 1
-    const skip = page * collection.limit - collection.limit
 
-    // Build filters dynamically with sanitization
-    const filters: Record<string, unknown> = { skip }
+    // Build params: page + filters from query string
+    const params: Record<string, unknown> = { page }
     filterKeys.forEach((key) => {
       const value = c.req.query(key)
-      if (value) filters[key] = value.trim()
+      if (value) params[key] = value.trim()
     })
 
-    const { results, info } = await Model.findAndCount(filters)
+    const { results, info } = await Model.findAndCount(params)
 
     // If no results and page > 1, return 404
     if (results.length === 0 && page > 1) {

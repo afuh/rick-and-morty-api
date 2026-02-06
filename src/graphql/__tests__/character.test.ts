@@ -133,6 +133,16 @@ describe('GraphQL charactersByIds(ids)', () => {
 })
 
 describe('GraphQL characters', () => {
+  test('should get 20 characters', async () => {
+    const gql = '{ characters { results { name } } }'
+    const {
+      characters: { results },
+    } = await query(gql)
+
+    expect(results).toBeInstanceOf(Array)
+    expect(results).toHaveLength(20)
+  })
+
   test('should get multiple characters', async () => {
     const gql = '{ characters { results { name } } }'
     const {
@@ -240,6 +250,16 @@ describe('GraphQL characters(filter)', () => {
     } = await query(gql)
 
     expect(results).toContainEqual({ name: 'Adjudicator Rick', status: 'Dead' })
+  })
+
+  test('should ignore filters with `null` values', async () => {
+    const gql = '{ characters(filter: { name: null }) { results { name } } }'
+    const {
+      characters: { results },
+    } = await query(gql)
+
+    expect(results).toBeInstanceOf(Array)
+    expect(results[0].name).toBe(result.character)
   })
 
   test('should return empty array for non-existent filter', async () => {

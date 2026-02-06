@@ -16,7 +16,7 @@ interface EpisodeModel extends Model<EpisodeInterface> {
   findAndCount(params: {
     name?: string
     episode?: string
-    skip: number
+    page: number
   }): Promise<ReturnType<typeof buildFindAndCountResponse>>
 }
 
@@ -54,8 +54,9 @@ function preQuery(this: Query<unknown, unknown>) {
 episodeSchema.pre('find', preQuery)
 episodeSchema.pre('findOne', preQuery)
 
-episodeSchema.statics.findAndCount = async function (params: { name?: string; episode?: string; skip: number }) {
-  const { name, episode, skip } = params
+episodeSchema.statics.findAndCount = async function (params: { name?: string; episode?: string; page: number }) {
+  const { name, episode, page } = params
+  const skip = (page - 1) * collection.limit
 
   const q = (key?: string) => {
     if (!key) return /.*/

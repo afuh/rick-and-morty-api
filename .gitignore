@@ -8,3 +8,4 @@ public/
 .coveralls.yml
 .nyc_output
 coverage
+dist

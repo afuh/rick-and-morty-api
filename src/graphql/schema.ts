@@ -11,7 +11,7 @@ export const typeDefs = `
     characters(page: Int, filter: FilterCharacter): Characters
 
     """
-    Get a list of characters selected by ids
+    Get a list of characters selected by IDs
     """
     charactersByIds(ids: [ID!]!): [Character]
 
@@ -26,7 +26,7 @@ export const typeDefs = `
     locations(page: Int, filter: FilterLocation): Locations
 
     """
-    Get a list of locations selected by ids
+    Get a list of locations selected by IDs
     """
     locationsByIds(ids: [ID!]!): [Location]
 
@@ -41,7 +41,7 @@ export const typeDefs = `
     episodes(page: Int, filter: FilterEpisode): Episodes
 
     """
-    Get a list of episodes selected by ids
+    Get a list of episodes selected by IDs
     """
     episodesByIds(ids: [ID!]!): [Episode]
   }

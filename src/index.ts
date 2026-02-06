@@ -10,6 +10,7 @@ import characterRoutes from './routes/character.js'
 import locationRoutes from './routes/location.js'
 import episodeRoutes from './routes/episode.js'
 import { schema } from './graphql/index.js'
+import { depthLimit } from './graphql/utils/helpers.js'
 
 const app = new Hono()
 const rest = new Hono()
@@ -63,6 +64,7 @@ app.use(
   graphqlServer({
     schema,
     graphiql: true,
+    validationRules: [depthLimit(5)],
   })
 )
 
