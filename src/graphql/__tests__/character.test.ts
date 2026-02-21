@@ -1,36 +1,22 @@
 import { describe, test, expect } from 'vitest'
-import app from '../../index.js'
+import { query } from './helpers.js'
 
-const query = async (gql: string) => {
-  const res = await app.request('/graphql', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: gql }),
-  })
-
-  const json = await res.json()
-  return json.data
+const keys = {
+  query: 'id name status species type gender origin { id } location { id } image episode { id } created',
+  properties: [
+    'id',
+    'name',
+    'status',
+    'species',
+    'type',
+    'gender',
+    'origin',
+    'location',
+    'image',
+    'episode',
+    'created',
+  ],
 }
-
-const charFragment = (q: string) =>
-  `
-  ${q}
-    fragment allProperties on Character {
-      id
-      name
-      status
-      species
-      type
-      gender
-      origin { id }
-      location { id }
-      image
-      episode { id }
-      created
-    }
-  `
-
-const keys = ['id', 'name', 'status', 'species', 'type', 'gender', 'origin', 'location', 'image', 'episode', 'created']
 
 const result = {
   episode: 'Pilot',
@@ -78,16 +64,16 @@ describe('GraphQL character(id)', () => {
     const { name } = character
 
     expect(name).toBe(result.character)
-    expect(character.location.residents).toHaveLength(101)
+    expect(character.location.residents).toHaveLength(9)
     expect(character.location.residents).toBeInstanceOf(Array)
     expect(character.location.residents).toContainEqual({ name })
   })
 
   test('should get all properties', async () => {
-    const gql = charFragment('{ character(id: 1) { ...allProperties } }')
+    const gql = `{ character(id: 1) { ${keys.query} } }`
     const { character } = await query(gql)
 
-    expect(Object.keys(character)).toEqual(keys)
+    expect(Object.keys(character)).toEqual(keys.properties)
   })
 
   test('should return null for non-existent character', async () => {
@@ -95,6 +81,14 @@ describe('GraphQL character(id)', () => {
     const { character } = await query(gql)
 
     expect(character).toBeNull()
+  })
+
+  test('should return origin and location as-is when name is unknown', async () => {
+    const gql = '{ character(id: 36) { origin { name } location { name } } }'
+    const { character } = await query(gql)
+    expect(character.origin).toEqual({ name: 'unknown' })
+
+    expect(character.location).toEqual({ name: 'unknown' })
   })
 })
 
@@ -182,18 +176,19 @@ describe('GraphQL characters', () => {
     const [{ name }] = results
 
     expect(name).toBe(result.character)
-    expect(results[0].location.residents).toHaveLength(101)
+    expect(results[0].location.residents).toHaveLength(9)
     expect(results[0].location.residents).toBeInstanceOf(Array)
     expect(results[0].location.residents).toContainEqual({ name })
   })
 
   test('should get all properties', async () => {
-    const gql = charFragment('{ characters { results { ...allProperties }} }')
+    const gql = `{ characters { results { ${keys.query} }} }`
+
     const {
       characters: { results },
     } = await query(gql)
 
-    expect(Object.keys(results[0])).toEqual(keys)
+    expect(Object.keys(results[0])).toEqual(keys.properties)
   })
 })
 

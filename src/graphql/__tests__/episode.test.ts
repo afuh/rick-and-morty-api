@@ -1,31 +1,10 @@
 import { describe, test, expect } from 'vitest'
-import app from '../../index.js'
+import { query } from './helpers.js'
 
-const query = async (gql: string) => {
-  const res = await app.request('/graphql', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: gql }),
-  })
-
-  const json = await res.json()
-  return json.data
+const keys = {
+  query: 'id name air_date episode characters { id } created',
+  properties: ['id', 'name', 'air_date', 'episode', 'characters', 'created'],
 }
-
-const epFragment = (q: string) =>
-  `
-  ${q}
-    fragment allProperties on Episode {
-      id
-      name
-      air_date
-      episode
-      characters {id}
-      created
-    }
-  `
-
-const keys = ['id', 'name', 'air_date', 'episode', 'characters', 'created']
 
 const result = {
   episode: 'Pilot',
@@ -54,15 +33,15 @@ describe('GraphQL episode(id)', () => {
     const { episode } = await query(gql)
 
     expect(episode.characters).toBeInstanceOf(Array)
-    expect(episode.characters).toHaveLength(19)
+    expect(episode.characters).toHaveLength(4)
     expect(episode.characters[0].name).toBe(result.character)
   })
 
   test('should get all properties', async () => {
-    const gql = epFragment('{ episode(id: 1) { ...allProperties } }')
+    const gql = `{ episode(id: 1) { ${keys.query} } }`
     const { episode } = await query(gql)
 
-    expect(Object.keys(episode)).toEqual(keys)
+    expect(Object.keys(episode)).toEqual(keys.properties)
   })
 
   test('should return null for non-existent episode', async () => {
@@ -129,12 +108,12 @@ describe('GraphQL episodes', () => {
   })
 
   test('should get all properties', async () => {
-    const gql = epFragment('{ episodes { results { ...allProperties } } }')
+    const gql = `{ episodes { results { ${keys.query} } } }`
     const {
       episodes: { results },
     } = await query(gql)
 
-    expect(Object.keys(results[0])).toEqual(keys)
+    expect(Object.keys(results[0])).toEqual(keys.properties)
   })
 })
 

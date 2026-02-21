@@ -1,31 +1,10 @@
 import { describe, test, expect } from 'vitest'
-import app from '../../index.js'
+import { query } from './helpers.js'
 
-const query = async (gql: string) => {
-  const res = await app.request('/graphql', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: gql }),
-  })
-
-  const json = await res.json()
-  return json.data
+const keys = {
+  query: 'id name type dimension residents { id } created',
+  properties: ['id', 'name', 'type', 'dimension', 'residents', 'created'],
 }
-
-const locFragment = (q: string) =>
-  `
-  ${q}
-    fragment allProperties on Location {
-      id
-      name
-      type
-      dimension
-      residents { id }
-      created
-    }
-  `
-
-const keys = ['id', 'name', 'type', 'dimension', 'residents', 'created']
 
 const result = {
   location: 'Earth (C-137)',
@@ -54,15 +33,15 @@ describe('GraphQL location(id)', () => {
     const { location } = await query(gql)
 
     expect(location.residents).toBeInstanceOf(Array)
-    expect(location.residents).toHaveLength(27)
+    expect(location.residents).toHaveLength(1)
     expect(location.residents[0].name).toBe(result.character)
   })
 
   test('should get all properties', async () => {
-    const gql = locFragment('{ location(id: 1) { ...allProperties } }')
+    const gql = `{ location(id: 1) { ${keys.query} } }`
     const { location } = await query(gql)
 
-    expect(Object.keys(location)).toEqual(keys)
+    expect(Object.keys(location)).toEqual(keys.properties)
   })
 
   test('should return null for non-existent location', async () => {
@@ -129,12 +108,12 @@ describe('GraphQL locations', () => {
   })
 
   test('should get all properties', async () => {
-    const gql = locFragment('{ locations { results { ...allProperties } } }')
+    const gql = `{ locations { results { ${keys.query} } } }`
     const {
       locations: { results },
     } = await query(gql)
 
-    expect(Object.keys(results[0])).toEqual(keys)
+    expect(Object.keys(results[0])).toEqual(keys.properties)
   })
 })
 

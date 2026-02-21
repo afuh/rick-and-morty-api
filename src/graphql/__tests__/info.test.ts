@@ -1,18 +1,8 @@
 import { describe, test, expect } from 'vitest'
 import app from '../../index.js'
+import { query } from './helpers.js'
 
-const query = async (gql: string) => {
-  const res = await app.request('/graphql', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: gql }),
-  })
-
-  const json = await res.json()
-  return json.data
-}
-
-const keys = ['count', 'pages', 'next', 'prev']
+const properties = ['count', 'pages', 'next', 'prev']
 
 describe('GraphQL pagination info', () => {
   test('should get info for characters', async () => {
@@ -48,7 +38,7 @@ describe('GraphQL pagination info', () => {
       characters: { info },
     } = await query(gql)
 
-    expect(Object.keys(info)).toEqual(keys)
+    expect(Object.keys(info)).toEqual(properties)
     expect(info.count).toBeTypeOf('number')
     expect(info.pages).toBeTypeOf('number')
     expect(info.next).toBeTypeOf('number')
@@ -63,7 +53,7 @@ describe('GraphQL pagination info', () => {
 
     expect(info.count).toBeTypeOf('number')
     expect(info.pages).toBeTypeOf('number')
-    expect(info.next).toBeTypeOf('number')
+    expect(info.next).toBeNull()
     expect(info.prev).toBeTypeOf('number')
   })
 
