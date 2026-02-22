@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest'
-import app from '../../index.js'
-import { message } from '../../utils/helpers.js'
+import app from '../../app.js'
+import { message } from '../../config.js'
 
 const resources = ['/api/character', '/api/location', '/api/episode']
 

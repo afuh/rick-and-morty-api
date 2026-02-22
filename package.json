@@ -4,12 +4,10 @@
   "description": "Rick and Morty API",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "dev:local": "NODE_ENV=local tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
+    "dev": "NODE_ENV=development tsx watch dev/dev.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/server.js",
     "test": "vitest",
-    "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "lint": "eslint . && tsc --noEmit"
   },

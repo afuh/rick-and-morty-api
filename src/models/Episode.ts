@@ -1,24 +1,7 @@
-import { Schema, model, Model, Query } from 'mongoose'
-import { collection } from '../utils/helpers.js'
-import { buildFindAndCountResponse } from './utils/helpers.js'
-
-interface EpisodeInterface {
-  id: number
-  name: string
-  air_date: string
-  episode: string
-  characters: string[]
-  url: string
-  created: Date
-}
-
-interface EpisodeModel extends Model<EpisodeInterface> {
-  findAndCount(params: {
-    name?: string
-    episode?: string
-    page: number
-  }): Promise<ReturnType<typeof buildFindAndCountResponse>>
-}
+import { Schema, model, Model, Query, type InferSchemaType } from 'mongoose'
+import { dbConfig, filterConfig } from '../config.js'
+import { buildFindAndCountResponse } from './utils/buildFindAndCountResponse.js'
+import { generateFilterOptions } from './utils/generateFilterOptions.js'
 
 const episodeSchema = new Schema(
   {
@@ -47,33 +30,31 @@ const episodeSchema = new Schema(
   }
 )
 
+type EpisodeFilterFields = (typeof filterConfig.filters.episode)[number]
+
+type EpisodeFilters = { [key in EpisodeFilterFields]?: string } & { page: number }
+
+type EpisodeInterface = InferSchemaType<typeof episodeSchema>
+
 function preQuery(this: Query<unknown, unknown>) {
-  this.select(collection.exclude)
+  this.select(dbConfig.projection.exclude)
 }
 
-episodeSchema.pre('find', preQuery)
-episodeSchema.pre('findOne', preQuery)
+episodeSchema.pre(/^find/, preQuery)
 
-episodeSchema.statics.findAndCount = async function (params: { name?: string; episode?: string; page: number }) {
-  const { name, episode, page } = params
-  const skip = (page - 1) * collection.limit
+episodeSchema.statics.findAndCount = async function (this: Model<EpisodeInterface>, params: EpisodeFilters) {
+  const { skip, query } = generateFilterOptions({ fields: filterConfig.filters.episode }, params)
 
-  const q = (key?: string) => {
-    if (!key) return /.*/
-    return new RegExp(key.replace(/[^\w\s]/g, '\\$&'), 'i')
-  }
-
-  const query = {
-    name: q(name),
-    episode: q(episode),
-  }
-
-  const [results, count]: [EpisodeInterface[], number] = await Promise.all([
-    this.find(query).sort({ id: 1 }).limit(collection.limit).skip(skip),
-    this.find(query).countDocuments(),
+  const [results, count] = await Promise.all([
+    this.find(query).sort({ id: 1 }).limit(dbConfig.pagination.limit).skip(skip),
+    this.countDocuments(query),
   ])
 
-  return buildFindAndCountResponse(results, count, skip)
+  return buildFindAndCountResponse(results, count, skip, dbConfig.pagination.limit)
+}
+
+interface EpisodeModel extends Model<EpisodeInterface> {
+  findAndCount(params: EpisodeFilters): Promise<ReturnType<typeof buildFindAndCountResponse>>
 }
 
 export default model<EpisodeInterface, EpisodeModel>('Episode', episodeSchema)

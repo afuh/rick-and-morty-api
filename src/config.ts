@@ -1,4 +1,4 @@
-export const baseUrl = 'https://rickandmortyapi.com/api'
+export const BASE_URL = 'https://rickandmortyapi.com/api'
 
 export const message = {
   noPage: 'There is nothing here',
@@ -7,14 +7,21 @@ export const message = {
   noEpisode: 'Episode not found',
   badParam: 'Hey! you must provide an id',
   badArray: 'Bad... bad array :/',
-}
+} as const
 
-export const collection = {
-  exclude: '-_id -author -__v -edited',
-  limit: 20,
-  queries: {
+export const dbConfig = {
+  pagination: {
+    limit: 20,
+  },
+  projection: {
+    exclude: '-_id -author -__v -edited',
+  },
+} as const
+
+export const filterConfig = {
+  filters: {
     character: ['name', 'status', 'species', 'type', 'gender'],
     episode: ['name', 'episode'],
     location: ['name', 'dimension', 'type'],
   },
-}
+} as const

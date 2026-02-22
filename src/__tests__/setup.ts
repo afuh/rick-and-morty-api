@@ -1,8 +1,8 @@
+import mongoose from 'mongoose'
 import { beforeAll, afterAll } from 'vitest'
 import { MongoMemoryServer } from 'mongodb-memory-server'
-import { connectDB } from '../utils/db.js'
-import mongoose from 'mongoose'
-import { seedDatabase } from './seed.js'
+import { connectDB } from '../db.js'
+import { seedDatabase } from '../../seed/seed.js'
 
 let mongoServer: MongoMemoryServer
 

@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { query } from './helpers.js'
+import { fetchGraphql } from './utils/fetchGraphql.js'
 
 const keys = {
   query: 'id name type dimension residents { id } created',
@@ -14,7 +14,7 @@ const result = {
 describe('GraphQL location(id)', () => {
   test('should get location by id', async () => {
     const gql = '{ location(id: 1) { name } }'
-    const { location } = await query(gql)
+    const { location } = await fetchGraphql(gql)
 
     expect(location).toBeTypeOf('object')
     expect(location.name).toBe(result.location)
@@ -22,7 +22,7 @@ describe('GraphQL location(id)', () => {
 
   test('should get different location', async () => {
     const gql = '{ location(id: 2) { name } }'
-    const { location } = await query(gql)
+    const { location } = await fetchGraphql(gql)
 
     expect(location).toBeTypeOf('object')
     expect(location.name).toBe('Abadango')
@@ -30,7 +30,7 @@ describe('GraphQL location(id)', () => {
 
   test('should get character type', async () => {
     const gql = '{ location(id: 1) { residents { name } } }'
-    const { location } = await query(gql)
+    const { location } = await fetchGraphql(gql)
 
     expect(location.residents).toBeInstanceOf(Array)
     expect(location.residents).toHaveLength(1)
@@ -39,14 +39,14 @@ describe('GraphQL location(id)', () => {
 
   test('should get all properties', async () => {
     const gql = `{ location(id: 1) { ${keys.query} } }`
-    const { location } = await query(gql)
+    const { location } = await fetchGraphql(gql)
 
     expect(Object.keys(location)).toEqual(keys.properties)
   })
 
   test('should return null for non-existent location', async () => {
     const gql = '{ location(id: 9999999) { id } }'
-    const { location } = await query(gql)
+    const { location } = await fetchGraphql(gql)
 
     expect(location).toBeNull()
   })
@@ -55,7 +55,7 @@ describe('GraphQL location(id)', () => {
 describe('GraphQL locationsByIds(ids)', () => {
   test('should get one location by ids', async () => {
     const gql = '{ locationsByIds(ids: [1]) { name } }'
-    const { locationsByIds } = await query(gql)
+    const { locationsByIds } = await fetchGraphql(gql)
 
     expect(locationsByIds).toBeInstanceOf(Array)
     expect(locationsByIds[0].name).toBe(result.location)
@@ -63,7 +63,7 @@ describe('GraphQL locationsByIds(ids)', () => {
 
   test('should get multiple locations by ids', async () => {
     const gql = '{ locationsByIds(ids: [1, 2]) { name } }'
-    const { locationsByIds } = await query(gql)
+    const { locationsByIds } = await fetchGraphql(gql)
 
     expect(locationsByIds).toBeInstanceOf(Array)
     expect(locationsByIds).toEqual([{ name: 'Earth (C-137)' }, { name: 'Abadango' }])
@@ -71,7 +71,7 @@ describe('GraphQL locationsByIds(ids)', () => {
 
   test('should get five locations by ids', async () => {
     const gql = `{ locationsByIds(ids: [1, 2, 3, 4, 5]) { id } }`
-    const { locationsByIds } = await query(gql)
+    const { locationsByIds } = await fetchGraphql(gql)
 
     expect(locationsByIds).toBeInstanceOf(Array)
     expect(locationsByIds).toHaveLength(5)
@@ -79,7 +79,7 @@ describe('GraphQL locationsByIds(ids)', () => {
 
   test('should return empty array for non-existent ids', async () => {
     const gql = '{ locationsByIds(ids: [9999999]) { id } }'
-    const { locationsByIds } = await query(gql)
+    const { locationsByIds } = await fetchGraphql(gql)
 
     expect(locationsByIds).toBeInstanceOf(Array)
     expect(locationsByIds).toHaveLength(0)
@@ -91,7 +91,7 @@ describe('GraphQL locations', () => {
     const gql = '{ locations { results { name } } }'
     const {
       locations: { results },
-    } = await query(gql)
+    } = await fetchGraphql(gql)
 
     expect(results).toBeInstanceOf(Array)
     expect(results[0].name).toBe(result.location)
@@ -101,7 +101,7 @@ describe('GraphQL locations', () => {
     const gql = '{ locations { results { residents { name } } } }'
     const {
       locations: { results },
-    } = await query(gql)
+    } = await fetchGraphql(gql)
 
     expect(results[0].residents).toBeInstanceOf(Array)
     expect(results[0].residents[0].name).toBe(result.character)
@@ -111,7 +111,7 @@ describe('GraphQL locations', () => {
     const gql = `{ locations { results { ${keys.query} } } }`
     const {
       locations: { results },
-    } = await query(gql)
+    } = await fetchGraphql(gql)
 
     expect(Object.keys(results[0])).toEqual(keys.properties)
   })
@@ -122,7 +122,7 @@ describe('GraphQL locations(filter)', () => {
     const gql = '{ locations(filter: { name: "earth" }) { results { name } } }'
     const {
       locations: { results },
-    } = await query(gql)
+    } = await fetchGraphql(gql)
 
     expect(results).toContainEqual({ name: result.location })
   })
@@ -131,7 +131,7 @@ describe('GraphQL locations(filter)', () => {
     const gql = '{ locations(filter: { type: "planet" }) { results { type } } }'
     const {
       locations: { results },
-    } = await query(gql)
+    } = await fetchGraphql(gql)
 
     expect(results).toContainEqual({ type: 'Planet' })
   })
@@ -140,7 +140,7 @@ describe('GraphQL locations(filter)', () => {
     const gql = '{ locations(filter: { name: "earth" type: "planet" }) { results { name type } } }'
     const {
       locations: { results },
-    } = await query(gql)
+    } = await fetchGraphql(gql)
 
     expect(results).toContainEqual({ name: result.location, type: 'Planet' })
   })
@@ -149,7 +149,7 @@ describe('GraphQL locations(filter)', () => {
     const gql = '{ locations(filter: { name: "asdasdasd" }) { results { id } } }'
     const {
       locations: { results },
-    } = await query(gql)
+    } = await fetchGraphql(gql)
 
     expect(results).toBeInstanceOf(Array)
     expect(results).toHaveLength(0)

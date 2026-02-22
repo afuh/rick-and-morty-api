@@ -1,7 +1,7 @@
 import CharacterModel from '../models/Character.js'
 import LocationModel from '../models/Location.js'
 import EpisodeModel from '../models/Episode.js'
-import { urlToId } from './utils/helpers.js'
+import { urlToId } from './utils/urlToId.js'
 
 export const resolvers = {
   Query: {

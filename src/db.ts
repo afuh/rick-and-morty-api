@@ -6,7 +6,6 @@ export const connectDB = async () => {
     mongoose.connection.on('error', (err) => {
       console.error(`→ ${err.message}`)
     })
-    console.log(`Database connected: ${mongoose.connection.host}/${mongoose.connection.name}`)
   } catch (error) {
     console.error('Database connection failed:', error)
     process.exit(1)

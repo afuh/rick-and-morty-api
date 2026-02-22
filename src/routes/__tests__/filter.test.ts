@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import app from '../../index.js'
+import app from '../../app.js'
 
 type Filter = {
   name: string

@@ -1,25 +1,7 @@
-import { Schema, model, Model, Query } from 'mongoose'
-import { collection } from '../utils/helpers.js'
-import { buildFindAndCountResponse } from './utils/helpers.js'
-
-interface LocationInterface {
-  id: number
-  name: string
-  type: string
-  dimension: string
-  residents: string[]
-  url: string
-  created: Date
-}
-
-interface LocationModel extends Model<LocationInterface> {
-  findAndCount(params: {
-    name?: string
-    type?: string
-    dimension?: string
-    page: number
-  }): Promise<ReturnType<typeof buildFindAndCountResponse>>
-}
+import { Schema, model, Model, Query, type InferSchemaType } from 'mongoose'
+import { dbConfig, filterConfig } from '../config.js'
+import { buildFindAndCountResponse } from './utils/buildFindAndCountResponse.js'
+import { generateFilterOptions } from './utils/generateFilterOptions.js'
 
 const locationSchema = new Schema(
   {
@@ -48,39 +30,31 @@ const locationSchema = new Schema(
   }
 )
 
+type LocationFilterFields = (typeof filterConfig.filters.location)[number]
+
+type LocationFilters = { [key in LocationFilterFields]?: string } & { page: number }
+
+type LocationInterface = InferSchemaType<typeof locationSchema>
+
 function preQuery(this: Query<unknown, unknown>) {
-  this.select(collection.exclude)
+  this.select(dbConfig.projection.exclude)
 }
 
-locationSchema.pre('find', preQuery)
-locationSchema.pre('findOne', preQuery)
+locationSchema.pre(/^find/, preQuery)
 
-locationSchema.statics.findAndCount = async function (params: {
-  name?: string
-  type?: string
-  dimension?: string
-  page: number
-}) {
-  const { name, type, dimension, page } = params
-  const skip = (page - 1) * collection.limit
+locationSchema.statics.findAndCount = async function (this: Model<LocationInterface>, params: LocationFilters) {
+  const { skip, query } = generateFilterOptions({ fields: filterConfig.filters.location }, params)
 
-  const q = (key?: string) => {
-    if (!key) return /.*/
-    return new RegExp(key.replace(/[^\w\s]/g, '\\$&'), 'i')
-  }
-
-  const query = {
-    name: q(name),
-    type: q(type),
-    dimension: q(dimension),
-  }
-
-  const [results, count]: [LocationInterface[], number] = await Promise.all([
-    this.find(query).sort({ id: 1 }).limit(collection.limit).skip(skip),
+  const [results, count] = await Promise.all([
+    this.find(query).sort({ id: 1 }).limit(dbConfig.pagination.limit).skip(skip),
     this.find(query).countDocuments(),
   ])
 
-  return buildFindAndCountResponse(results, count, skip)
+  return buildFindAndCountResponse(results, count, skip, dbConfig.pagination.limit)
+}
+
+interface LocationModel extends Model<LocationInterface> {
+  findAndCount(params: LocationFilters): Promise<ReturnType<typeof buildFindAndCountResponse>>
 }
 
 export default model<LocationInterface, LocationModel>('Location', locationSchema)

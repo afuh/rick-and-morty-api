@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest'
-import app from '../../index.js'
-import { query } from './helpers.js'
+import app from '../../app.js'
+import { fetchGraphql } from './utils/fetchGraphql.js'
 
 const properties = ['count', 'pages', 'next', 'prev']
 
@@ -9,7 +9,7 @@ describe('GraphQL pagination info', () => {
     const gql = '{ characters { info { count } } }'
     const {
       characters: { info },
-    } = await query(gql)
+    } = await fetchGraphql(gql)
 
     expect(info).toBeTypeOf('object')
   })
@@ -18,7 +18,7 @@ describe('GraphQL pagination info', () => {
     const gql = '{ locations { info { count } } }'
     const {
       locations: { info },
-    } = await query(gql)
+    } = await fetchGraphql(gql)
 
     expect(info).toBeTypeOf('object')
   })
@@ -27,7 +27,7 @@ describe('GraphQL pagination info', () => {
     const gql = '{ episodes { info { count } } }'
     const {
       episodes: { info },
-    } = await query(gql)
+    } = await fetchGraphql(gql)
 
     expect(info).toBeTypeOf('object')
   })
@@ -36,7 +36,7 @@ describe('GraphQL pagination info', () => {
     const gql = '{ characters { info { count pages next prev } } }'
     const {
       characters: { info },
-    } = await query(gql)
+    } = await fetchGraphql(gql)
 
     expect(Object.keys(info)).toEqual(properties)
     expect(info.count).toBeTypeOf('number')
@@ -49,7 +49,7 @@ describe('GraphQL pagination info', () => {
     const gql = '{ characters(page: 2) { info { count pages next prev } } }'
     const {
       characters: { info },
-    } = await query(gql)
+    } = await fetchGraphql(gql)
 
     expect(info.count).toBeTypeOf('number')
     expect(info.pages).toBeTypeOf('number')
@@ -59,7 +59,7 @@ describe('GraphQL pagination info', () => {
 
   test('should return null info for invalid page', async () => {
     const gql = '{ characters(page: 2000) { info { count pages next prev } } }'
-    const { characters } = await query(gql)
+    const { characters } = await fetchGraphql(gql)
 
     expect(characters.info.count).toBeNull()
     expect(characters.info.pages).toBeNull()
@@ -69,7 +69,7 @@ describe('GraphQL pagination info', () => {
 
   test('should return null info for invalid filter', async () => {
     const gql = '{ characters(filter: {name: "asdasdas"}) { info { count pages next prev } } }'
-    const { characters } = await query(gql)
+    const { characters } = await fetchGraphql(gql)
 
     expect(characters.info.count).toBeNull()
     expect(characters.info.pages).toBeNull()

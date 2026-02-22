@@ -1,10 +1,10 @@
-import app from '../../index.js'
+import app from '../../../app.js'
 
-export const query = async (gql: string) => {
+export const fetchGraphql = async (query: string) => {
   const res = await app.request('/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: gql }),
+    body: JSON.stringify({ query }),
   })
 
   const json = await res.json()

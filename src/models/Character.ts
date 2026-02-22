@@ -1,38 +1,7 @@
-import { Schema, model, Model, Query } from 'mongoose'
-import { collection } from '../utils/helpers.js'
-import { buildFindAndCountResponse } from './utils/helpers.js'
-
-interface CharacterInterface {
-  id: number
-  name: string
-  species: string
-  type: string
-  status: string
-  location: {
-    name: string
-    url: string
-  }
-  origin: {
-    name: string
-    url: string
-  }
-  gender: string
-  episode: string[]
-  image: string
-  url: string
-  created: Date
-}
-
-interface CharacterModel extends Model<CharacterInterface> {
-  findAndCount(params: {
-    name?: CharacterInterface['name']
-    type?: CharacterInterface['type']
-    status?: CharacterInterface['status']
-    species?: CharacterInterface['species']
-    gender?: CharacterInterface['gender']
-    page: number
-  }): Promise<ReturnType<typeof buildFindAndCountResponse>>
-}
+import { Schema, model, Model, Query, type InferSchemaType } from 'mongoose'
+import { dbConfig, filterConfig } from '../config.js'
+import { buildFindAndCountResponse } from './utils/buildFindAndCountResponse.js'
+import { generateFilterOptions } from './utils/generateFilterOptions.js'
 
 const characterSchema = new Schema(
   {
@@ -52,7 +21,6 @@ const characterSchema = new Schema(
   {
     toJSON: {
       transform(_doc, ret) {
-        // Only return the fields specified in the API docs
         return {
           id: ret.id,
           name: ret.name,
@@ -72,46 +40,42 @@ const characterSchema = new Schema(
   }
 )
 
+type CharacterFilterFields = (typeof filterConfig.filters.character)[number]
+
+type CharacterFilters = { [key in CharacterFilterFields]?: string } & { page: number }
+
+type CharacterInterface = InferSchemaType<typeof characterSchema>
+
+type CharacterPopulated = Omit<CharacterInterface, 'location' | 'origin'> & {
+  location: { name: string; url: string }
+  origin: { name: string; url: string }
+}
+
 function preQuery(this: Query<unknown, unknown>) {
   this.populate({ path: 'location', select: 'name url -_id' })
   this.populate({ path: 'origin', select: 'name url -_id' })
-  // Avoid querying these fields from Mongo
-  this.select(collection.exclude)
+  // Avoid querying these fields from MongoDB
+  this.select(dbConfig.projection.exclude)
 }
 
-characterSchema.pre('find', preQuery)
-characterSchema.pre('findOne', preQuery)
+characterSchema.pre(/^find/, preQuery)
 
-characterSchema.statics.findAndCount = async function (params: {
-  name?: string
-  type?: string
-  status?: string
-  species?: string
-  gender?: string
-  page: number
-}) {
-  const { name, type, status, species, gender, page } = params
-  const skip = (page - 1) * collection.limit
+characterSchema.statics.findAndCount = async function (this: Model<CharacterPopulated>, params: CharacterFilters) {
+  const { skip, query } = generateFilterOptions(
+    { fields: filterConfig.filters.character, prefixMatchFields: ['gender'] },
+    params
+  )
 
-  const q = (key?: string) => {
-    if (!key) return /.*/
-    return new RegExp(/^male/i.test(key) ? `^${key}` : key.replace(/[^\w\s]/g, '\\$&'), 'i')
-  }
-
-  const query = {
-    name: q(name),
-    status: q(status),
-    species: q(species),
-    type: q(type),
-    gender: q(gender),
-  }
-
-  const [results, count]: [CharacterInterface[], number] = await Promise.all([
-    this.find(query).sort({ id: 1 }).limit(collection.limit).skip(skip),
-    this.find(query).countDocuments(),
+  const [results, count] = await Promise.all([
+    this.find(query).sort({ id: 1 }).limit(dbConfig.pagination.limit).skip(skip),
+    this.countDocuments(query),
   ])
 
-  return buildFindAndCountResponse(results, count, skip)
+  return buildFindAndCountResponse(results, count, skip, dbConfig.pagination.limit)
 }
 
-export default model<CharacterInterface, CharacterModel>('Character', characterSchema)
+interface CharacterModel extends Model<CharacterPopulated> {
+  findAndCount(params: CharacterFilters): Promise<ReturnType<typeof buildFindAndCountResponse>>
+}
+
+export default model<CharacterPopulated, CharacterModel>('Character', characterSchema)

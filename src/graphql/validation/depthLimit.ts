@@ -1,17 +1,14 @@
 import { GraphQLError } from 'graphql'
 import type { ValidationContext, ASTNode, FieldNode, InlineFragmentNode, FragmentSpreadNode } from 'graphql'
 
-export const urlToId = (url: string | string[]) => {
-  const getId = (str: string) => {
-    const match = str.match(/\d+$/)
-    return parseInt(match ? match[0] : '0')
-  }
-  return Array.isArray(url) ? url.map((item) => getId(item)) : [getId(url)]
-}
-
-// TODO: Should we use a package like graphql-armor instead of implementing our own depth limit?
+/**
+ * GraphQL validation rule to limit query depth.
+ * @param maxDepth - Maximum allowed depth for a GraphQL query.
+ *
+ * @returns A validation rule function that checks query depth and reports errors if exceeded.
+ */
 export const depthLimit = (maxDepth: number) => (context: ValidationContext) => ({
-  enter(node: ASTNode) {
+  OperationDefinition(node: ASTNode) {
     const check = (n: ASTNode, depth = 0): number => {
       if ('selectionSet' in n && n.selectionSet) {
         const childDepths = n.selectionSet.selections.map((s: FieldNode | InlineFragmentNode | FragmentSpreadNode) =>
@@ -23,8 +20,11 @@ export const depthLimit = (maxDepth: number) => (context: ValidationContext) => 
     }
 
     const currentDepth = check(node)
+
     if (currentDepth > maxDepth) {
-      context.reportError(new GraphQLError(`Query depth limit of ${maxDepth} exceeded, found ${currentDepth}.`))
+      context.reportError(
+        new GraphQLError(`Query depth limit of ${maxDepth} exceeded, found ${currentDepth}.`, { nodes: node })
+      )
     }
   },
 })
