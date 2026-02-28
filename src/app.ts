@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { graphqlServer } from '@hono/graphql-server'
+import { logger } from 'hono/logger'
 
 import { schema } from './graphql/index.js'
 import characterRoutes from './routes/character.js'
@@ -13,6 +14,7 @@ const app = new Hono()
 const rest = new Hono()
 
 app.use('*', cors({ origin: '*' }))
+app.use('*', logger())
 
 rest.get('/', (c) => {
   return c.json({
@@ -32,6 +34,11 @@ app.use('/graphql', graphqlServer({ schema, validationRules: [depthLimit(5)] }))
 
 app.notFound((c) => {
   return c.json({ error: message.noPage }, 404)
+})
+
+app.onError((err, c) => {
+  console.error(`Unhandled Exception in ${c.req.url}:`, err)
+  return c.json({ error: 'Internal Server Error' }, 500)
 })
 
 export default app
