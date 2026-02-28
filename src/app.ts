@@ -1,4 +1,3 @@
-import { serveStatic } from '@hono/node-server/serve-static'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { graphqlServer } from '@hono/graphql-server'
@@ -22,14 +21,6 @@ rest.get('/', (c) => {
     episodes: `${BASE_URL}/episode`,
   })
 })
-
-rest.use(
-  '/character/avatar/*',
-  serveStatic({
-    root: './',
-    rewriteRequestPath: (path) => path.replace(/^\/api\/character\/avatar/, '/images'),
-  })
-)
 
 rest.route('/character', characterRoutes)
 rest.route('/location', locationRoutes)
