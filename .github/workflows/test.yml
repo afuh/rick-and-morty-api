@@ -1,37 +1,36 @@
-on: [pull_request]
+name: Run tests
 
-name: Tests
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - src/**
+
+  # Remove push trigger after migration is complete
+  push:
+    branches: [hono-migration]
+    paths:
+      - src/**
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x]
-        mongodb-version: [4.2]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
 
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.3.0
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}
-        mongodb-replica-set: insert-replica-set-name
+      - name: Install dependencies
+        run: npm ci
 
-    - run: npm ci
-
-    - name: Add test data
-      run: mongorestore --host=localhost:27017 --db=rickmorty-test --drop ./test/data
-
-    - name: Tests
-      run: npm test
-
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.github_token }}
+      - name: Run tests and generate coverage report
+        run: |
+          echo "### Test & Coverage Summary" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          NO_COLOR=1 npm run test:coverage >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

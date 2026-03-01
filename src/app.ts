@@ -35,7 +35,7 @@ app.notFound((c) => {
 })
 
 app.onError((err, c) => {
-  console.error(`Unhandled Exception in ${c.req.url}:`, err)
+  console.error(`Unhandled Exception in ${c.req.url}\n\n`, err)
   return c.json({ error: 'Internal Server Error' }, 500)
 })
 

@@ -18,11 +18,7 @@ interface ModelWithStatics<T> extends Model<T> {
  */
 export const createGetByIdHandler = <T>(Model: ModelWithStatics<T>, noResourceMessage: string) => {
   return factory.createHandlers(async (c) => {
-    const id = c.req.param('id')
-
-    if (!id) {
-      return c.json({ error: message.badParam }, 400)
-    }
+    const id = c.req.param('id')!
 
     // If it has brackets [1,2,3], parse as JSON
     if (/\[.+\]$/.test(id)) {

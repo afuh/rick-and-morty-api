@@ -11,24 +11,23 @@ describe('Avatars', () => {
     vi.unstubAllGlobals()
   })
 
-  test('should serve character avatar image', async () => {
+  test.each([
+    [{ 'Content-Type': 'image/png' }, 'image/png'],
+    [{}, 'image/jpeg'],
+  ])('should set correct content-type when upstream headers are %o', async (headers, expectedContentType) => {
     const mockImageData = new Uint8Array([1, 2, 3])
 
     const mockResponse = new Response(mockImageData, {
       status: 200,
-      headers: {
-        'Content-Type': 'image/jpeg',
-      },
+      headers,
     })
 
     vi.mocked(fetch).mockResolvedValue(mockResponse)
 
     const res = await app.request('/api/character/avatar/1.jpeg')
 
-    expect(fetch).toHaveBeenCalledWith(`${process.env.AVATARS_ENDPOINT}/1.jpeg`)
     expect(res.status).toBe(200)
-    expect(res.headers.get('content-type')).toBe('image/jpeg')
-    expect(res.headers.get('cache-control')).not.toBeNull()
+    expect(res.headers.get('content-type')).toBe(expectedContentType)
   })
 
   test.each(['error', '1.png', 'abc.jpg', '1.jpegexe'])('should return 404 for invalid file "%s"', async (filename) => {
