@@ -1,7 +1,6 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { graphqlServer } from '@hono/graphql-server'
-import { logger } from 'hono/logger'
 
 import { schema } from './graphql/index.js'
 import characterRoutes from './routes/character.js'
@@ -14,7 +13,6 @@ const app = new Hono()
 const rest = new Hono()
 
 app.use('*', cors({ origin: '*' }))
-app.use('*', logger())
 
 rest.get('/', (c) => {
   return c.json({
